@@ -1,0 +1,594 @@
+/*
+================================================================================
+FAQ.CSS - Streamline Dumpsters Ltd. FAQ Page Styles
+================================================================================
+
+PURPOSE:
+Styles for the FAQ page with accordion functionality, including smooth animations,
+accessibility features, and responsive design.
+
+FUNCTIONALITY:
+- Accordion UI with smooth expand/collapse transitions
+- Accessible focus states and ARIA support
+- Rotating plus/cross icons
+- Responsive layout across all screen sizes
+- Chatbot section styling
+
+ACCESSIBILITY:
+- High contrast focus indicators
+- Keyboard navigation support
+- Screen reader friendly animations
+- Proper ARIA state communication
+
+BROWSER SUPPORT:
+- Modern browsers (Chrome 70+, Firefox 65+, Safari 12+, Edge 79+)
+- Graceful degradation for older browsers
+================================================================================
+*/
+
+/* =============================================================================
+   FAQ SECTION
+   ============================================================================= */
+
+.faq {
+  padding: 3rem 0;
+  background: var(--color-white);
+}
+
+.faq-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  font-size: var(--fz-h1);
+  font-weight: bold;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-section-bg);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+/* =============================================================================
+   FAQ QUESTION BUTTONS
+   ============================================================================= */
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  font-size: var(--fz-h3);
+  font-weight: bold;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background-color var(--transition-fast);
+  border-radius: 0;
+}
+
+.faq-question:hover {
+  background-color: var(--color-section-bg);
+}
+
+.faq-question:focus,
+.faq-question:focus-visible {
+  outline: none;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-section-bg);
+}
+
+/* =============================================================================
+   FAQ ICONS (PLUS/CROSS)
+   ============================================================================= */
+
+.faq-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.faq-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background: var(--color-primary);
+  transform: translate(-50%, -50%);
+  transition: transform var(--transition-fast);
+}
+
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 16px;
+  background: var(--color-primary);
+  transform: translate(-50%, -50%);
+  transition: transform var(--transition-fast);
+}
+
+/* Rotate to X when expanded */
+.faq-question[aria-expanded="true"] .faq-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.faq-question[aria-expanded="true"] .faq-icon::after {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* =============================================================================
+   FAQ ANSWERS
+   ============================================================================= */
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+  background: rgba(1, 176, 187, 0.5);
+}
+
+.faq-answer[aria-hidden="false"] {
+  max-height: 500px;
+  padding: 1rem 1rem 1.5rem;
+}
+
+.faq-answer p {
+  font-size: var(--fz-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* =============================================================================
+   PROHIBITED ITEMS VISUAL CARD
+   ============================================================================= */
+
+.prohibited-items-card {
+  background: rgba(1, 176, 187, 0.1) !important;
+  border-radius: 12px;
+  border: 2px solid rgba(1, 176, 187, 0.3);
+}
+
+.prohibited-card-container {
+  padding: 0 0 3rem 0;
+  min-height: 600px;
+}
+
+.prohibited-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #ff4444, #ff6b6b);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 2.5rem;
+}
+
+.warning-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.prohibited-header p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.prohibited-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 0 1.5rem;
+}
+
+.prohibited-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #ffebee;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.prohibited-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 68, 68, 0.15);
+  border-color: #ff4444;
+}
+
+.item-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff5f5;
+  border-radius: 50%;
+  border: 2px solid #ffebee;
+  flex-shrink: 0;
+}
+
+.item-name {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.prohibited-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 0 0 10px 10px;
+  margin-top: 1.5rem;
+}
+
+.disposal-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.prohibited-footer p {
+  margin: 0;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   CHATBOT SECTION
+   ============================================================================= */
+
+.chatbot {
+  background: var(--color-section-bg);
+  padding: 3rem 0;
+}
+
+.chatbot-heading {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  font-size: var(--fz-h2);
+  font-weight: bold;
+}
+
+.chatbot-paragraph {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  color: #666;
+  font-size: var(--fz-base);
+  line-height: 1.5;
+}
+
+.chatbot-placeholder {
+  background: var(--color-white);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  color: var(--color-text);
+  font-weight: bold;
+  font-size: var(--fz-lg);
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+/* Tablet styles */
+@media (min-width: 768px) {
+  .faq {
+    padding: 4rem 0;
+  }
+
+  .faq-heading {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .faq-question {
+    padding: 2rem 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .faq-answer[aria-hidden="false"] {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+
+  .faq-answer p {
+    font-size: 1.1rem;
+  }
+
+  /* Prohibited items responsive - Tablet */
+  .prohibited-items-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 2rem;
+  }
+
+  .prohibited-header,
+  .prohibited-footer {
+    padding: 2rem;
+  }
+
+  .chatbot {
+    padding: 4rem 0;
+  }
+
+  .chatbot-heading {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chatbot-paragraph {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .chatbot-placeholder {
+    min-height: 500px;
+    padding: 2rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .faq {
+    padding: 5rem 0;
+  }
+
+  .faq-heading {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .faq-list {
+    max-width: 900px;
+  }
+
+  .faq-question {
+    padding: 2.5rem 2rem;
+    font-size: 1.375rem;
+  }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .faq-icon::before {
+    width: 20px;
+  }
+
+  .faq-icon::after {
+    height: 20px;
+  }
+
+  .faq-answer[aria-hidden="false"] {
+    padding: 2rem 2rem 2.5rem;
+  }
+
+  .faq-answer p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  /* Prohibited items responsive - Desktop */
+  .prohibited-items-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 0 2.5rem;
+  }
+
+  .prohibited-item {
+    padding: 1.25rem;
+  }
+
+  .item-icon {
+    width: 45px;
+    height: 45px;
+    font-size: 1.75rem;
+  }
+
+  .item-name {
+    font-size: 1rem;
+  }
+
+  .prohibited-header,
+  .prohibited-footer {
+    padding: 2.5rem;
+  }
+
+  .chatbot {
+    padding: 5rem 0;
+  }
+
+  .chatbot-placeholder {
+    min-height: 600px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  .faq {
+    padding: 2rem 0;
+  }
+
+  .faq-heading {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-question {
+    padding: 1rem 0.75rem;
+    font-size: 1rem;
+  }
+
+  .faq-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .faq-icon::before {
+    width: 14px;
+  }
+
+  .faq-icon::after {
+    height: 14px;
+  }
+
+  .faq-answer[aria-hidden="false"] {
+    padding: 0.75rem 0.75rem 1rem;
+  }
+
+  .faq-answer p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  /* Prohibited items responsive - Mobile */
+  .prohibited-items-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 0 1rem;
+  }
+
+  .prohibited-item {
+    padding: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .item-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1.25rem;
+  }
+
+  .item-name {
+    font-size: 0.85rem;
+  }
+
+  .prohibited-header,
+  .prohibited-footer {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .warning-icon,
+  .disposal-icon {
+    font-size: 1.5rem;
+  }
+
+  .prohibited-header p,
+  .prohibited-footer p {
+    font-size: 0.9rem;
+  }
+
+  .chatbot {
+    padding: 2rem 0;
+  }
+
+  .chatbot-heading {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chatbot-paragraph {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .chatbot-placeholder {
+    min-height: 300px;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION PREFERENCES
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-question,
+  .faq-icon,
+  .faq-icon::before,
+  .faq-icon::after,
+  .faq-answer,
+  .prohibited-item {
+    transition: none;
+  }
+
+  .faq-answer[aria-hidden="false"] {
+    max-height: none;
+  }
+
+  .prohibited-item:hover {
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================= */
+
+@media (prefers-contrast: high) {
+  .faq-question:focus,
+  .faq-question:focus-visible {
+    border-width: 3px;
+    border-color: ButtonText;
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    background: ButtonText;
+  }
+
+  .prohibited-item {
+    border: 2px solid ButtonText;
+  }
+
+  .prohibited-item:hover,
+  .prohibited-item:focus {
+    border-width: 3px;
+    outline: 2px solid ButtonText;
+  }
+
+  .prohibited-header,
+  .prohibited-footer {
+    border: 2px solid ButtonText;
+  }
+}

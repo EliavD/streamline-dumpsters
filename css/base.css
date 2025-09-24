@@ -1,0 +1,1499 @@
+/*
+================================================================================
+BASE.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE:
+Global stylesheet containing foundational styles for the entire website.
+This file establishes the design system and common components used across
+all pages of the Streamline Dumpsters Ltd. website.
+
+SCOPE:
+- CSS Reset and normalization
+- Typography system (fonts, headings, body text)
+- Layout utilities (grid, flexbox, containers)
+- Global color variables and theme definitions
+- Button styles and interactive elements
+- Header and navigation styling
+- Footer styling
+- Form elements styling
+- Responsive breakpoints and media queries
+- Utility classes for spacing, alignment, and visibility
+
+DEPENDENCIES:
+- None (this is the foundational stylesheet)
+- Should be loaded BEFORE all page-specific stylesheets
+
+USAGE:
+This file is linked first in all HTML pages to establish the base design
+system. Page-specific CSS files build upon these foundational styles.
+
+FUTURE IMPLEMENTATION:
+- CSS custom properties for consistent theming
+- Dark mode support variables
+- Print stylesheet optimizations
+- Accessibility focus indicators
+- Animation and transition utilities
+
+BROWSER SUPPORT:
+- Modern browsers (Chrome 70+, Firefox 65+, Safari 12+, Edge 79+)
+- Progressive enhancement for older browsers
+
+MAINTENANCE NOTES:
+- Update color variables here to change site-wide theme
+- Modify typography scale here to affect all text elements
+- Test changes across all pages before deployment
+================================================================================
+*/
+
+/* ============================================================================
+   DESIGN TOKENS - CSS Custom Properties
+   ============================================================================ */
+
+:root {
+  /* Colors - Brand and UI palette */
+  --color-primary: #01B0BB;        /* Primary CTAs, essential links, important headings */
+  --color-primary-dark: #01929B;   /* Hover/active states for primary elements */
+  --color-text: #000000;           /* Main body text and heading text */
+  --color-white: #FFFFFF;          /* Text on dark backgrounds, button labels */
+  --color-section-bg: #D3D3D3;     /* Section backgrounds, subtle separators */
+  --hero-overlay: rgba(0,0,0,0.7); /* Hero image overlays for text readability */
+  --focus-ring: rgba(1,176,187,0.22); /* Focus ring color for accessibility */
+
+  /* Typography scale - Mobile-first responsive sizing */
+  --fz-base: 1rem;                 /* 16px base font size */
+  --fz-sm: 0.875rem;               /* 14px for small text, captions */
+  --fz-h1: 1.75rem;                /* 28px mobile heading 1 */
+  --fz-h2: 1.5rem;                 /* 24px mobile heading 2 */
+  --fz-h3: 1.25rem;                /* 20px mobile heading 3 */
+
+  /* Spacing and layout tokens */
+  --container-pad: 1rem;           /* Mobile horizontal padding (16px) */
+  --container-pad-lg: 2rem;        /* Desktop horizontal padding (32px) */
+  --max-width: 1200px;             /* Maximum content width for readability */
+  --radius: 0.5rem;                /* Standard border radius (8px) */
+  --radius-sm: 0.25rem;            /* Small border radius (4px) */
+
+  /* Motion and visual effects */
+  --transition-fast: 180ms cubic-bezier(.2,.8,.2,1); /* Fast transitions for UI feedback */
+  --shadow-sm: 0 4px 10px rgba(0,0,0,0.06);          /* Subtle shadow for cards */
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.1);           /* Medium shadow for modals */
+
+  /* Extended shadow system */
+  --shadow-xs: 0 1px 3px rgba(0,0,0,0.1);     /* Minimal shadow for subtle elevation */
+  --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);   /* Large shadow for modals/overlays */
+  --shadow-xl: 0 24px 48px rgba(0,0,0,0.15);   /* Extra large shadow for major elevation */
+
+  /* Responsive breakpoints - Used in media queries */
+  --bp-md: 768px;                  /* Tablet breakpoint */
+  --bp-lg: 1024px;                 /* Desktop breakpoint */
+}
+
+/* ============================================================================
+   CSS RESET & NORMALIZATION - Modern, mobile-first approach
+   ============================================================================ */
+
+/*
+ * Universal box-sizing reset
+ * Ensures all elements use border-box sizing for predictable layouts
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Remove default margins and padding
+ * Provides consistent baseline across all browsers
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * HTML and body foundation
+ * Sets up the document with consistent baseline styles
+ */
+html {
+  font-size: var(--fz-base); /* 16px base, enables rem units */
+  scroll-behavior: smooth;    /* Smooth scrolling for anchor links */
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--fz-base);
+  line-height: 1.6;           /* Optimal line height for readability */
+  color: var(--color-text);
+  background-color: var(--color-white);
+  -webkit-font-smoothing: antialiased;     /* Improve font rendering on webkit */
+  -moz-osx-font-smoothing: grayscale;      /* Improve font rendering on Firefox/Mac */
+  text-rendering: optimizeLegibility;       /* Optimize text rendering */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;          /* Full viewport height for sticky footer */
+}
+
+/* ============================================================================
+   TYPOGRAPHY SYSTEM - Consistent heading and text styles
+   ============================================================================ */
+
+/*
+ * Heading styles with consistent spacing and responsive sizing
+ * Uses design tokens for maintainable typography scale
+ */
+h1 {
+  font-size: var(--fz-h1);
+  font-weight: 700;
+  line-height: 1.2;           /* Tighter line height for headings */
+  margin-bottom: 1rem;        /* Consistent spacing below headings */
+  color: var(--color-text);
+}
+
+h2 {
+  font-size: var(--fz-h2);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.875rem;
+  color: var(--color-text);
+}
+
+h3 {
+  font-size: var(--fz-h3);
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  color: var(--color-text);
+}
+
+/*
+ * Paragraph and text elements
+ * Ensures consistent spacing and readability
+ */
+p {
+  margin-bottom: 1rem;        /* Consistent paragraph spacing */
+  max-width: 65ch;            /* Optimal line length for reading */
+}
+
+/*
+ * List styling reset and improvements
+ * Provides clean foundation for custom list styles
+ */
+ul, ol {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;       /* Consistent indentation */
+}
+
+li {
+  margin-bottom: 0.25rem;     /* Subtle spacing between list items */
+}
+
+/* ============================================================================
+   INTERACTIVE ELEMENTS - Links, buttons, and form controls
+   ============================================================================ */
+
+/*
+ * Link styles with accessibility considerations
+ * Provides clear visual feedback and smooth transitions
+ */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration-thickness: 2px;
+}
+
+/*
+ * Focus styles for accessibility
+ * Ensures keyboard navigation is clearly visible
+ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================================
+   MEDIA ELEMENTS - Images, videos, and embedded content
+   ============================================================================ */
+
+/*
+ * Responsive media defaults
+ * Ensures images and media scale properly and don't break layouts
+ */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;             /* Removes baseline spacing issues */
+  max-width: 100%;            /* Responsive scaling */
+  height: auto;               /* Maintains aspect ratio */
+}
+
+/*
+ * Image optimization and loading
+ * Improves performance and user experience
+ */
+img {
+  font-style: italic;         /* Styles alt text if image fails to load */
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 1rem;         /* Space around wrapped images */
+}
+
+/* ============================================================================
+   FORM ELEMENTS - Input, textarea, and select styling
+   ============================================================================ */
+
+/*
+ * Form control inheritance and consistency
+ * Ensures form elements inherit typography and behave predictably
+ */
+input,
+button,
+textarea,
+select {
+  font: inherit;              /* Inherit typography from parent */
+  color: inherit;             /* Inherit color from parent */
+}
+
+/*
+ * Remove button styling inconsistencies
+ * Provides clean foundation for custom button styles
+ */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/*
+ * Textarea improvements
+ * Prevents layout issues and improves usability
+ */
+textarea {
+  resize: vertical;           /* Only allow vertical resizing */
+  min-height: 4rem;           /* Minimum usable height */
+}
+
+/* ============================================================================
+   ACCESSIBILITY & UTILITY - Screen readers, motion, and helper classes
+   ============================================================================ */
+
+/*
+ * Screen reader only content
+ * Hides content visually but keeps it available to assistive technology
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Respect user motion preferences
+ * Reduces motion for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   CONTAINER & LAYOUT SYSTEM - Responsive layout foundation
+   ============================================================================ */
+
+/*
+ * Main container class for content centering and responsive padding
+ * Provides consistent maximum width and horizontal spacing across all breakpoints
+ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);     /* 1200px maximum width for readability */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);   /* 1rem (16px) on mobile */
+  padding-right: var(--container-pad);
+}
+
+/*
+ * Row and column layout helpers
+ * Simple flexbox-based grid system for responsive layouts
+ */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;                       /* Consistent spacing between columns */
+}
+
+/*
+ * Column classes for responsive layouts
+ * Mobile-first approach with breakpoint-specific widths
+ */
+.col {
+  flex: 1;                         /* Equal width columns by default */
+}
+
+.col--half {
+  width: 100%;                     /* Full width on mobile */
+}
+
+/* ============================================================================
+   UTILITY CLASSES - Common helper classes
+   ============================================================================ */
+
+/*
+ * Text alignment utilities
+ * Provides consistent text alignment options
+ */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/*
+ * Muted text utility
+ * For secondary information, captions, and de-emphasized content
+ * WCAG AA compliant color contrast ratio maintained
+ */
+.muted {
+  color: #666666;                  /* 4.61:1 contrast ratio against white background */
+  font-size: var(--fz-sm);
+}
+
+/*
+ * Prevent text selection utility
+ * Useful for UI elements that shouldn't be selectable
+ */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+ * Display utilities
+ * Common visibility and display helpers
+ */
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+/* ============================================================================
+   ACCESSIBILITY FOUNDATION - Enhanced focus and screen reader support
+   ============================================================================ */
+
+/*
+ * Enhanced focus styles for accessibility
+ * Removes default browser outline and provides consistent, prominent focus indicators
+ * Meets WCAG 2.1 AA requirements for focus visibility
+ */
+*:focus {
+  outline: none;                   /* Remove default browser outline */
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring); /* Prominent focus ring */
+  border-radius: var(--radius-sm);
+}
+
+/*
+ * Skip to content link for keyboard navigation
+ * Allows users to bypass navigation and jump to main content
+ * Hidden by default, visible when focused
+ */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 6px;                        /* Slide down when focused */
+}
+
+/*
+ * Screen reader only content (enhanced version)
+ * Hides content visually but keeps it available to assistive technology
+ * More robust than basic sr-only class
+ */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/*
+ * Focus within containers
+ * Enhances focus visibility for complex interactive components
+ */
+.focus-within:focus-within {
+  box-shadow: 0 0 0 2px var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================================
+   BUTTON SYSTEM - Comprehensive button components with variants
+   ============================================================================ */
+
+/*
+ * Base button class
+ * Foundation for all button variants with consistent behavior
+ * Use .btn as the base class and combine with modifier classes
+ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;                     /* Space between icon and text */
+  padding: 0.75rem 1.5rem;
+  font-family: inherit;
+  font-size: var(--fz-base);
+  font-weight: 600;                /* Bold type for better hierarchy */
+  line-height: 1.2;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  border: 2px solid transparent;
+  border-radius: var(--radius);    /* Consistent border radius */
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  min-height: 44px;                /* Minimum touch target */
+  position: relative;
+  overflow: hidden;
+}
+
+/*
+ * Primary button variant
+ * Main call-to-action styling with teal background
+ */
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/*
+ * Outline button variant
+ * Subtle styling for secondary actions
+ */
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn--outline:active {
+  transform: translateY(0);
+}
+
+/*
+ * Secondary button variant
+ * Neutral styling for less prominent actions
+ */
+.btn--secondary {
+  background-color: var(--color-section-bg);
+  color: var(--color-text);
+  border-color: var(--color-section-bg);
+}
+
+.btn--secondary:hover {
+  background-color: #C0C0C0;       /* Slightly darker gray */
+  border-color: #C0C0C0;
+  color: var(--color-text);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/*
+ * Button size variants
+ * Multiple sizes for different use cases
+ */
+.btn--sm {
+  padding: 0.5rem 1rem;
+  font-size: var(--fz-sm);
+  min-height: 36px;
+}
+
+.btn--lg {
+  padding: 1rem 2rem;
+  font-size: 1.125rem;             /* 18px */
+  min-height: 52px;
+}
+
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+/*
+ * Button states
+ * Disabled and loading states
+ */
+.btn:disabled,
+.btn--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn:disabled:hover,
+.btn--disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/*
+ * Loading state
+ * For asynchronous actions
+ */
+.btn--loading {
+  color: transparent;
+  pointer-events: none;
+}
+
+.btn--loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+ * Icon support
+ * For buttons with icons
+ */
+.btn--icon-only {
+  padding: 0.75rem;
+  min-width: 44px;
+}
+
+.btn--icon-left .btn__icon {
+  margin-right: 0.5rem;
+}
+
+.btn--icon-right .btn__icon {
+  margin-left: 0.5rem;
+}
+
+/*
+ * Focus states for accessibility
+ * Enhanced focus indicators for buttons
+ */
+.btn:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/*
+ * Reduced motion handling
+ * Respects user preferences for reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: background-color var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast);
+  }
+
+  .btn:hover {
+    transform: none;
+  }
+
+  .btn--loading::after {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* ============================================================================
+   HEADER & NAVIGATION SYSTEM - Responsive header with mobile hamburger menu
+   ============================================================================ */
+
+/*
+ * Site header container
+ * Sticky positioning ensures header remains visible during scroll
+ * High z-index prevents content from overlapping
+ */
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-section-bg);
+  z-index: 999;                    /* High z-index for header layering */
+  box-shadow: var(--shadow-sm);    /* Subtle shadow for header separation */
+}
+
+/*
+ * Header inner container
+ * Flexbox layout for logo and navigation alignment
+ * Consistent with site container system
+ */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  min-height: 64px;                /* 64px minimum height for mobile */
+}
+
+/*
+ * Site logo styling
+ * Responsive sizing across breakpoints
+ * Maintains proper proportions and readability
+ */
+.site-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.logo-img {
+  height: 56px;
+  width: 56px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  padding: 8px;
+}
+
+.site-logo:hover {
+  opacity: 0.8;
+}
+
+/*
+ * Main navigation container
+ * Hidden by default on mobile, visible on desktop
+ * Transforms into overlay panel on mobile when open
+ */
+.main-nav {
+  display: none;                   /* Hidden by default on mobile */
+}
+
+/*
+ * Navigation list styling
+ * Flexbox layout for horizontal alignment on desktop
+ * Stacked layout on mobile when revealed
+ */
+.nav-list {
+  display: flex;
+  flex-direction: column;          /* Stacked on mobile */
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/*
+ * Navigation link styling
+ * Medium weight for better hierarchy
+ * Proper touch targets for mobile accessibility
+ */
+.nav-link {
+  display: block;
+  padding: 1rem var(--container-pad);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;                /* Medium weight for nav links */
+  border-bottom: 1px solid var(--color-section-bg);
+  transition: all var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+  background-color: rgba(1, 176, 187, 0.05); /* Subtle hover background */
+}
+
+/*
+ * Call-to-action button in navigation
+ * Full-width on mobile, inline on desktop
+ * Primary button styling with enhanced visual prominence
+ */
+.nav-cta {
+  display: block;
+  margin: 1rem var(--container-pad);
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius);
+  text-align: center;
+  border: 2px solid var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.nav-cta:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/*
+ * Mobile navigation toggle button (hamburger menu)
+ * Three-bar construction using pseudo-elements
+ * Includes proper ARIA attributes for accessibility
+ */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 44px;                     /* Minimum touch target size */
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;                   /* Above navigation overlay */
+}
+
+/*
+ * Hamburger menu bars
+ * Created with pseudo-elements for clean semantic markup
+ * Animated transforms for open/close states
+ */
+.nav-toggle::before,
+.nav-toggle::after,
+.nav-toggle .nav-toggle__bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-text);
+  border-radius: 1px;
+  transition: all var(--transition-fast);
+  margin: 0 auto;
+}
+
+.nav-toggle::before,
+.nav-toggle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-toggle::before {
+  top: 14px;                       /* Top bar position */
+}
+
+.nav-toggle::after {
+  bottom: 14px;                    /* Bottom bar position */
+}
+
+.nav-toggle .nav-toggle__bar {
+  position: relative;              /* Middle bar */
+}
+
+/*
+ * Mobile navigation open state
+ * Reveals navigation overlay and transforms hamburger to X
+ */
+.site-header.is-open .main-nav {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-section-bg);
+  box-shadow: var(--shadow-md);
+}
+
+/*
+ * Hamburger animation to X when menu is open
+ * Respects reduced motion preferences
+ */
+.site-header.is-open .nav-toggle::before {
+  transform: translateX(-50%) rotate(45deg);
+  top: 50%;
+  margin-top: -1px;
+}
+
+.site-header.is-open .nav-toggle::after {
+  transform: translateX(-50%) rotate(-45deg);
+  bottom: 50%;
+  margin-bottom: -1px;
+}
+
+.site-header.is-open .nav-toggle .nav-toggle__bar {
+  opacity: 0;                      /* Hide middle bar */
+  transform: scale(0);
+}
+
+/*
+ * Reduced motion fallback
+ * Uses opacity changes instead of transforms for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle::before,
+  .nav-toggle::after,
+  .nav-toggle .nav-toggle__bar {
+    transition: opacity var(--transition-fast);
+  }
+
+  .site-header.is-open .nav-toggle::before,
+  .site-header.is-open .nav-toggle::after {
+    transform: translateX(-50%);
+    opacity: 0.7;
+  }
+
+  .site-header.is-open .nav-toggle .nav-toggle__bar {
+    opacity: 0.3;
+  }
+}
+
+/* ============================================================================
+   FOOTER SYSTEM - Site footer with responsive grid layout
+   ============================================================================ */
+
+/*
+ * Main site footer
+ * Dark background with white text for contrast and visual separation
+ */
+.site-footer {
+  background-color: var(--color-text);   /* Black background */
+  color: var(--color-white);
+  margin-top: auto;                      /* Push to bottom with flexbox */
+}
+
+/*
+ * Footer inner container
+ * Responsive grid layout with consistent spacing
+ */
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem var(--container-pad) 1rem;
+  display: grid;
+  grid-template-columns: 1fr;           /* Single column on mobile */
+  gap: 2rem;
+}
+
+/*
+ * Footer sections
+ * Individual content areas within the footer
+ */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footer-section h3 {
+  color: var(--color-white);
+  font-size: 1.125rem;                  /* 18px */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+/*
+ * Footer links
+ * White text with reduced opacity and hover effects
+ */
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);     /* 80% opacity for subtle appearance */
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  padding: 0.25rem 0;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  color: var(--color-white);            /* Full opacity on hover */
+  text-decoration: underline;
+  transform: translateX(4px);           /* Subtle slide effect */
+}
+
+/*
+ * Footer navigation lists
+ * Clean list styling for footer navigation
+ */
+.footer-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-nav li {
+  margin: 0;
+}
+
+/*
+ * Social media icons
+ * Accessible icon links with proper labeling
+ */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: var(--color-white);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.social-link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/*
+ * Footer bottom section
+ * Copyright and legal information with visual separation
+ */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--fz-sm);
+  max-width: none;                      /* Override paragraph max-width */
+}
+
+.footer-bottom .footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--fz-sm);
+}
+
+/* ============================================================================
+   VISUAL ENHANCEMENT SYSTEM - Shadows, borders, and polish
+   ============================================================================ */
+
+/*
+ * Border separator utilities
+ * Consistent border styling for content separation
+ */
+.border-top {
+  border-top: 1px solid var(--color-section-bg);
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--color-section-bg);
+}
+
+.border-subtle {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * Content separators
+ * Visual dividers for content sections
+ */
+.separator {
+  height: 1px;
+  background-color: var(--color-section-bg);
+  border: none;
+  margin: 2rem 0;
+}
+
+.separator--subtle {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/*
+ * Image handling system
+ * Responsive image utilities with proper aspect ratios
+ */
+
+/*
+ * IMAGE GUIDELINES AND UTILITIES:
+ *
+ * RECOMMENDED FORMATS:
+ * - WebP for modern browsers (85% compression)
+ * - JPEG fallback for compatibility
+ * - PNG for images requiring transparency
+ * - SVG for icons and simple graphics
+ *
+ * RESPONSIVE IMAGES:
+ * Use srcset and sizes attributes for optimal loading:
+ * <img src="image-800w.jpg"
+ *      srcset="image-400w.jpg 400w, image-800w.jpg 800w, image-1200w.jpg 1200w"
+ *      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+ *      alt="Descriptive alt text">
+ *
+ * LAZY LOADING:
+ * Add loading="lazy" for images below the fold
+ *
+ * ASPECT RATIO CONTAINERS:
+ * Use CSS aspect-ratio property for consistent sizing
+ */
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/*
+ * Aspect ratio utilities
+ * Consistent image aspect ratios across the site
+ */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINT FRAMEWORK - Mobile-first media queries
+   ============================================================================ */
+
+/*
+ * MOBILE FIRST APPROACH
+ * Base styles above are mobile (320px+) defaults
+ * Media queries below enhance layouts for larger screens
+ *
+ * Breakpoint Strategy:
+ * - Mobile (default): 320px - 767px (phones)
+ * - Tablet (md): 768px - 1023px (tablets, small laptops)
+ * - Desktop (lg): 1024px+ (large laptops, desktops)
+ */
+
+/*
+ * TABLET BREAKPOINT (768px+)
+ * Enhanced layouts for medium screens
+ * Typically tablets in landscape, small laptops
+ */
+@media (min-width: 768px) {
+
+  /* Container gets larger padding for better use of space */
+  .container {
+    padding-left: var(--container-pad-lg);  /* 2rem (32px) on tablet+ */
+    padding-right: var(--container-pad-lg);
+  }
+
+  /* Typography scales up for better readability on larger screens */
+  :root {
+    --fz-h1: 2.25rem;             /* 36px on tablet+ */
+    --fz-h2: 1.875rem;            /* 30px on tablet+ */
+    --fz-h3: 1.5rem;              /* 24px on tablet+ */
+  }
+
+  /* Column layout becomes two-column on tablet */
+  .col--half {
+    width: calc(50% - 0.5rem);    /* ~48% accounting for gap */
+  }
+
+  /* Enhanced focus states for larger screens */
+  *:focus-visible {
+    box-shadow: 0 0 0 4px var(--focus-ring); /* Larger focus ring on bigger screens */
+  }
+
+  /* Header gets larger padding and height */
+  .header-inner {
+    padding: 0 var(--container-pad-lg);
+    min-height: 72px;              /* Larger header on tablet+ */
+  }
+
+  /* Logo scales up for better visibility */
+  .logo-img {
+    height: 72px;
+    width: 72px;
+  }
+
+  /* Navigation becomes horizontal inline layout */
+  .main-nav {
+    display: block;                /* Always visible on tablet+ */
+    position: static;
+  }
+
+  .nav-list {
+    flex-direction: row;           /* Horizontal layout */
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Navigation links become compact inline elements */
+  .nav-link {
+    padding: 0.5rem 1rem;
+    border-bottom: none;
+    border-radius: var(--radius-sm);
+  }
+
+  /* CTA becomes compact inline button */
+  .nav-cta {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: var(--fz-sm);
+  }
+
+  /* Hide mobile toggle on tablet+ */
+  .nav-toggle {
+    display: none;
+  }
+
+  /* Footer becomes three-column layout */
+  .footer-inner {
+    grid-template-columns: 1fr 1fr 1fr;  /* Three equal columns */
+    padding: 3rem var(--container-pad-lg) 2rem;
+  }
+
+  /* Footer sections get horizontal spacing */
+  .footer-section h3 {
+    font-size: 1.25rem;                  /* 20px on tablet+ */
+  }
+
+  /* Social links get enhanced spacing */
+  .social-links {
+    gap: 1.5rem;
+  }
+
+  /* Button hover effects enhanced on devices with hover capability */
+  @media (hover: hover) {
+    .btn--primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+}
+
+/*
+ * DESKTOP BREAKPOINT (1024px+)
+ * Full desktop layouts and enhancements
+ * Large laptops, desktops, and external monitors
+ */
+@media (min-width: 1024px) {
+
+  /* Typography reaches full desktop scale */
+  :root {
+    --fz-h1: 2.75rem;             /* 44px on desktop */
+    --fz-h2: 2.25rem;             /* 36px on desktop */
+    --fz-h3: 1.75rem;             /* 28px on desktop */
+  }
+
+  /* Header reaches full desktop height */
+  .header-inner {
+    min-height: 80px;              /* Larger header on desktop */
+  }
+
+  /* Logo reaches full desktop size */
+  .logo-img {
+    height: 84px;
+    width: 84px;
+  }
+
+  /* Enhanced spacing for navigation elements */
+  .nav-list {
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .nav-cta {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--fz-base);
+  }
+
+  /* Footer reaches full desktop spacing */
+  .footer-inner {
+    padding: 4rem var(--container-pad-lg) 2rem;
+    gap: 3rem;
+  }
+
+  /* Enhanced footer navigation layout */
+  .footer-nav {
+    gap: 0.75rem;
+  }
+
+  /* Footer bottom section gets enhanced layout */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  /* More sophisticated hover states on desktop (assumes mouse input) */
+  @media (hover: hover) {
+    a:hover {
+      transform: translateY(-1px);  /* Subtle lift effect */
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-link:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+/*
+ * PRINT STYLES
+ * Optimized styles for printing
+ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .skip-to-content,
+  .sr-only {
+    display: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
+/*
+ * HIGH CONTRAST MODE SUPPORT
+ * Enhanced visibility for users with contrast preferences
+ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text: #000000;
+    --color-primary: #0066CC;
+    --color-primary-dark: #004499;
+    --focus-ring: rgba(0, 102, 204, 0.5);
+  }
+
+  *:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+
+/* ============================================================================
+   USAGE GUIDELINES AND ENFORCEMENT COMMENTS
+   ============================================================================ */
+
+/*
+ * BUTTON SYSTEM USAGE GUIDELINES:
+ *
+ * HIERARCHY (use in this order of importance):
+ * 1. .btn.btn--primary - Main call-to-action (max 1 per page section)
+ * 2. .btn.btn--outline - Secondary actions
+ * 3. .btn.btn--secondary - Tertiary/utility actions
+ *
+ * SIZE USAGE:
+ * - .btn--lg: Hero sections, primary landing CTAs
+ * - .btn (default): Standard actions, forms, navigation
+ * - .btn--sm: Compact spaces, table actions, secondary UI
+ *
+ * BLOCK BUTTONS:
+ * - Use .btn--block for mobile-first responsive design
+ * - Combine with responsive utilities for desktop inline layout
+ *
+ * ACCESSIBILITY REQUIREMENTS:
+ * - Always include descriptive text (avoid "Click here", "Read more")
+ * - Use aria-label for icon-only buttons
+ * - Ensure minimum 44px touch target (automatic with .btn class)
+ * - Test with keyboard navigation and screen readers
+ *
+ * PERFORMANCE:
+ * - Minimize button variants per page (max 3 different styles)
+ * - Use CSS transforms for hover effects (better performance)
+ * - Respect prefers-reduced-motion (automatic)
+ *
+ * FOOTER SYSTEM USAGE GUIDELINES:
+ *
+ * CONTENT STRUCTURE:
+ * - Column 1: Company info, contact details
+ * - Column 2: Main navigation links
+ * - Column 3: Legal links, social media
+ *
+ * SOCIAL MEDIA ICONS:
+ * - Must include aria-label="Platform name" for accessibility
+ * - Use SVG icons with proper fill and sizing
+ * - Maintain consistent visual weight across icons
+ *
+ * LINK GUIDELINES:
+ * - Use .footer-link class for all footer links
+ * - Ensure sufficient color contrast (current: 80% opacity meets WCAG AA)
+ * - Group related links logically
+ *
+ * RESPONSIVE BEHAVIOR:
+ * - Mobile: Single column, stacked layout
+ * - Tablet+: Three column grid layout
+ * - Desktop: Enhanced spacing and hover effects
+ *
+ * FILE ORGANIZATION GUIDELINES:
+ *
+ * CSS ARCHITECTURE:
+ * 1. Design tokens (:root variables)
+ * 2. Reset and normalization
+ * 3. Typography system
+ * 4. Layout utilities
+ * 5. Component systems (buttons, navigation, footer)
+ * 6. Responsive enhancements
+ * 7. Utility classes
+ *
+ * MAINTENANCE:
+ * - Update design tokens for theme changes
+ * - Test button system with real content
+ * - Verify footer links and social media URLs
+ * - Check accessibility compliance quarterly
+ * - Monitor Core Web Vitals for performance
+ *
+ * BROWSER TESTING:
+ * - Test button hover states on touch devices
+ * - Verify footer layout on various screen sizes
+ * - Check social icon accessibility with screen readers
+ * - Validate reduced motion preferences
+ */

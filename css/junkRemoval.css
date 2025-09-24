@@ -1,0 +1,621 @@
+/**
+ * ================================================================================
+ * JUNK REMOVAL MODAL STYLES
+ * Streamline Dumpsters Ltd. - Junk Removal Bid Request Modal
+ * ================================================================================
+ *
+ * PURPOSE:
+ * - Styles for junk removal modal system
+ * - Photo upload area styling
+ * - Form validation error states
+ * - Responsive design for mobile devices
+ *
+ * FEATURES:
+ * - Consistent with existing base.css theme
+ * - Accessible focus states and indicators
+ * - Interactive photo upload with drag-and-drop
+ * - Form validation visual feedback
+ * - Mobile-optimized responsive layout
+ *
+ * ================================================================================
+ */
+
+/* Photo Upload Area */
+.photo-upload-area {
+  margin-bottom: 2rem;
+}
+
+.upload-dropzone {
+  border: 2px dashed #d1d5db;
+  border-radius: var(--radius, 12px);
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--color-primary, #3b82f6);
+  background: #f0f9ff;
+}
+
+.upload-dropzone.drag-over {
+  border-color: var(--color-primary, #3b82f6);
+  background: #dbeafe;
+  transform: scale(1.02);
+}
+
+.upload-dropzone.uploading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.upload-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary, #1f2937);
+  margin-bottom: 0.5rem;
+}
+
+.upload-subtext {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+#photoInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Legacy support for existing photo upload classes */
+.photo-upload {
+  margin: 1.5rem 0;
+}
+
+.photo-dropzone {
+  border: 2px dashed #d1d5db;
+  border-radius: var(--radius, 12px);
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-dropzone:hover,
+.photo-dropzone:focus {
+  border-color: var(--color-primary, #3b82f6);
+  background: #f0f9ff;
+  outline: none;
+}
+
+.photo-dropzone--dragover {
+  border-color: var(--color-primary, #3b82f6);
+  background: #dbeafe;
+  transform: scale(1.02);
+}
+
+.photo-dropzone__content {
+  pointer-events: none;
+}
+
+.photo-dropzone__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+  display: block;
+}
+
+.photo-dropzone__text strong {
+  color: var(--color-text-primary, #1f2937);
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.photo-dropzone__subtext {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.photo-upload__counter {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+  text-align: center;
+}
+
+/* Photo Preview Grid */
+.photo-preview-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.photo-preview {
+  position: relative;
+  background: white;
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.photo-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-preview-info {
+  padding: 0.75rem;
+  background: white;
+}
+
+.photo-filename {
+  font-size: 0.8rem;
+  color: #374151;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0.25rem;
+}
+
+.photo-filesize {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.photo-remove {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.photo-remove:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+.photo-remove:focus {
+  outline: 2px solid var(--color-primary, #3b82f6);
+  outline-offset: 2px;
+}
+
+.upload-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: var(--color-primary, #3b82f6);
+  transition: width 0.3s ease;
+  border-radius: 0 0 var(--radius, 8px) var(--radius, 8px);
+}
+
+/* Legacy support for existing photo preview classes */
+.photo-preview__remove {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.photo-preview__remove:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+.photo-preview__name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Upload Status Messages */
+.upload-status {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: var(--radius, 6px);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.upload-status.success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.upload-status.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.upload-status.warning {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+/* Enhanced Form Validation Styles */
+.field-error {
+  border-color: var(--color-error, #ef4444) !important;
+  box-shadow: 0 0 0 1px var(--color-error, #ef4444);
+}
+
+.has-error .form-group {
+  position: relative;
+}
+
+.has-error input,
+.has-error textarea,
+.has-error select {
+  border-color: var(--color-error, #ef4444);
+  box-shadow: 0 0 0 1px var(--color-error, #ef4444);
+}
+
+.field-error-message {
+  color: var(--color-error, #ef4444);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.field-error-message::before {
+  content: "⚠️";
+  font-size: 0.75rem;
+}
+
+/* Form status area */
+.form-status {
+  padding: 1rem;
+  border-radius: var(--radius, 6px);
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  text-align: center;
+  display: none;
+}
+
+.form-status.success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  display: block;
+}
+
+.form-status.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  display: block;
+}
+
+.form-status.warning {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  display: block;
+}
+
+/* Form Status Messages */
+.form-message {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.form-message--success {
+  background: var(--color-success-light, #d1fae5);
+  border: 1px solid var(--color-success, #10b981);
+  color: var(--color-success-dark, #065f46);
+}
+
+.form-message--success::before {
+  content: "✅";
+}
+
+.form-message--error {
+  background: var(--color-error-light, #fee2e2);
+  border: 1px solid var(--color-error, #ef4444);
+  color: var(--color-error-dark, #991b1b);
+}
+
+.form-message--error::before {
+  content: "❌";
+}
+
+.form-message--warning {
+  background: var(--color-warning-light, #fef3c7);
+  border: 1px solid var(--color-warning, #f59e0b);
+  color: var(--color-warning-dark, #92400e);
+}
+
+.form-message--warning::before {
+  content: "⚠️";
+}
+
+.form-message--info {
+  background: var(--color-info-light, #dbeafe);
+  border: 1px solid var(--color-info, #3b82f6);
+  color: var(--color-info-dark, #1e40af);
+}
+
+.form-message--info::before {
+  content: "ℹ️";
+}
+
+/* Loading State for Submit Button */
+.btn--loading {
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn--loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+  top: 0;
+  bottom: 0;
+  right: 1rem;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Modal Specific Overrides */
+#junkRemovalModal .modal__content {
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+#junkRemovalModal .modal__title {
+  color: var(--color-text-primary, #111827);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#junkRemovalModal .form-section {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-light, #f3f4f6);
+}
+
+#junkRemovalModal .form-section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 1rem;
+}
+
+#junkRemovalModal .form-section legend {
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .upload-dropzone,
+  .photo-dropzone {
+    padding: 2rem 1rem;
+  }
+
+  .upload-icon,
+  .photo-dropzone__icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .photo-preview-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .photo-preview img {
+    height: 100px;
+  }
+
+  .photo-preview-info {
+    padding: 0.5rem;
+  }
+
+  .photo-filename {
+    font-size: 0.75rem;
+  }
+
+  .photo-filesize {
+    font-size: 0.7rem;
+  }
+
+  .photo-remove,
+  .photo-preview__remove {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  #junkRemovalModal .modal__content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .form-message,
+  .upload-status,
+  .form-status {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-dropzone {
+    padding: 1.5rem 1rem;
+    min-height: 100px;
+  }
+
+  .photo-dropzone__icon {
+    font-size: 1.5rem;
+  }
+
+  .photo-preview-container {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .photo-preview__name {
+    font-size: 0.65rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .photo-preview__remove {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  #junkRemovalModal .modal__content {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .form-message {
+    font-size: 0.8rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-dropzone {
+    padding: 1rem 0.75rem;
+  }
+
+  .photo-dropzone__text strong {
+    font-size: 0.9rem;
+  }
+
+  .photo-dropzone__subtext {
+    font-size: 0.8rem;
+  }
+
+  .photo-preview-container {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .photo-dropzone {
+    border-width: 3px;
+  }
+
+  .field-error {
+    border-width: 2px;
+  }
+
+  .photo-preview__remove {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid white;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .photo-dropzone,
+  .btn--loading::after {
+    transition: none;
+    animation: none;
+  }
+
+  .photo-dropzone--dragover {
+    transform: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .photo-upload,
+  .form-message,
+  .modal__overlay {
+    display: none;
+  }
+}

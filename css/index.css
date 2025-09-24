@@ -1,0 +1,1676 @@
+/*
+================================================================================
+INDEX.CSS - Streamline Dumpsters Ltd. Homepage
+================================================================================
+
+PURPOSE:
+Styles specific to the homepage (index.html) of Streamline Dumpsters Ltd.
+This file contains layout and styling for homepage-specific components
+and sections that showcase the company's services.
+
+SCOPE:
+- Hero section with background image and overlay
+- Customer reviews section layout
+- Service "buy boxes" styling and layout
+- Homepage-specific responsive breakpoints
+- Call-to-action button customizations
+
+DEPENDENCIES:
+- base.css (must be loaded first)
+- Hero background image: assets/img/hero-bg.jpg
+
+COMPONENTS STYLED:
+- .hero: Main hero section with background image and overlay
+- .reviews: Customer testimonial display section
+- .buy-boxes: Service purchase options layout
+
+RESPONSIVE DESIGN:
+- Mobile-first approach building on base.css
+- Tablet and desktop hero section enhancements
+- Responsive overlay and text positioning
+
+MAINTENANCE NOTES:
+- Update hero background image path if needed
+- Modify service box layouts for new offerings
+- Test homepage performance on mobile devices
+================================================================================
+*/
+
+/* ============================================================================
+   HERO SECTION - Full-width background with overlay and content
+   ============================================================================ */
+
+.hero {
+  position: relative;
+  height: 42vh;
+  min-height: 300px;
+  background-image: url('../assets/img/PlainCityDumpster14yd.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.hero-overlay {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--hero-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  max-width: 600px;
+  padding: 2rem;
+  text-align: left;
+  color: var(--color-white);
+}
+
+.hero-content h1 {
+  font-size: var(--fz-h1);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: white;
+}
+
+.hero-content h2 {
+  font-size: var(--fz-h2);
+  font-weight: 600;
+  margin-bottom: 0;
+  line-height: 1.3;
+  color: white;
+}
+
+.hero-cta {
+  position: absolute;
+  top: 80px;
+  right: var(--container-pad);
+  z-index: 10;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .hero {
+    height: 60vh;
+    min-height: 360px;
+  }
+
+  .hero-overlay {
+    width: 50%;
+    background: var(--hero-overlay);
+  }
+
+  .hero-content {
+    text-align: left;
+    padding: 3rem;
+  }
+
+  .hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: white;
+  }
+
+  .hero-content h2 {
+    font-size: 2rem;
+    color: white;
+  }
+
+  .hero-cta {
+    right: var(--container-pad-lg);
+  }
+}
+
+/* Accessibility and motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta {
+    transition: none;
+  }
+
+  .hero-cta:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================================
+   FEATURE CAROUSEL - Rotating marketing phrases
+   ============================================================================ */
+
+.feature-carousel {
+  background: var(--color-white);
+  padding: 2rem 0;
+  text-align: center;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-carousel .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.feature-carousel h2 {
+  font-size: var(--fz-h2);
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  height: 120px;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.carousel-track {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  width: max-content;
+  animation: scroll-continuous 60s linear infinite;
+}
+
+.carousel-item {
+  background: rgba(1, 176, 187, 0.75);
+  color: #000000;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 200px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Continuous scrolling animation */
+@keyframes scroll-continuous {
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .feature-carousel {
+    padding: 3rem 0;
+  }
+
+  .carousel-container {
+    height: 130px;
+  }
+
+  .carousel-track {
+    gap: 5.5rem;
+  }
+
+  .carousel-item {
+    padding: 1.25rem 2.5rem;
+    min-width: 220px;
+    font-size: 1.375rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .feature-carousel {
+    padding: 4rem 0;
+  }
+
+  .feature-carousel h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .carousel-container {
+    height: 140px;
+  }
+
+  .carousel-track {
+    gap: 6rem;
+  }
+
+  .carousel-item {
+    padding: 1.5rem 3rem;
+    min-width: 250px;
+    font-size: 1.5rem;
+    border-radius: 12px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .feature-carousel {
+    padding: 1.5rem 0;
+  }
+
+  .feature-carousel h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .carousel-container {
+    height: 100px;
+  }
+
+  .carousel-track {
+    gap: 4rem;
+  }
+
+  .carousel-item {
+    padding: 0.75rem 1.5rem;
+    min-width: 180px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    animation: scroll-continuous 120s linear infinite;
+  }
+
+  .carousel-item:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================================
+   BUY BOXES SECTION - Dual card layout for services
+   ============================================================================ */
+
+.buy-boxes {
+  background: var(--color-section-bg);
+  padding: 3rem 0;
+}
+
+.buy-box-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 4%;
+  flex-wrap: wrap;
+}
+
+.buy-box {
+  flex: 0 0 48%;
+  min-width: 280px;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.buy-box:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.buy-box h2 {
+  font-size: var(--fz-h2);
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.buy-box p {
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.buy-box .btn {
+  margin-top: auto;
+  align-self: center;
+  white-space: nowrap;
+}
+
+/* Service image styling */
+.service-image {
+  margin-bottom: 1.5rem;
+}
+
+.service-img {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Junk removal image sizing to align subtitles */
+.junk-removal-img {
+  max-width: 420px !important;
+  width: 95%;
+}
+
+/* Service subtitle */
+.service-subtitle {
+  font-size: var(--fz-base);
+  color: var(--color-primary);
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Feature list styling */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  gap: 0.75rem;
+}
+
+.checkmark {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  color: var(--color-text);
+  font-size: var(--fz-sm);
+  line-height: 1.4;
+}
+
+/* Process list styling */
+.process-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  text-align: left;
+}
+
+.process-step {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.step-number {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-text {
+  color: var(--color-text);
+  font-size: var(--fz-sm);
+  line-height: 1.4;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .buy-boxes {
+    padding: 4rem 0;
+  }
+
+  .buy-box {
+    padding: 2.25rem 2rem;
+    min-width: 320px;
+  }
+
+  .buy-box h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buy-box p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+/* Small screen adjustments - maintain side-by-side layout */
+@media (max-width: 480px) {
+  .buy-box {
+    min-width: 150px;
+    padding: 1.5rem 1rem;
+  }
+
+  .buy-box h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .buy-box p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buy-box .btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  /* Service image mobile adjustments */
+  .service-img {
+    max-width: 240px;
+  }
+
+  .junk-removal-img {
+    max-width: 280px !important;
+    width: 90%;
+  }
+
+  .service-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Feature list mobile adjustments */
+  .feature-item {
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .checkmark {
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+  }
+
+  .feature-text {
+    font-size: 0.8rem;
+  }
+
+  /* Process list mobile adjustments */
+  .process-step {
+    margin-bottom: 0.75rem;
+    gap: 0.75rem;
+  }
+
+  .step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .step-text {
+    font-size: 0.8rem;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .buy-box {
+    transition: none;
+  }
+
+  .buy-box:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+}
+
+/* ============================================================================
+   CHATBOT SECTION - The Fill-osopher integration
+   ============================================================================ */
+
+.chatbot {
+  background: var(--color-section-bg);
+  padding: 3rem 0;
+}
+
+.chatbot h2 {
+  font-size: var(--fz-h2);
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.chatbot p {
+  max-width: 600px;
+  margin: 0 auto 2.5rem auto;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.chatbot-container {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.5rem;
+  margin: 0 auto;
+  max-width: 800px;
+  width: 100%;
+}
+
+#chatbase-bot {
+  height: 700px;
+  min-height: 700px;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+#chatbase-bot iframe {
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .chatbot {
+    padding: 4rem 0;
+  }
+
+  .chatbot h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .chatbot p {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .chatbot-container {
+    padding: 2rem;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  .chatbot {
+    padding: 2rem 0;
+  }
+
+  .chatbot-container {
+    margin: 0 1rem;
+    padding: 1rem;
+  }
+
+  #chatbase-bot {
+    height: 600px;
+    min-height: 600px;
+  }
+
+  .chatbot h2 {
+    font-size: 1.75rem;
+  }
+
+  .chatbot p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ============================================================================
+   ABOUT US SECTION - Two-column layout with image and content
+   ============================================================================ */
+
+.about-us {
+  background: var(--color-section-bg);
+  padding: 3rem 0;
+}
+
+.about-us h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.about-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-content {
+  padding: 1rem 0;
+}
+
+.about-content h3 {
+  font-size: var(--fz-h2);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .about-us {
+    padding: 4rem 0;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-content {
+    padding: 0;
+  }
+
+  .about-content h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ============================================================================
+   REVIEWS SECTION - Google Business Reviews Carousel
+   ============================================================================ */
+
+.reviews {
+  background: var(--color-primary);
+  padding: 3rem 0;
+  overflow: hidden;
+}
+
+.reviews h2 {
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reviews-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviews-grid {
+  display: flex;
+  gap: 2rem;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(0);
+  padding: 0 1rem;
+}
+
+.review-card {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  flex: 0 0 auto;
+  min-width: 300px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.loading-placeholder {
+  opacity: 0.7;
+}
+
+.review-rating {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.star {
+  color: #FFD700;
+}
+
+.review-text {
+  font-size: var(--fz-sm);
+  line-height: 1.5;
+  font-style: italic;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top: 1rem;
+}
+
+.author-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #D3D3D3;
+  flex-shrink: 0;
+}
+
+.author-info {
+  flex: 1;
+}
+
+.author-name {
+  font-weight: bold;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.author-source {
+  font-size: var(--fz-sm);
+  color: #666;
+  margin: 0;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-btn:hover,
+.carousel-btn:focus {
+  background: rgba(255,255,255,1);
+  outline: 3px solid var(--focus-ring);
+}
+
+.carousel-btn-left {
+  left: 10px;
+}
+
+.carousel-btn-right {
+  right: 10px;
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  .reviews {
+    padding: 4rem 0;
+  }
+
+  .reviews h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .review-card {
+    min-width: 350px;
+    max-width: 400px;
+    padding: 2.5rem;
+  }
+
+  .reviews-grid {
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+
+  .carousel-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+
+  .carousel-btn-left {
+    left: 20px;
+  }
+
+  .carousel-btn-right {
+    right: 20px;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .review-card {
+    min-width: 280px;
+    max-width: 320px;
+    padding: 1.5rem;
+  }
+
+  .reviews-grid {
+    gap: 1.5rem;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .carousel-btn-left {
+    left: 5px;
+  }
+
+  .carousel-btn-right {
+    right: 5px;
+  }
+}
+
+/* ============================================================================
+   BOOKING MODAL - Styled to match website theme
+   ============================================================================ */
+
+/* Modal Overlay and Backdrop */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  animation: modalFadeIn 0.3s ease-out forwards;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modal Content Container */
+.modal-content {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xl);
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Modal Header */
+.modal-header {
+  padding: 2rem 2rem 1rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(135deg, var(--color-primary) 0%, rgba(1, 176, 187, 0.9) 100%);
+  color: var(--color-white);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.modal-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: var(--fz-h2);
+  font-weight: bold;
+  color: var(--color-white);
+}
+
+.modal-subtitle {
+  margin: 0;
+  font-size: var(--fz-base);
+  opacity: 0.95;
+  font-weight: 500;
+}
+
+/* Close Button */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(10px);
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Form Structure */
+.form-section {
+  border: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.form-section legend {
+  font-size: var(--fz-lg);
+  font-weight: bold;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  padding: 0;
+  border: none;
+  display: block;
+  width: 100%;
+}
+
+#dumpsterBookingForm {
+  padding: 2rem;
+}
+
+/* Form Layout */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  font-size: var(--fz-sm);
+}
+
+.required {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Form Controls */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--fz-base);
+  background: var(--color-white);
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+.form-group input:invalid:not(:focus):not(:placeholder-shown),
+.form-group select:invalid:not(:focus) {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.form-group input:valid:not(:focus):not([value=""]),
+.form-group select:valid:not(:focus):not([value=""]) {
+  border-color: #27ae60;
+  background-color: rgba(39, 174, 96, 0.05);
+}
+
+/* Field Help and Error States */
+.field-help {
+  font-size: var(--fz-xs);
+  color: #666;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.field-error {
+  font-size: var(--fz-xs);
+  color: #e74c3c;
+  margin-top: 0.25rem;
+  font-weight: 500;
+  display: none;
+}
+
+.field-error:not(:empty) {
+  display: block;
+}
+
+.form-group.has-error input,
+.form-group.has-error select {
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.05);
+}
+
+.form-group.has-error .field-error {
+  display: block;
+}
+
+/* Checkbox Styling */
+.checkbox-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.checkbox-group label {
+  margin: 0;
+  font-weight: normal;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.checkbox-group a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.checkbox-group a:hover {
+  text-decoration: none;
+}
+
+/* Availability Status */
+.availability-section {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: var(--color-section-bg);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--color-primary);
+}
+
+.availability-status {
+  font-size: var(--fz-sm);
+  font-weight: 500;
+  margin: 0;
+}
+
+.availability-status.available {
+  color: #27ae60;
+}
+
+.availability-status.unavailable {
+  color: #e74c3c;
+}
+
+.availability-status.checking {
+  color: #f39c12;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--fz-sm);
+  color: #666;
+  margin-top: 1rem;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Form Status Messages */
+.form-status {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fz-sm);
+  font-weight: 500;
+  display: none;
+}
+
+.form-status.success {
+  background: rgba(39, 174, 96, 0.1);
+  color: #27ae60;
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  display: block;
+}
+
+.form-status.error {
+  background: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  display: block;
+}
+
+.form-status.info {
+  background: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  display: block;
+}
+
+/* Payment Section */
+.payment-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--color-border);
+}
+
+.payment-summary {
+  background: var(--color-section-bg);
+  padding: 1.5rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.payment-amount {
+  font-size: var(--fz-lg);
+  color: var(--color-text);
+}
+
+.payment-amount strong {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+}
+
+.payment-amount small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #666;
+  font-size: var(--fz-sm);
+}
+
+/* Square Payment Form Container */
+.card-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  min-height: 56px;
+  position: relative;
+}
+
+.card-container:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.form-actions .btn {
+  flex: 1;
+  justify-content: center;
+  min-height: 48px;
+  font-weight: 600;
+}
+
+/* Enhanced Button Styling for Modal */
+.modal .btn--primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, rgba(1, 176, 187, 0.9) 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(1, 176, 187, 0.3);
+  transition: all var(--transition-fast);
+}
+
+.modal .btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(1, 176, 187, 0.4);
+}
+
+.modal .btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(1, 176, 187, 0.3);
+}
+
+.modal .btn--secondary {
+  background: transparent;
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.modal .btn--secondary:hover {
+  background: var(--color-section-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.modal .btn--block {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 767px) {
+  .modal {
+    padding: 0.5rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .modal-content {
+    max-height: calc(100vh - 4rem);
+    width: 100%;
+    margin: 0;
+  }
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+  }
+
+  .modal-header h2 {
+    font-size: var(--fz-h3);
+    margin-right: 2rem;
+  }
+
+  .modal-subtitle {
+    font-size: var(--fz-sm);
+  }
+
+  .modal-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  #dumpsterBookingForm {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .availability-section {
+    padding: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .payment-summary {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 0.25rem;
+    padding-top: 1rem;
+  }
+
+  .modal-content {
+    max-height: calc(100vh - 2rem);
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  #dumpsterBookingForm {
+    padding: 1rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.625rem;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal-content {
+    animation: none;
+  }
+
+  .modal-close:hover {
+    transform: none;
+  }
+
+  .modal .btn--primary:hover {
+    transform: none;
+  }
+
+  .spinner {
+    animation: none;
+  }
+}
+
+/* Focus Management */
+.modal input:focus,
+.modal select:focus,
+.modal button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .modal {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .modal-content {
+    border: 3px solid var(--color-text);
+  }
+
+  .form-group input,
+  .form-group select {
+    border-width: 3px;
+  }
+}
+
+/* =============================================================================
+   CALENDAR COMPONENT STYLING
+   ============================================================================= */
+
+/* Calendar Component Styling */
+.booking-calendar {
+  border: 2px solid #e5e7eb;
+  border-radius: var(--radius, 12px);
+  padding: 1.5rem;
+  background: white;
+  margin: 1rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-month-year {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary, #1f2937);
+  margin: 0;
+}
+
+.calendar-nav {
+  background: none;
+  border: 2px solid #e5e7eb;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  color: var(--color-primary, #3b82f6);
+  font-weight: bold;
+}
+
+.calendar-nav:hover {
+  background: var(--color-primary, #3b82f6);
+  color: white;
+  border-color: var(--color-primary, #3b82f6);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  margin-bottom: 1px;
+}
+
+.weekday {
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 0.875rem;
+  background: #f9fafb;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 48px;
+}
+
+.calendar-day:hover:not(.disabled):not(.fully-booked) {
+  background: #dbeafe;
+  transform: scale(1.05);
+}
+
+.calendar-day.selected-start {
+  background: var(--color-primary, #3b82f6);
+  color: white;
+  font-weight: 700;
+}
+
+.calendar-day.selected-end {
+  background: var(--color-primary, #3b82f6);
+  color: white;
+  font-weight: 700;
+}
+
+.calendar-day.in-range {
+  background: #bfdbfe;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.calendar-day.fully-booked {
+  background: #fca5a5;
+  color: #991b1b;
+  cursor: not-allowed;
+  font-weight: 600;
+}
+
+.calendar-day.fully-booked::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #991b1b;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.calendar-day.disabled {
+  background: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.calendar-day.other-month {
+  color: #d1d5db;
+  background: #fafafa;
+}
+
+.selected-dates {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-top: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.selected-date, .rental-duration {
+  text-align: center;
+}
+
+.selected-date strong, .rental-duration strong {
+  display: block;
+  color: #374151;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.calendar-instructions {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.fully-booked-indicator {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Responsive Calendar */
+@media (max-width: 640px) {
+  .booking-calendar {
+    padding: 1rem;
+  }
+
+  .calendar-day {
+    min-height: 40px;
+    font-size: 0.875rem;
+  }
+
+  .selected-dates {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: left;
+  }
+}

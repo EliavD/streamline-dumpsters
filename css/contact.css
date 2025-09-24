@@ -1,0 +1,408 @@
+/*
+================================================================================
+CONTACT.CSS - Streamline Dumpsters Ltd. Contact Page Styles
+================================================================================
+
+PURPOSE:
+Styles for the contact page with form functionality, including two-column layout,
+form validation states, and responsive design for all devices.
+
+FUNCTIONALITY:
+- Two-column contact layout (form + info)
+- Contact form styling with validation states
+- Contact information card with primary color background
+- Service area section styling
+- Mobile-first responsive design
+
+ACCESSIBILITY:
+- High contrast form elements
+- Clear focus indicators for form fields
+- Proper label-input associations
+- Screen reader friendly error messages
+
+BROWSER SUPPORT:
+- Modern browsers (Chrome 70+, Firefox 65+, Safari 12+, Edge 79+)
+- Graceful degradation for older browsers
+================================================================================
+*/
+
+/* =============================================================================
+   CONTACT SECTION
+   ============================================================================= */
+
+.contact-section {
+  padding: 3rem 0;
+  background: var(--color-section-bg);
+}
+
+.contact-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  font-size: var(--fz-h1);
+  font-weight: bold;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =============================================================================
+   CONTACT FORM COLUMN
+   ============================================================================= */
+
+.contact-form-column {
+  background: var(--color-white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  font-size: var(--fz-sm);
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid #ccc;
+  font-size: var(--fz-base);
+  font-family: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  background: var(--color-white);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus,
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.contact-form input:invalid,
+.contact-form textarea:invalid {
+  border-color: #dc2626;
+}
+
+.contact-form input:invalid:focus,
+.contact-form textarea:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-message {
+  margin-top: 1rem;
+  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+
+.form-message.success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  display: block;
+}
+
+.form-message.error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  display: block;
+}
+
+.form-message.loading {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+  display: block;
+}
+
+/* =============================================================================
+   CONTACT INFO COLUMN
+   ============================================================================= */
+
+.contact-info-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contact-info-card {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-info-heading {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: var(--fz-h3);
+  font-weight: bold;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-item .icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.info-item .info-text {
+  font-size: var(--fz-base);
+  line-height: 1.5;
+}
+
+/* =============================================================================
+   SERVICE AREA SECTION
+   ============================================================================= */
+
+.service-area {
+  padding: 3rem 0;
+  background: var(--color-white);
+}
+
+.service-area h2 {
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  font-size: var(--fz-h2);
+  font-weight: bold;
+}
+
+.service-area p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: var(--fz-base);
+  line-height: 1.6;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+/* Tablet and Desktop */
+@media (min-width: 768px) {
+  .contact-section {
+    padding: 4rem 0;
+  }
+
+  .contact-heading {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .contact-form-column {
+    padding: 2.5rem;
+  }
+
+  .contact-form label {
+    font-size: var(--fz-base);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .contact-info-card {
+    padding: 2.5rem;
+  }
+
+  .contact-info-heading {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-item {
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .info-item .icon {
+    font-size: 1.75rem;
+  }
+
+  .info-item .info-text {
+    font-size: 1.1rem;
+  }
+
+  .service-area {
+    padding: 4rem 0;
+  }
+
+  .service-area h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-area p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1024px) {
+  .contact-section {
+    padding: 5rem 0;
+  }
+
+  .contact-heading {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+
+  .contact-grid {
+    gap: 4rem;
+  }
+
+  .contact-form-column {
+    padding: 3rem;
+  }
+
+  .contact-form .form-group {
+    margin-bottom: 2rem;
+  }
+
+  .contact-info-card {
+    padding: 3rem;
+  }
+
+  .service-area {
+    padding: 5rem 0;
+  }
+
+  .service-area h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* Mobile Specific */
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 2rem 0;
+  }
+
+  .contact-heading {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-grid {
+    gap: 1.5rem;
+  }
+
+  .contact-form-column {
+    padding: 1.5rem;
+  }
+
+  .contact-form .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.625rem;
+    font-size: 1rem;
+  }
+
+  .contact-info-card {
+    padding: 1.5rem;
+  }
+
+  .contact-info-heading {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .info-item {
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .info-item .icon {
+    font-size: 1.25rem;
+  }
+
+  .info-item .info-text {
+    font-size: 0.9rem;
+  }
+
+  .service-area {
+    padding: 2rem 0;
+  }
+
+  .service-area h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-area p {
+    font-size: 0.9rem;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION PREFERENCES
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-form input,
+  .contact-form textarea {
+    transition: none;
+  }
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================= */
+
+@media (prefers-contrast: high) {
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: ButtonText;
+    box-shadow: 0 0 0 3px ButtonText;
+  }
+
+  .contact-info-card {
+    border: 2px solid currentColor;
+  }
+}
