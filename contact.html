@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Streamline Dumpsters Ltd.</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="site-logo">
+                <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
+                </ul>
+            </nav>
+
+            <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation menu">
+                <span class="nav-toggle__bar"></span>
+                <span class="sr-only">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="contact-section">
+            <div class="container">
+                <h1 class="contact-heading">Get a fast quote or ask a question.</h1>
+                <div class="contact-grid">
+
+                    <!-- Contact Form Column -->
+                    <div class="contact-form-column">
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Your Email</label>
+                                <input type="email" id="email" name="email" required aria-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Your Phone Number</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn--primary btn--block">Send Message</button>
+                            <div class="form-message" aria-live="polite" aria-atomic="true"></div>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info Column -->
+                    <div class="contact-info-column">
+                        <div class="contact-info-card">
+                            <h3 class="contact-info-heading">Contact Information</h3>
+                            <p class="info-item">
+                                <i class="icon">📞</i><span class="info-text">(614) 636-2343</span>
+                            </p>
+                            <p class="info-item">
+                                <i class="icon">✉️</i><span class="info-text">Eli@Sl-Dumpsters.com</span>
+                            </p>
+                            <p class="info-item">
+                                <i class="icon">📍</i><span class="info-text">Dublin, Ohio and surrounding areas.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Service Area Section -->
+        <section class="service-area">
+            <div class="container text-center">
+                <h2>Our Service Area</h2>
+                <p class="muted">We proudly serve Dublin, Ohio, and the surrounding communities, providing fast and reliable dumpster rental and junk removal services.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
+                    <p class="footer-text">Dublin, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
+                    <div class="footer-contact">
+                        <a href="tel:(614) 636-2343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
+                        <a href="mailto:Eli@Sl-Dumpsters.com" class="footer-link" aria-label="Email Streamline Dumpsters">Eli@Sl-Dumpsters.com</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="bookNow.html" class="footer-link">14-Yard Dumpster Rental</a></li>
+                        <li><a href="bookNow.html" class="footer-link">Junk Removal Service</a></li>
+                        <li><a href="contact.html" class="footer-link">Same-Day Delivery</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Quick Links</h4>
+                    <ul class="footer-list">
+                        <li><a href="faq.html" class="footer-link">FAQ</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                        <li><a href="bookNow.html" class="footer-link">Book Now</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd. | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.site-header');
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (navToggle && header) {
+                navToggle.addEventListener('click', function() {
+                    const isOpen = header.classList.contains('is-open');
+
+                    // Toggle open state
+                    header.classList.toggle('is-open');
+
+                    // Update ARIA attributes
+                    navToggle.setAttribute('aria-expanded', !isOpen);
+
+                    // Update screen reader text
+                    const srText = navToggle.querySelector('.sr-only');
+                    if (srText) {
+                        srText.textContent = isOpen ? 'Menu' : 'Close menu';
+                    }
+                });
+
+                // Close menu when clicking nav links
+                if (mainNav) {
+                    mainNav.addEventListener('click', function(e) {
+                        if (e.target.classList.contains('nav-link') || e.target.classList.contains('nav-cta')) {
+                            header.classList.remove('is-open');
+                            navToggle.setAttribute('aria-expanded', 'false');
+                            const srText = navToggle.querySelector('.sr-only');
+                            if (srText) {
+                                srText.textContent = 'Menu';
+                            }
+                        }
+                    });
+                }
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && header.classList.contains('is-open')) {
+                        header.classList.remove('is-open');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        navToggle.focus();
+                        const srText = navToggle.querySelector('.sr-only');
+                        if (srText) {
+                            srText.textContent = 'Menu';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="js/contact.js" defer></script>
+</body>
+</html>

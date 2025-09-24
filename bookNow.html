@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamline Dumpsters Ltd. - Book Now</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/bookNow.css">
+    <link rel="stylesheet" href="css/junkRemoval.css">
+    <!-- Square Payments SDK -->
+    <script type="text/javascript" src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+</head>
+<body>
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="site-logo">
+                <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="bookNow.html" class="btn btn--primary btn--sm nav-link--active">Book Now</a></li>
+                </ul>
+            </nav>
+
+            <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation menu">
+                <span class="nav-toggle__bar"></span>
+                <span class="sr-only">Menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main-content" class="book-now container">
+
+        <!-- Buy Boxes - Exact structure from index.html -->
+        <section class="buy-boxes">
+            <div class="container buy-box-grid">
+                <article class="buy-box">
+                    <h2 style="line-height: 1.1;">14 Cubic Yard Dumpster rental</h2>
+                    <div class="service-image">
+                        <img src="assets/img/14ydDumpster.png" alt="14 yard dumpster rental" class="service-img">
+                    </div>
+                    <p class="service-subtitle">🚛 6 pickup truck loads</p>
+                    <ul class="feature-list">
+                        <li class="feature-item">
+                            <span class="checkmark">✓</span>
+                            <span class="feature-text">$299 with 3 days included</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="checkmark">✓</span>
+                            <span class="feature-text">$15 per additional day</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="checkmark">✓</span>
+                            <span class="feature-text">Same day delivery</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="checkmark">✓</span>
+                            <span class="feature-text">Driveway safe</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="checkmark">✓</span>
+                            <span class="feature-text">No hidden fees</span>
+                        </li>
+                    </ul>
+                    <button class="btn btn--primary" id="openBookingModal"
+                            aria-controls="bookingModal" aria-expanded="false"
+                            aria-label="Book 14 Cubic Yard Dumpster Rental">
+                        Book Now
+                    </button>
+                </article>
+                <article class="buy-box">
+                    <h2 style="line-height: 1.1;">Junk Removal</h2>
+                    <div class="service-image">
+                        <img src="assets/img/dumpster.png" alt="Junk removal service truck" class="service-img junk-removal-img">
+                    </div>
+                    <p class="service-subtitle">Custom Quote</p>
+                    <ol class="process-list">
+                        <li class="process-step">
+                            <span class="step-number">1</span>
+                            <span class="step-text">Text us photos of your junk</span>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-number">2</span>
+                            <span class="step-text">Receive instant quote</span>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-number">3</span>
+                            <span class="step-text">Schedule pickup</span>
+                        </li>
+                        <li class="process-step">
+                            <span class="step-number">4</span>
+                            <span class="step-text">We load and haul away</span>
+                        </li>
+                    </ol>
+                    <button type="button"
+                            class="btn btn--primary"
+                            id="openJunkModal"
+                            aria-controls="junkRemovalModal"
+                            aria-expanded="false"
+                            aria-label="Request Junk Removal Bid">
+                        Get a Bid
+                    </button>
+                </article>
+            </div>
+        </section>
+
+        <!-- Special Guidelines -->
+        <section class="special-guidelines">
+          <div class="container">
+            <h2>Special Item Guidelines & Extra Charges</h2>
+            <p>Due to where we dispose of the waste in your dumpster — and for the safety of our driver on the road — there are certain items we cannot accept, and others that require extra handling and fees.</p>
+
+            <div class="guidelines-container">
+              <!-- Prohibited Items Card -->
+              <div class="guidelines-card prohibited-items-card">
+                <div class="card-header">
+                  <h3>PROHIBITED ITEMS</h3>
+                </div>
+                <div class="card-content">
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Batteries</h4>
+                      <p>All types of batteries must be disposed of at designated recycling centers.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Liquids</h4>
+                      <p>No liquid waste of any kind can be placed in dumpsters.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Asbestos</h4>
+                      <p>Hazardous material requiring specialized disposal methods.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Electronic Waste</h4>
+                      <p>TVs, computers, and electronics need special recycling facilities.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Vehicle Fluids/Parts</h4>
+                      <p>Oil, antifreeze, and automotive parts require proper disposal.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Dirt</h4>
+                      <p>Soil and dirt are not accepted in standard waste dumpsters.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Concrete</h4>
+                      <p>Heavy concrete materials require specialized disposal services.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon prohibited-icon">❌</div>
+                    <div class="item-content">
+                      <h4>Yard Waste</h4>
+                      <p>Grass, leaves, and branches should go to composting facilities.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Extra Fees Card -->
+              <div class="guidelines-card extra-fees-card">
+                <div class="card-header">
+                  <h3>EXTRA FEES APPLY</h3>
+                </div>
+                <div class="card-content">
+                  <div class="guideline-item">
+                    <div class="item-icon warning-icon">⚠️</div>
+                    <div class="item-content">
+                      <h4>Appliances</h4>
+                      <p>Refrigerators, washers, dryers require additional handling fees.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon warning-icon">⚠️</div>
+                    <div class="item-content">
+                      <h4>Tires</h4>
+                      <p>Automotive tires incur special disposal charges.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon warning-icon">⚠️</div>
+                    <div class="item-content">
+                      <h4>Tube TVs / CRTs</h4>
+                      <p>Old television sets require specialized electronic waste handling.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Other Notes Card -->
+              <div class="guidelines-card other-notes-card">
+                <div class="card-header">
+                  <h3>OTHER NOTES</h3>
+                </div>
+                <div class="card-content">
+                  <div class="guideline-item">
+                    <div class="item-icon info-icon">💰</div>
+                    <div class="item-content">
+                      <h4>Overfilling</h4>
+                      <p>$50 fee if material rises above the top edge of the dumpster.</p>
+                    </div>
+                  </div>
+
+                  <div class="guideline-item">
+                    <div class="item-icon info-icon">🚛</div>
+                    <div class="item-content">
+                      <h4>Heavy Materials</h4>
+                      <p>Concrete and dirt must be hand-loaded or wheelbarrowed — no machinery.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="guidelines-footer">We appreciate your help keeping our service safe, efficient, and environmentally responsible.</p>
+          </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
+                    <p class="footer-text">Dublin, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
+                    <div class="footer-contact">
+                        <a href="tel:" class="footer-link" aria-label="Call Streamline Dumpsters">Phone</a>
+                        <a href="mailto:" class="footer-link" aria-label="Email Streamline Dumpsters">Email</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Services</h4>
+                    <ul class="footer-list">
+                        <li><a href="bookNow.html" class="footer-link">14-Yard Dumpster Rental</a></li>
+                        <li><a href="bookNow.html" class="footer-link">Junk Removal Service</a></li>
+                        <li><a href="contact.html" class="footer-link">Same-Day Delivery</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Quick Links</h4>
+                    <ul class="footer-list">
+                        <li><a href="faq.html" class="footer-link">FAQ</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                        <li><a href="bookNow.html" class="footer-link">Book Now</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd. | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile navigation functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.site-header');
+            const navToggle = document.querySelector('.nav-toggle');
+            const mainNav = document.querySelector('.main-nav');
+
+            if (navToggle && header) {
+                navToggle.addEventListener('click', function() {
+                    const isOpen = header.classList.contains('is-open');
+
+                    // Toggle open state
+                    header.classList.toggle('is-open');
+
+                    // Update ARIA attributes
+                    navToggle.setAttribute('aria-expanded', !isOpen);
+
+                    // Update screen reader text
+                    const srText = navToggle.querySelector('.sr-only');
+                    if (srText) {
+                        srText.textContent = isOpen ? 'Menu' : 'Close menu';
+                    }
+                });
+
+                // Close menu when clicking nav links
+                if (mainNav) {
+                    mainNav.addEventListener('click', function(e) {
+                        if (e.target.classList.contains('nav-link') || e.target.classList.contains('nav-cta')) {
+                            header.classList.remove('is-open');
+                            navToggle.setAttribute('aria-expanded', 'false');
+                            const srText = navToggle.querySelector('.sr-only');
+                            if (srText) {
+                                srText.textContent = 'Menu';
+                            }
+                        }
+                    });
+                }
+
+                // Close menu on escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && header.classList.contains('is-open')) {
+                        header.classList.remove('is-open');
+                        navToggle.setAttribute('aria-expanded', 'false');
+                        navToggle.focus();
+                        const srText = navToggle.querySelector('.sr-only');
+                        if (srText) {
+                            srText.textContent = 'Menu';
+                        }
+                    }
+                });
+            }
+        });
+
+        console.log('✓ Book Now page loaded - bookNow.css, bookNow.js, and junkRemoval.js should be available');
+    </script>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="booking-title" hidden>
+      <div class="modal-content">
+        <!-- Close Button -->
+        <button class="modal-close" id="closeBookingModal" aria-label="Close booking form">×</button>
+
+        <!-- Modal Header -->
+        <header class="modal-header">
+          <h2 id="booking-title">Book Your 14 Yard Dumpster</h2>
+          <p class="modal-subtitle">$299 - Includes 3-day rental + 4,000 lbs capacity</p>
+        </header>
+
+        <!-- Booking Form -->
+        <form id="dumpsterBookingForm" novalidate>
+          <!-- Customer Information Section -->
+          <fieldset class="form-section">
+            <legend>Customer Information</legend>
+
+            <div class="form-group">
+              <label for="fullName">Full Name <span class="required">*</span></label>
+              <input id="fullName" name="fullName" type="text" required
+                     autocomplete="name" aria-describedby="fullNameError">
+              <div class="field-error" id="fullNameError" role="alert"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address <span class="required">*</span></label>
+              <input id="email" name="email" type="email" required
+                     autocomplete="email" aria-describedby="emailError">
+              <div class="field-error" id="emailError" role="alert"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number <span class="required">*</span></label>
+              <input id="phone" name="phone" type="tel" required
+                     autocomplete="tel" aria-describedby="phoneError"
+                     placeholder="(555) 123-4567">
+              <div class="field-error" id="phoneError" role="alert"></div>
+            </div>
+          </fieldset>
+
+          <!-- Drop-off Information Section -->
+          <fieldset class="form-section">
+            <legend>Drop-off Information</legend>
+
+            <div class="form-group">
+              <label for="dropoffAddress">Drop-off Address <span class="required">*</span></label>
+              <input id="dropoffAddress" name="dropoffAddress" type="text" required
+                     autocomplete="street-address" aria-describedby="dropoffAddressError"
+                     placeholder="123 Main St">
+              <div class="field-error" id="dropoffAddressError" role="alert"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dropoffCity">City <span class="required">*</span></label>
+                <input id="dropoffCity" name="dropoffCity" type="text" required
+                       autocomplete="address-level2" aria-describedby="dropoffCityError">
+                <div class="field-error" id="dropoffCityError" role="alert"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="dropoffZip">ZIP Code <span class="required">*</span></label>
+                <input id="dropoffZip" name="dropoffZip" type="text" required
+                       autocomplete="postal-code" aria-describedby="dropoffZipError"
+                       pattern="[0-9]{5}(-[0-9]{4})?" placeholder="12345">
+                <div class="field-error" id="dropoffZipError" role="alert"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="dropoffNotes">Special Instructions (Optional)</label>
+              <textarea id="dropoffNotes" name="dropoffNotes" rows="3"
+                        placeholder="Gate code, placement instructions, etc."
+                        aria-describedby="dropoffNotesHelp"></textarea>
+              <div class="field-help" id="dropoffNotesHelp">Any special delivery instructions or access information</div>
+            </div>
+          </fieldset>
+
+          <!-- Rental Period Section -->
+          <fieldset class="form-section">
+            <legend>Rental Period</legend>
+
+            <div class="calendar-section">
+              <label class="calendar-label">Select Your Rental Period <span class="required">*</span></label>
+              <div class="calendar-instructions">
+                Click to select start date, then click end date. <span class="fully-booked-indicator">Red dates are fully booked.</span>
+              </div>
+
+              <div id="bookingCalendar" class="booking-calendar">
+                <div class="calendar-header">
+                  <button type="button" class="calendar-nav" id="prevMonth" aria-label="Previous month">‹</button>
+                  <h3 class="calendar-month-year" id="currentMonthYear"></h3>
+                  <button type="button" class="calendar-nav" id="nextMonth" aria-label="Next month">›</button>
+                </div>
+
+                <div class="calendar-weekdays">
+                  <div class="weekday">Sun</div>
+                  <div class="weekday">Mon</div>
+                  <div class="weekday">Tue</div>
+                  <div class="weekday">Wed</div>
+                  <div class="weekday">Thu</div>
+                  <div class="weekday">Fri</div>
+                  <div class="weekday">Sat</div>
+                </div>
+
+                <div id="calendarGrid" class="calendar-grid">
+                  <!-- Calendar days will be generated here -->
+                </div>
+              </div>
+
+              <div class="selected-dates">
+                <div class="selected-date">
+                  <strong>Delivery:</strong> <span id="selectedStartDate">Not selected</span>
+                </div>
+                <div class="selected-date">
+                  <strong>Pickup:</strong> <span id="selectedEndDate">Not selected</span>
+                </div>
+                <div class="rental-duration">
+                  <strong>Duration:</strong> <span id="rentalDuration">-</span>
+                </div>
+              </div>
+
+              <div class="field-error" id="calendarError" role="alert"></div>
+            </div>
+
+            <!-- Keep time slot selection -->
+            <div class="form-group">
+              <label for="timeSlot">Delivery Time <span class="required">*</span></label>
+              <select id="timeSlot" name="timeSlot" required aria-describedby="timeSlotError">
+                <option value="">Select delivery time slot</option>
+              </select>
+              <div class="field-error" id="timeSlotError" role="alert"></div>
+            </div>
+          </fieldset>
+
+          <!-- Availability Status Display -->
+          <div class="availability-section">
+            <div id="availabilityStatus" class="availability-status" role="status" aria-live="polite"></div>
+            <div id="loadingIndicator" class="loading-indicator" hidden>
+              <span class="spinner"></span> Checking availability...
+            </div>
+          </div>
+
+          <!-- Form Status Messages -->
+          <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+
+          <!-- Payment Section (Initially Hidden) -->
+          <div class="payment-section" id="paymentSection" style="display: none;">
+            <fieldset class="form-section">
+              <legend>Payment Information</legend>
+
+              <div class="payment-summary">
+                <div class="payment-amount">
+                  <strong>Total: $299.00</strong>
+                  <small>Includes delivery, pickup, and disposal</small>
+                </div>
+              </div>
+
+              <div id="card-container" class="card-container" aria-label="Credit card information">
+                <!-- Square payment form will be inserted here -->
+              </div>
+
+              <div class="form-group checkbox-group">
+                <input id="agreeTos" name="agreeTos" type="checkbox" required aria-describedby="agreeTosError">
+                <label for="agreeTos">
+                  I agree to the <a href="#terms" target="_blank" rel="noopener">terms of service</a>
+                  and <a href="#privacy" target="_blank" rel="noopener">privacy policy</a>
+                  <span class="required">*</span>
+                </label>
+                <div class="field-error" id="agreeTosError" role="alert"></div>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary btn--block" id="continueToPayment">
+              Continue to Payment
+            </button>
+            <button type="submit" class="btn btn--primary btn--block" id="submitPayment" style="display: none;">
+              Complete Booking - $299
+            </button>
+            <button type="button" class="btn btn--secondary" id="cancelBooking">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Junk Removal Modal -->
+    <div id="junkRemovalModal" class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="junk-removal-title" hidden>
+      <div class="modal-content">
+        <!-- Close Button -->
+        <button class="modal-close" id="closeJunkModal" aria-label="Close junk removal form">×</button>
+
+        <!-- Modal Header -->
+        <header class="modal-header">
+          <h2 id="junk-removal-title">Get Your Junk Removal Bid</h2>
+          <p class="modal-subtitle">Upload photos and get a fast, accurate quote</p>
+        </header>
+
+        <!-- Junk Removal Form -->
+        <form id="junkRemovalForm" novalidate enctype="multipart/form-data">
+          <!-- Customer Information Section -->
+          <fieldset class="form-section">
+            <legend>Contact Information</legend>
+
+            <div class="form-group">
+              <label for="junkFullName">Full Name <span class="required">*</span></label>
+              <input id="junkFullName" name="customerName" type="text" required
+                     autocomplete="name" aria-describedby="junkFullNameError">
+              <div class="field-error" id="junkFullNameError" role="alert"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="junkPhone">Phone Number <span class="required">*</span></label>
+              <input id="junkPhone" name="customerPhone" type="tel" required
+                     autocomplete="tel" aria-describedby="junkPhoneError"
+                     placeholder="(555) 123-4567">
+              <div class="field-error" id="junkPhoneError" role="alert"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="junkEmail">Email Address <span class="required">*</span></label>
+              <input id="junkEmail" name="customerEmail" type="email" required
+                     autocomplete="email" aria-describedby="junkEmailError">
+              <div class="field-error" id="junkEmailError" role="alert"></div>
+            </div>
+          </fieldset>
+
+          <!-- Service Location Section -->
+          <fieldset class="form-section">
+            <legend>Service Location</legend>
+
+            <div class="form-group">
+              <label for="junkAddress">Service Address <span class="required">*</span></label>
+              <input id="junkAddress" name="serviceAddress" type="text" required
+                     autocomplete="street-address" aria-describedby="junkAddressError"
+                     placeholder="123 Main St">
+              <div class="field-error" id="junkAddressError" role="alert"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="junkCity">City <span class="required">*</span></label>
+                <input id="junkCity" name="serviceCity" type="text" required
+                       autocomplete="address-level2" aria-describedby="junkCityError">
+                <div class="field-error" id="junkCityError" role="alert"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="junkZip">ZIP Code <span class="required">*</span></label>
+                <input id="junkZip" name="serviceZip" type="text" required
+                       autocomplete="postal-code" aria-describedby="junkZipError"
+                       pattern="[0-9]{5}(-[0-9]{4})?" placeholder="12345">
+                <div class="field-error" id="junkZipError" role="alert"></div>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Photo Upload Section -->
+          <fieldset class="form-section">
+            <legend>Photos of Items to Remove</legend>
+
+            <div class="upload-instructions">
+              <p>Upload up to 5 photos to help us provide an accurate quote. Include different angles and all areas with items.</p>
+            </div>
+
+            <div class="photo-upload-area">
+              <div class="upload-dropzone" id="photoDropzone">
+                <div class="upload-icon">📷</div>
+                <p class="upload-text">
+                  <strong>Click to upload photos</strong> or drag and drop
+                </p>
+                <p class="upload-subtext">PNG, JPG, WEBP up to 10MB each (5 photos max)</p>
+                <input type="file" id="junkPhotos" name="junkPhotos"
+                       accept="image/jpeg,image/jpg,image/png,image/webp"
+                       multiple aria-describedby="photoInputError">
+              </div>
+              <div class="field-error" id="photoInputError" role="alert"></div>
+            </div>
+
+            <!-- Photo Preview Area -->
+            <div class="photo-preview-container" id="photoPreviewContainer">
+              <!-- Uploaded photo previews will appear here -->
+            </div>
+          </fieldset>
+
+          <!-- Additional Information Section -->
+          <fieldset class="form-section">
+            <legend>Additional Details (Optional)</legend>
+
+            <div class="form-group">
+              <label for="junkDescription">Describe the items or any special requirements</label>
+              <textarea id="junkDescription" name="description" rows="4"
+                        placeholder="Heavy items, stairs, tight spaces, specific pickup times, etc."
+                        aria-describedby="junkDescriptionHelp"></textarea>
+              <div class="field-help" id="junkDescriptionHelp">
+                Help us prepare with details about access, item types, or timing preferences
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Form Status Messages -->
+          <div id="junk-form-status" class="form-status" role="status" aria-live="polite"></div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary btn--block" id="submitJunkRequest">
+              Submit Bid Request
+            </button>
+            <button type="button" class="btn btn--secondary" id="cancelJunkRequest">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/bookNow.js" defer></script>
+    <script src="js/junkRemoval.js" defer></script>
+</body>
+</html>
