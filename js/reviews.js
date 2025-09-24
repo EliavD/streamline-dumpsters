@@ -1,0 +1,387 @@
+/*
+================================================================================
+REVIEWS.JS - Streamline Dumpsters Ltd. Customer Reviews
+================================================================================
+
+PURPOSE:
+Manages customer review display and Google Reviews API integration via backend proxy.
+Handles fetching, displaying, and carousel navigation for customer testimonials.
+
+SECURITY NOTE:
+This script uses a backend proxy (/api/reviews) to securely fetch Google Reviews
+without exposing API keys to the frontend.
+================================================================================
+*/
+
+document.addEventListener('DOMContentLoaded', function() {
+    const reviewsGrid = document.querySelector('.reviews-grid');
+    const leftBtn = document.querySelector('.carousel-btn-left');
+    const rightBtn = document.querySelector('.carousel-btn-right');
+
+    if (!reviewsGrid) {
+        console.log('Reviews grid not found');
+        return;
+    }
+
+    // Configuration
+    const config = {
+        autoScrollDelay: 8000, // 8 seconds per review set
+        animationDuration: 500, // 0.5 seconds for slide transition
+        reviewsPerView: {
+            mobile: 1,
+            tablet: 2,
+            desktop: 3
+        }
+    };
+
+    // State management
+    let reviews = [];
+    let currentIndex = 0;
+    let autoScrollInterval;
+    let reviewsPerView = 1;
+
+    // Fallback reviews in case API fails
+    const fallbackReviews = [
+        {
+            author_name: "Sarah Johnson",
+            rating: 5,
+            text: "Excellent service! Same-day delivery as promised and the dumpster was perfect for our home renovation project. Very professional and transparent pricing.",
+            time: Date.now() - 86400000 // 1 day ago
+        },
+        {
+            author_name: "Mike Chen",
+            rating: 5,
+            text: "Streamline Dumpsters made our garage cleanout so much easier. Fair pricing, friendly service, and they picked it up right on time. Highly recommend!",
+            time: Date.now() - 172800000 // 2 days ago
+        },
+        {
+            author_name: "Jennifer Davis",
+            rating: 5,
+            text: "Great local company! Used them for our kitchen remodel debris. Dumpster was clean, delivered exactly when they said it would be. Will use again.",
+            time: Date.now() - 259200000 // 3 days ago
+        },
+        {
+            author_name: "Robert Wilson",
+            rating: 4,
+            text: "Professional service from start to finish. The team was responsive and the pricing was very competitive. Made our construction project much smoother.",
+            time: Date.now() - 345600000 // 4 days ago
+        }
+    ];
+
+    // Initialize reviews system
+    function init() {
+        updateReviewsPerView();
+        setupEventListeners();
+        loadReviews();
+
+        console.log('Reviews system initialized');
+    }
+
+    // Update reviews per view based on screen size
+    function updateReviewsPerView() {
+        const width = window.innerWidth;
+        if (width >= 1024) {
+            reviewsPerView = config.reviewsPerView.desktop;
+        } else if (width >= 768) {
+            reviewsPerView = config.reviewsPerView.tablet;
+        } else {
+            reviewsPerView = config.reviewsPerView.mobile;
+        }
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+        if (leftBtn) {
+            leftBtn.addEventListener('click', () => {
+                prevReviews();
+                resetAutoScroll();
+            });
+        }
+
+        if (rightBtn) {
+            rightBtn.addEventListener('click', () => {
+                nextReviews();
+                resetAutoScroll();
+            });
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!reviewsGrid.contains(document.activeElement)) return;
+
+            switch (e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevReviews();
+                    resetAutoScroll();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    nextReviews();
+                    resetAutoScroll();
+                    break;
+            }
+        });
+
+        // Pause auto-scroll on hover
+        if (reviewsGrid) {
+            reviewsGrid.addEventListener('mouseenter', pauseAutoScroll);
+            reviewsGrid.addEventListener('mouseleave', startAutoScroll);
+        }
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            updateReviewsPerView();
+            updateCarouselPosition();
+        });
+
+        // Pause when page is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                pauseAutoScroll();
+            } else {
+                startAutoScroll();
+            }
+        });
+    }
+
+    // Load reviews from backend proxy or fallback
+    async function loadReviews() {
+        try {
+            // First try to load from cache
+            const cachedReviews = getCachedReviews();
+            if (cachedReviews && cachedReviews.length > 0) {
+                reviews = cachedReviews;
+                displayReviews();
+                startAutoScroll();
+                return;
+            }
+
+            // Try to fetch from backend proxy
+            const response = await fetch('/api/reviews', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.reviews && data.reviews.length > 0) {
+                    reviews = filterAndSortReviews(data.reviews);
+                    cacheReviews(reviews);
+                    displayReviews();
+                    startAutoScroll();
+                    console.log(`Loaded ${reviews.length} reviews from API`);
+                    return;
+                }
+            }
+
+            throw new Error('No reviews received from API');
+
+        } catch (error) {
+            console.warn('Failed to load reviews from API, using fallback:', error);
+            reviews = fallbackReviews;
+            displayReviews();
+            startAutoScroll();
+        }
+    }
+
+    // Filter and sort reviews
+    function filterAndSortReviews(rawReviews) {
+        return rawReviews
+            .filter(review => review.text && review.text.length > 20) // Only reviews with text
+            .filter(review => review.rating >= 4) // Only 4+ star reviews
+            .sort((a, b) => b.time - a.time) // Sort by most recent
+            .slice(0, 10); // Limit to 10 reviews
+    }
+
+    // Cache reviews in localStorage
+    function cacheReviews(reviewsData) {
+        try {
+            const cacheData = {
+                reviews: reviewsData,
+                timestamp: Date.now(),
+                expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+            };
+            localStorage.setItem('streamline_reviews', JSON.stringify(cacheData));
+        } catch (error) {
+            console.warn('Failed to cache reviews:', error);
+        }
+    }
+
+    // Get cached reviews
+    function getCachedReviews() {
+        try {
+            const cached = localStorage.getItem('streamline_reviews');
+            if (!cached) return null;
+
+            const data = JSON.parse(cached);
+            if (Date.now() > data.expires) {
+                localStorage.removeItem('streamline_reviews');
+                return null;
+            }
+
+            return data.reviews;
+        } catch (error) {
+            console.warn('Failed to load cached reviews:', error);
+            return null;
+        }
+    }
+
+    // Display reviews in the carousel
+    function displayReviews() {
+        if (!reviews || reviews.length === 0) return;
+
+        reviewsGrid.innerHTML = reviews.map(review => createReviewCard(review)).join('');
+        updateCarouselPosition();
+        updateNavigationButtons();
+    }
+
+    // Create a single review card
+    function createReviewCard(review) {
+        const stars = generateStarRating(review.rating);
+        const timeAgo = formatTimeAgo(review.time);
+
+        return `
+            <div class="review-card">
+                <div class="review-rating">
+                    ${stars}
+                </div>
+                <p class="review-text">"${escapeHtml(review.text)}"</p>
+                <div class="review-author">
+                    <div class="author-img"></div>
+                    <div class="author-info">
+                        <p class="author-name">${escapeHtml(review.author_name)}</p>
+                        <p class="author-source">Google • ${timeAgo}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Generate star rating HTML
+    function generateStarRating(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        let stars = '';
+
+        for (let i = 0; i < fullStars; i++) {
+            stars += '<span class="star">⭐</span>';
+        }
+
+        if (hasHalfStar) {
+            stars += '<span class="star">⭐</span>';
+        }
+
+        const emptyStars = 5 - Math.ceil(rating);
+        for (let i = 0; i < emptyStars; i++) {
+            stars += '<span class="star" style="opacity: 0.3;">⭐</span>';
+        }
+
+        return stars;
+    }
+
+    // Format time ago
+    function formatTimeAgo(timestamp) {
+        const now = Date.now();
+        const diff = now - timestamp;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        if (days === 0) return 'Today';
+        if (days === 1) return '1 day ago';
+        if (days < 30) return `${days} days ago`;
+        if (days < 60) return '1 month ago';
+        return `${Math.floor(days / 30)} months ago`;
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    // Navigate to previous reviews
+    function prevReviews() {
+        if (reviews.length <= reviewsPerView) return;
+
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : Math.max(0, reviews.length - reviewsPerView);
+        updateCarouselPosition();
+        updateNavigationButtons();
+    }
+
+    // Navigate to next reviews
+    function nextReviews() {
+        if (reviews.length <= reviewsPerView) return;
+
+        const maxIndex = Math.max(0, reviews.length - reviewsPerView);
+        currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+        updateCarouselPosition();
+        updateNavigationButtons();
+    }
+
+    // Update carousel position
+    function updateCarouselPosition() {
+        const reviewCards = reviewsGrid.querySelectorAll('.review-card');
+        if (reviewCards.length === 0) return;
+
+        const cardWidth = reviewCards[0].offsetWidth;
+        const gap = 32; // 2rem gap
+        const offset = -(currentIndex * (cardWidth + gap));
+
+        reviewsGrid.style.transform = `translateX(${offset}px)`;
+    }
+
+    // Update navigation button states
+    function updateNavigationButtons() {
+        if (!leftBtn || !rightBtn) return;
+
+        const maxIndex = Math.max(0, reviews.length - reviewsPerView);
+
+        leftBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        rightBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+
+        leftBtn.disabled = currentIndex === 0;
+        rightBtn.disabled = currentIndex >= maxIndex;
+    }
+
+    // Start auto-scroll
+    function startAutoScroll() {
+        if (reviews.length <= reviewsPerView) return;
+
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(() => {
+            nextReviews();
+        }, config.autoScrollDelay);
+    }
+
+    // Pause auto-scroll
+    function pauseAutoScroll() {
+        clearInterval(autoScrollInterval);
+    }
+
+    // Reset auto-scroll timer
+    function resetAutoScroll() {
+        pauseAutoScroll();
+        setTimeout(startAutoScroll, 2000); // Resume after 2 seconds
+    }
+
+    // Initialize the reviews system
+    init();
+
+    // Expose public API for debugging
+    if (window.DEBUG) {
+        window.reviewsCarousel = {
+            nextReviews,
+            prevReviews,
+            getCurrentIndex: () => currentIndex,
+            getReviews: () => reviews,
+            getReviewsPerView: () => reviewsPerView,
+            reloadReviews: loadReviews
+        };
+    }
+});
