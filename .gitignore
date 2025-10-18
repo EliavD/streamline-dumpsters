@@ -89,6 +89,10 @@ airtable-field-mapping-*.html
 *.backup
 *.bak
 *.orig
+*.old
+backup_deleted_files_*/
+js_backup_*/
+*_backup_*/
 
 # Database files
 *.db
@@ -98,3 +102,9 @@ airtable-field-mapping-*.html
 # Sensitive configuration files
 config/local.json
 config/production.json
+
+# Certificate private keys - NEVER COMMIT THESE
+certs/*.key
+certs/*.srl
+certs/root.key
+certs/server.key
