@@ -1,3 +1,4 @@
+console.log("🔥🔥🔥 bookNow-fixed.js LOADING - TOP OF FILE 🔥🔥🔥");
 /*
 ================================================================================
 BOOKNOW.JS - Streamline Dumpsters Ltd. Booking Modal System - Phase 3
@@ -55,7 +56,7 @@ FUTURE PHASES:
 class BookingAPI {
   constructor(baseURL) {
     this.baseURL = baseURL;
-    this.requestTimeout = 5000; // 5 seconds (shorter for better UX)
+    this.requestTimeout = 15000; // 15 seconds (Google Apps Script can be slow)
   }
 
   /**
@@ -199,15 +200,21 @@ class BookingAPI {
    */
   async createBooking(bookingData) {
     try {
-      const response = await this.makeRequest(this.baseURL, {
+      // Use no-cors mode to bypass CORS restrictions with Google Apps Script
+      const response = await fetch(this.baseURL, {
         method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(bookingData)
       });
 
-      return response;
+      // Note: no-cors mode doesn't allow reading response
+      // So we assume success if no error was thrown
+      console.log('✅ Booking submitted to Google Apps Script');
+
+      return { status: 'booked' };
 
     } catch (error) {
       console.error('Error creating booking:', error);
@@ -527,7 +534,18 @@ class AvailabilityChecker {
   showLoadingState(message = 'Loading...') {
     const loadingIndicator = document.getElementById('loadingIndicator');
     if (loadingIndicator) {
-      loadingIndicator.innerHTML = `<span class="spinner"></span> ${message}`;
+      // Clear existing content safely
+      loadingIndicator.textContent = '';
+
+      // Create spinner element
+      const spinner = document.createElement('span');
+      spinner.className = 'spinner';
+      loadingIndicator.appendChild(spinner);
+
+      // Add message as text node (safe from XSS)
+      const messageText = document.createTextNode(' ' + message);
+      loadingIndicator.appendChild(messageText);
+
       loadingIndicator.hidden = false;
     }
   }
@@ -625,10 +643,36 @@ class ErrorHandler {
     const formStatus = document.getElementById('form-status');
 
     if (formStatus) {
-      formStatus.innerHTML = `
-        <div>${message}</div>
-        ${retryCallback ? '<button type="button" class="btn btn--secondary" onclick="' + retryCallback + '">Retry</button>' : ''}
-      `;
+      // Clear existing content safely
+      formStatus.textContent = '';
+
+      // Create message div
+      const messageDiv = document.createElement('div');
+      messageDiv.textContent = message;
+      formStatus.appendChild(messageDiv);
+
+      // Add retry button if callback provided
+      if (retryCallback) {
+        const retryButton = document.createElement('button');
+        retryButton.type = 'button';
+        retryButton.className = 'btn btn--secondary';
+        retryButton.textContent = 'Retry';
+        // Use addEventListener instead of onclick attribute to avoid XSS
+        retryButton.addEventListener('click', () => {
+          // Execute callback safely
+          if (typeof retryCallback === 'function') {
+            retryCallback();
+          } else if (typeof retryCallback === 'string') {
+            // If callback is a string function name, execute it from window scope
+            const fn = window[retryCallback];
+            if (typeof fn === 'function') {
+              fn();
+            }
+          }
+        });
+        formStatus.appendChild(retryButton);
+      }
+
       formStatus.className = 'form-status error';
     }
   }
@@ -653,23 +697,25 @@ class BookingDataManager {
   }
 
   static prepareBookingData(calendarDates = null) {
-    const form = document.getElementById('dumpsterBookingForm');
-    if (!form) return {};
-
-    const formData = new FormData(form);
+    // Read directly from input fields (NOT from FormData)
+    // because fields are in three-step modal, not in the hidden form
+    const getValue = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
+    };
 
     return {
-      name: this.sanitizeInput(formData.get('fullName')),
-      email: this.sanitizeInput(formData.get('email')),
-      phone: this.sanitizeInput(formData.get('phone')),
-      dropoff_address: this.sanitizeInput(formData.get('dropoffAddress')),
-      dropoff_city: this.sanitizeInput(formData.get('dropoffCity')),
-      dropoff_zip: this.sanitizeInput(formData.get('dropoffZip')),
-      dropoff_notes: this.sanitizeInput(formData.get('dropoffNotes')),
+      name: this.sanitizeInput(getValue('fullName')),
+      email: this.sanitizeInput(getValue('email')),
+      phone: this.sanitizeInput(getValue('phone')),
+      dropoff_address: this.sanitizeInput(getValue('dropoffAddress')),
+      dropoff_city: this.sanitizeInput(getValue('dropoffCity')),
+      dropoff_zip: this.sanitizeInput(getValue('dropoffZip')),
+      dropoff_notes: this.sanitizeInput(getValue('dropoffNotes')),
       delivery_date: calendarDates?.startDate || null,
       pickup_date: calendarDates?.endDate || null,
       rental_duration: calendarDates?.duration || 0,
-      time: formData.get('timeSlot')
+      time: getValue('timeSlot')
     };
   }
 
@@ -772,10 +818,14 @@ class BackendTester {
  */
 class BookingModal {
   constructor() {
+    console.log('🏗️ BookingModal constructor called');
+
     // Check if we're on a page with the booking modal
     this.modal = document.getElementById('bookingModal');
+    console.log('  - Modal element found:', !!this.modal);
+
     if (!this.modal) {
-      console.log('BookingModal: Modal not found on this page');
+      console.log('⚠️ BookingModal: Modal not found on this page - exiting constructor');
       return;
     }
 
@@ -784,6 +834,9 @@ class BookingModal {
     this.openButton = document.getElementById('openBookingModal');
     this.closeButton = document.getElementById('closeBookingModal');
     this.cancelButton = document.getElementById('cancelBooking');
+
+    console.log('  - Open button found:', !!this.openButton);
+    console.log('  - Form found:', !!this.form);
 
     // Form elements
     this.formElements = {
@@ -815,12 +868,12 @@ class BookingModal {
     this.stateManager = new FormStateManager();
     this.phoneFormatter = new PhoneFormatter('phone');
 
+    // Calendar management system
+    this.calendarManager = new CalendarManager(this.api, this.dateManager);
+
     // Phase 5: Payment processing system
     this.paymentProcessor = new PaymentProcessor();
-    this.bookingFlowManager = new BookingFlowManager(this, this.api, this.validator, this.stateManager, this.paymentProcessor);
-
-    // Calendar management system
-    this.calendarManager = new CalendarManager();
+    this.bookingFlowManager = new BookingFlowManager(this, this.api, this.validator, this.stateManager, this.paymentProcessor, this.calendarManager);
 
     // Initialize the modal system
     this.initializeModal();
@@ -837,16 +890,34 @@ class BookingModal {
   initializeModal() {
     if (!this.modal || !this.openButton) {
       console.warn('BookingModal: Required elements not found');
+      console.log('  - this.modal:', !!this.modal);
+      console.log('  - this.openButton:', !!this.openButton);
       return;
     }
 
+    console.log('🎯 Attaching click handler to openBookingModal button');
+
     // Open modal event listener
     this.openButton.addEventListener('click', (e) => {
+      console.log('🖱️ Book Now button clicked!');
       e.preventDefault();
+      e.stopPropagation();
+      console.log('📖 Calling openModal()...');
       this.openModal();
     });
 
-    // Close modal event listeners
+    // Close modal event listeners - attach to ALL close buttons (all steps)
+    const allCloseButtons = this.modal.querySelectorAll('.three-step-modal__close-btn');
+    allCloseButtons.forEach(closeBtn => {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('🚪 Close button clicked');
+        this.closeModal();
+      });
+    });
+    console.log(`  - Attached close handlers to ${allCloseButtons.length} close buttons`);
+
+    // Legacy close button (if exists)
     if (this.closeButton) {
       this.closeButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -990,6 +1061,22 @@ class BookingModal {
       formData.calendarDates = calendarDates; // Add calendar dates to validation
       const validation = this.validator.validateForm(formData);
 
+      // DEBUG: Log validation results
+      console.log('=== VALIDATION DEBUG ===');
+      console.log('Form Data:', formData);
+      console.log('Validation Result:', validation);
+      console.log('Field Results:', validation.fieldResults);
+
+      // Show which fields failed
+      for (const [fieldName, result] of Object.entries(validation.fieldResults)) {
+        if (!result.isValid) {
+          console.log(`❌ ${fieldName} FAILED:`, result.errors);
+        } else {
+          console.log(`✓ ${fieldName} passed`);
+        }
+      }
+      console.log('=======================');
+
       if (!validation.isValid) {
         this.showValidationErrors(validation.fieldResults);
         this.validator.showFormError('Please correct the errors above before continuing.');
@@ -1001,10 +1088,12 @@ class BookingModal {
       this.validator.showSuccess('Validating information...');
 
       // Check final availability
+      console.log('Checking availability for dates:', calendarDates);
       const availability = await this.api.checkAvailability(
         calendarDates.startDate,
         calendarDates.endDate
       );
+      console.log('Availability response:', availability);
 
       if (!availability.available) {
         this.validator.showFormError('Selected dates are no longer available. Please choose different dates.');
@@ -1012,20 +1101,45 @@ class BookingModal {
       }
 
       // Initialize payment form
+      console.log('Initializing payment processor...');
+      console.log('Square Config:', {
+        appId: this.paymentProcessor.appId,
+        locationId: this.paymentProcessor.locationId
+      });
       this.validator.showSuccess('Initializing secure payment form...');
-      await this.paymentProcessor.createCardPaymentForm();
+
+      try {
+        await this.paymentProcessor.createCardPaymentForm();
+        console.log('✅ Payment processor initialized successfully');
+      } catch (squareError) {
+        console.error('❌ Square payment initialization failed:', squareError);
+        console.error('Square error details:', {
+          message: squareError.message,
+          stack: squareError.stack
+        });
+        // Show error to user
+        this.validator.showFormError('Payment form failed to load. Please refresh the page and try again.');
+        throw squareError; // Stop the process
+      }
 
       // Show payment section
       this.stateManager.showPaymentSection();
       this.stateManager.setAvailabilityStatus(true, availability.message);
-      this.validator.showSuccess('Information validated. Please complete payment to finalize your booking.');
+      this.validator.showSuccess('Information validated. You can now proceed with your booking.');
 
     } catch (error) {
       console.error('Continue to payment error:', error);
+      console.error('Error stack:', error.stack);
+      console.error('Error details:', {
+        message: error.message,
+        name: error.name,
+        code: error.code
+      });
+
       if (error.message.includes('Square')) {
         this.validator.showFormError('Payment system unavailable. Please try again in a few minutes.');
       } else {
-        this.validator.showFormError('Unable to proceed to payment. Please try again.');
+        this.validator.showFormError(`Unable to proceed to payment: ${error.message}`);
       }
     } finally {
       this.stateManager.setSubmissionState(false);
@@ -1131,14 +1245,20 @@ class BookingModal {
     // Prevent body scrolling
     document.body.style.overflow = 'hidden';
 
+    // Scroll modal content to top
+    const modalContent = this.modal.querySelector('.modal-content');
+    if (modalContent) {
+      modalContent.scrollTop = 0;
+    }
+
     // Update focusable elements list
     this.updateFocusableElements();
 
-    // Focus the first form input
+    // Focus the modal header or close button instead of first input
     setTimeout(() => {
-      const firstInput = this.formElements.fullName;
-      if (firstInput) {
-        firstInput.focus();
+      const closeButton = this.closeButton;
+      if (closeButton) {
+        closeButton.focus();
       }
     }, 100);
 
@@ -1290,22 +1410,59 @@ class BookingModal {
   }
 }
 
-// Initialize the booking modal when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize the booking modal after modals are loaded
+function initializeBookingModal() {
+  console.log('🔄 initializeBookingModal() called');
+  console.log('  - Modal exists:', !!document.getElementById('bookingModal'));
+  console.log('  - Button exists:', !!document.getElementById('openBookingModal'));
+  console.log('  - CONFIG exists:', typeof window.CONFIG !== 'undefined');
+  console.log('  - Already initialized:', !!window.bookingModal);
+  // Prevent double initialization (check if it's actually a BookingModal instance, not the DOM element!)
+  if (window.bookingModal && window.bookingModal instanceof BookingModal) {
+    console.log('⏭️  BookingModal already initialized, skipping');
+    return;
+  }
+
+  // Clear if it's just the DOM element
+  if (window.bookingModal && !(window.bookingModal instanceof BookingModal)) {
+    console.log('⚠️  window.bookingModal was the DOM element, clearing it');
+    window.bookingModal = null;
+  }
+
   // Only initialize if we have the required configuration
   if (typeof window.CONFIG === 'undefined') {
-    console.warn('BookingModal: Configuration not loaded, waiting...');
+    console.warn('⚠️  BookingModal: Configuration not loaded, waiting 500ms...');
 
     // Wait a bit for config to load, then try again
     setTimeout(() => {
       if (typeof window.CONFIG !== 'undefined') {
+        console.log('✅ CONFIG now available, creating BookingModal');
         window.bookingModal = new BookingModal();
       } else {
-        console.error('BookingModal: Configuration not available');
+        console.error('❌ BookingModal: Configuration still not available after waiting');
       }
     }, 500);
   } else {
+    console.log('✅ All prerequisites met, creating BookingModal');
     window.bookingModal = new BookingModal();
+  }
+}
+
+// Wait for modals to be loaded by modal-loader.js
+document.addEventListener('modalsLoaded', () => {
+  console.log('📦 modalsLoaded event received in bookNow.js');
+  initializeBookingModal();
+});
+
+// Fallback: If modalsLoaded event already fired or modal-loader not present
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('📄 DOMContentLoaded event in bookNow.js');
+  // Check if modal already exists (direct HTML, not loaded dynamically)
+  if (document.getElementById('bookingModal')) {
+    console.log('✓ Modal found in DOM on DOMContentLoaded, initializing...');
+    initializeBookingModal();
+  } else {
+    console.log('⏳ Modal not found in DOM on DOMContentLoaded, waiting for modalsLoaded event');
   }
 });
 
@@ -1576,21 +1733,16 @@ class PaymentProcessor {
         style: {
           '.input-container': {
             borderColor: '#d1d5db',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontFamily: 'inherit'
+            borderRadius: '8px'
           },
           '.input-container.is-focus': {
-            borderColor: 'var(--color-primary, #01B0BB)',
-            borderWidth: '2px'
+            borderColor: '#01b0bb'
           },
           '.input-container.is-error': {
-            borderColor: '#ef4444',
-            borderWidth: '2px'
+            borderColor: '#ef4444'
           },
           '.message-text': {
-            color: '#ef4444',
-            fontSize: '14px'
+            color: '#ef4444'
           },
           '.message-icon': {
             color: '#ef4444'
@@ -1755,6 +1907,8 @@ class PaymentProcessor {
     this.isInitialized = false;
   }
 }
+// Expose PaymentProcessor globally for three-step-modal compatibility
+window.PaymentProcessor = PaymentProcessor;
 
 /**
  * ErrorRecoveryManager Class - Handle payment and booking failures
@@ -2103,23 +2257,30 @@ class FormValidator {
 
   /**
    * Get current form data
+   * Reads directly from input fields since they're in three-step modal, not in form tag
    */
   getFormData() {
-    const form = document.getElementById('dumpsterBookingForm');
-    if (!form) return {};
+    const getValue = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.value : '';
+    };
 
-    const formData = new FormData(form);
-    const data = {};
+    const getChecked = (id) => {
+      const element = document.getElementById(id);
+      return element ? element.checked : false;
+    };
 
-    // Convert FormData to regular object
-    for (const [key, value] of formData.entries()) {
-      data[key] = value;
-    }
-
-    // Special handling for checkbox
-    data.agreeTos = form.querySelector('#agreeTos')?.checked || false;
-
-    return data;
+    return {
+      fullName: getValue('fullName'),
+      email: getValue('email'),
+      phone: getValue('phone'),
+      dropoffAddress: getValue('dropoffAddress'),
+      dropoffCity: getValue('dropoffCity'),
+      dropoffZip: getValue('dropoffZip'),
+      dropoffNotes: getValue('dropoffNotes'),
+      timeSlot: getValue('timeSlot'),
+      agreeTos: getChecked('agreeTos')
+    };
   }
 
   /**
@@ -2255,9 +2416,15 @@ class FormStateManager {
     // Show validation feedback
     const statusElement = document.getElementById('form-status');
     if (statusElement) {
-      statusElement.innerHTML = '<div class="form-status info">Form validation is now active</div>';
+      // Create validation message safely
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'form-status info';
+      messageDiv.textContent = 'Form validation is now active';
+      statusElement.textContent = '';
+      statusElement.appendChild(messageDiv);
+
       setTimeout(() => {
-        statusElement.innerHTML = '';
+        statusElement.textContent = '';
       }, 2000);
     }
   }
@@ -2409,12 +2576,13 @@ class FormStateManager {
  * BookingFlowManager Class - Complete booking flow management with payment processing
  */
 class BookingFlowManager {
-  constructor(modal, api, validator, stateManager, paymentProcessor) {
+  constructor(modal, api, validator, stateManager, paymentProcessor, calendarManager) {
     this.modal = modal;
     this.api = api;
     this.validator = validator;
     this.stateManager = stateManager;
     this.paymentProcessor = paymentProcessor;
+    this.calendarManager = calendarManager;
     this.currentBookingData = null;
     this.errorRecoveryManager = new ErrorRecoveryManager(this);
     this.securityManager = new SecurityManager();
@@ -2431,9 +2599,24 @@ class BookingFlowManager {
 
       // Step 1: Validate form data
       const formData = this.validator.getFormData();
+
+      // Add calendar dates to form data
+      formData.calendarDates = this.calendarManager.getSelectedDates();
+
       const validation = this.validator.validateForm(formData);
 
       if (!validation.isValid) {
+        console.error('❌ Form validation failed:');
+        console.error('📋 Form data:', formData);
+        console.error('🔍 Validation results:', validation.fieldResults);
+
+        // Log specific failed fields
+        Object.entries(validation.fieldResults).forEach(([field, result]) => {
+          if (!result.isValid) {
+            console.error(`  ❌ ${field}: ${result.errors.join(', ')}`);
+          }
+        });
+
         this.showValidationErrors(validation.fieldResults);
         throw new Error('Please correct form errors before continuing.');
       }
@@ -2523,25 +2706,17 @@ class BookingFlowManager {
    * Handle successful booking with payment confirmation
    */
   async handleBookingSuccess(bookingResult, paymentResult, formData) {
-    this.validator.showSuccess('Booking confirmed! You will receive a confirmation email shortly.');
-
-    // Show success details with payment info
-    const successMessage = this.createSuccessMessage(bookingResult, paymentResult, formData);
-    this.updateStatusMessage(successMessage, 'success');
-
     // Store booking reference for potential future use
     this.currentBookingData = {
       bookingMessage: bookingResult.message || 'Booking confirmed successfully',
       paymentId: paymentResult.paymentId,
       amount: paymentResult.amount / 100, // Convert back from cents
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      formData: formData // Store form data for confirmation screen
     };
 
-    // Auto-close modal after delay
-    setTimeout(() => {
-      this.modal.closeModal();
-      this.stateManager.resetForm();
-    }, 7000); // Longer delay to show success message
+    // Show Step 4 confirmation screen instead of auto-closing
+    this.showConfirmationScreen(formData);
   }
 
   /**
@@ -2589,25 +2764,65 @@ class BookingFlowManager {
    * Create success message with payment details
    */
   createSuccessMessage(bookingResult, paymentResult, formData) {
-    return `
-      <div class="booking-success">
-        <h3>🎉 Booking Confirmed!</h3>
-        <p>${bookingResult.message || 'Your dumpster rental has been successfully booked.'}</p>
-        <div class="booking-details">
-          <p><strong>Delivery:</strong> ${this.formatDate(formData.deliveryDate)} at ${this.formatTimeSlot(formData.timeSlot)}</p>
-          <p><strong>Pickup:</strong> ${this.formatDate(formData.pickupDate)}</p>
-          <p><strong>Amount Charged:</strong> $${(paymentResult.amount / 100).toFixed(2)}</p>
-          <p><strong>Payment ID:</strong> ${paymentResult.paymentId}</p>
-          <p><strong>Confirmation:</strong> ${bookingResult.confirmation_number || 'EMAIL_CONFIRMATION'}</p>
-        </div>
-        <p class="booking-next-steps">
-          <strong>Next Steps:</strong><br>
-          • You will receive a confirmation email within 5 minutes<br>
-          • Our team will contact you the day before delivery<br>
-          • Please ensure clear access to your driveway
-        </p>
-      </div>
-    `;
+    // Create DOM elements safely to prevent XSS
+    const container = document.createElement('div');
+    container.className = 'booking-success';
+
+    // Create heading
+    const heading = document.createElement('h3');
+    heading.textContent = '🎉 Booking Confirmed!';
+    container.appendChild(heading);
+
+    // Create message paragraph
+    const messagePara = document.createElement('p');
+    messagePara.textContent = bookingResult.message || 'Your dumpster rental has been successfully booked.';
+    container.appendChild(messagePara);
+
+    // Create booking details section
+    const detailsDiv = document.createElement('div');
+    detailsDiv.className = 'booking-details';
+
+    // Helper function to create detail paragraph
+    const createDetail = (label, value) => {
+      const p = document.createElement('p');
+      const strong = document.createElement('strong');
+      strong.textContent = label + ': ';
+      p.appendChild(strong);
+      p.appendChild(document.createTextNode(value));
+      return p;
+    };
+
+    // Add all booking details
+    detailsDiv.appendChild(createDetail('Delivery',
+      `${this.formatDate(formData.deliveryDate)} at ${this.formatTimeSlot(formData.timeSlot)}`));
+    detailsDiv.appendChild(createDetail('Pickup',
+      this.formatDate(formData.pickupDate)));
+    detailsDiv.appendChild(createDetail('Amount Charged',
+      `$${(paymentResult.amount / 100).toFixed(2)}`));
+    detailsDiv.appendChild(createDetail('Payment ID',
+      paymentResult.paymentId));
+    detailsDiv.appendChild(createDetail('Confirmation',
+      bookingResult.confirmation_number || 'EMAIL_CONFIRMATION'));
+
+    container.appendChild(detailsDiv);
+
+    // Create next steps paragraph
+    const nextStepsPara = document.createElement('p');
+    nextStepsPara.className = 'booking-next-steps';
+
+    const nextStepsStrong = document.createElement('strong');
+    nextStepsStrong.textContent = 'Next Steps:';
+    nextStepsPara.appendChild(nextStepsStrong);
+    nextStepsPara.appendChild(document.createElement('br'));
+    nextStepsPara.appendChild(document.createTextNode('• You will receive a confirmation email within 5 minutes'));
+    nextStepsPara.appendChild(document.createElement('br'));
+    nextStepsPara.appendChild(document.createTextNode('• Our team will contact you the day before delivery'));
+    nextStepsPara.appendChild(document.createElement('br'));
+    nextStepsPara.appendChild(document.createTextNode('• Please ensure clear access to your driveway'));
+
+    container.appendChild(nextStepsPara);
+
+    return container;
   }
 
   /**
@@ -2646,12 +2861,16 @@ class BookingFlowManager {
   updateStatusMessage(message, type = 'info') {
     const statusElement = document.getElementById('form-status');
     if (statusElement) {
+      // Always use textContent for safety - only accepts strings
       if (typeof message === 'string') {
         statusElement.textContent = message;
+        statusElement.className = `form-status ${type}`;
       } else {
-        statusElement.innerHTML = message;
+        // If a DOM element is passed, use it directly
+        statusElement.textContent = '';
+        statusElement.appendChild(message);
+        statusElement.className = `form-status ${type}`;
       }
-      statusElement.className = `form-status ${type}`;
     }
   }
 
@@ -2660,6 +2879,108 @@ class BookingFlowManager {
       if (!result.isValid && result.errors.length > 0) {
         this.validator.showFieldError(fieldName, result.errors[0]);
       }
+    }
+  }
+
+  /**
+   * Show Step 4 confirmation screen with booking details
+   * Replaces the auto-close behavior after successful payment
+   */
+  showConfirmationScreen(formData) {
+    console.log('🎉 Showing confirmation screen (Step 4)');
+
+    // Get calendar dates
+    const calendarDates = this.calendarManager.getSelectedDates();
+
+    // Format dates for display
+    const deliveryDate = this.formatConfirmationDate(calendarDates.startDate);
+    const pickupDate = this.formatConfirmationDate(calendarDates.endDate);
+
+    // Format location
+    const location = `${formData.dropoffAddress || formData.dropoff_address}, ${formData.dropoffCity || formData.dropoff_city}`;
+
+    // Populate confirmation fields
+    document.getElementById('confirmationDeliveryDate').textContent = deliveryDate;
+    document.getElementById('confirmationPickupDate').textContent = pickupDate;
+    document.getElementById('confirmationLocation').textContent = location;
+
+    // Navigate to Step 4
+    this.goToStep(4);
+
+    // Setup button handlers
+    this.setupConfirmationButtons();
+  }
+
+  /**
+   * Navigate to a specific step (including Step 4)
+   */
+  goToStep(stepNumber) {
+    // Hide all steps
+    const allSteps = document.querySelectorAll('.three-step__step');
+    allSteps.forEach(step => {
+      step.classList.remove('active');
+    });
+
+    // Show target step
+    const targetStep = document.getElementById(`step-${stepNumber}`);
+    if (targetStep) {
+      targetStep.classList.add('active');
+      console.log(`✅ Navigated to Step ${stepNumber}`);
+    } else {
+      console.error(`❌ Step ${stepNumber} not found`);
+    }
+  }
+
+  /**
+   * Format date for confirmation screen (e.g., "Oct 26, 2024")
+   */
+  formatConfirmationDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString + 'T00:00:00');
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  /**
+   * Setup button handlers for confirmation screen
+   */
+  setupConfirmationButtons() {
+    // "Book Another Dumpster" button
+    const bookAnotherBtn = document.getElementById('bookAnotherDumpster');
+    if (bookAnotherBtn) {
+      bookAnotherBtn.onclick = () => {
+        console.log('🔄 Book Another Dumpster clicked');
+        // Reset form and go back to Step 1
+        this.stateManager.resetForm();
+        this.modal.resetForm();
+        this.goToStep(1);
+        // Reset Square payment flag
+        window.squarePaymentInitialized = false;
+      };
+    }
+
+    // "Back to Home" button
+    const backToHomeBtn = document.getElementById('backToHome');
+    if (backToHomeBtn) {
+      backToHomeBtn.onclick = () => {
+        console.log('🏠 Back to Home clicked');
+        // Close the modal and reset
+        this.modal.closeModal();
+        this.stateManager.resetForm();
+        // Reset Square payment flag
+        window.squarePaymentInitialized = false;
+      };
+    }
+
+    // Close button in confirmation header
+    const confirmationCloseBtn = document.querySelector('.three-step-modal__close-btn--confirmation');
+    if (confirmationCloseBtn) {
+      confirmationCloseBtn.onclick = () => {
+        console.log('❌ Confirmation close clicked');
+        this.modal.closeModal();
+        this.stateManager.resetForm();
+        // Reset Square payment flag
+        window.squarePaymentInitialized = false;
+      };
     }
   }
 }
@@ -2673,7 +2994,9 @@ class BookingFlowManager {
  * Handles calendar rendering, date selection, and availability checking
  */
 class CalendarManager {
-  constructor() {
+  constructor(api, dateManager) {
+    this.api = api;
+    this.dateManager = dateManager;
     this.currentMonth = new Date();
     this.selectedStartDate = null;
     this.selectedEndDate = null;
@@ -2694,7 +3017,7 @@ class CalendarManager {
     if (this.isInitialized) return;
 
     try {
-      this.availabilityChecker = new AvailabilityChecker();
+      this.availabilityChecker = new AvailabilityChecker(this.api, this.dateManager);
       this.setupEventListeners();
       await this.render();
       await this.loadAvailability();
@@ -2799,7 +3122,8 @@ class CalendarManager {
     const grid = document.getElementById('calendarGrid');
     if (!grid) return;
 
-    grid.innerHTML = '';
+    // Clear grid safely
+    grid.textContent = '';
 
     const year = this.currentMonth.getFullYear();
     const month = this.currentMonth.getMonth();
@@ -2838,20 +3162,19 @@ class CalendarManager {
     // Add CSS classes based on date state
     if (date.getMonth() !== currentMonth) {
       button.classList.add('other-month');
-      button.disabled = true;
+      // Don't disable other-month dates - allow booking across months
     }
 
-    if (this.isDateDisabled(date)) {
-      button.classList.add('disabled');
-      button.disabled = true;
-      button.setAttribute('aria-disabled', 'true');
-    }
-
+    // Check if date is fully booked first (takes priority over regular disabled)
     if (this.isDateFullyBooked(date)) {
       button.classList.add('fully-booked');
       button.disabled = true;
       button.setAttribute('aria-disabled', 'true');
       button.setAttribute('aria-label', `${this.formatDateForScreen(date)} - Fully booked`);
+    } else if (this.isDateDisabled(date)) {
+      button.classList.add('disabled');
+      button.disabled = true;
+      button.setAttribute('aria-disabled', 'true');
     }
 
     // Mark selected dates
@@ -2951,42 +3274,14 @@ class CalendarManager {
    * Load availability data from backend
    */
   async loadAvailability() {
-    if (!this.availabilityChecker) return;
-
-    // Skip availability checking in development mode
-    if (window.CONFIG?.isDevelopment) {
-      if (window.CONFIG?.debug?.enableLogging) {
-        console.log('📅 Skipping availability check in development mode');
-      }
-      // Add some mock fully booked dates for testing
-      this.updateAvailability({
-        fullyBookedDates: [
-          '2024-12-25', // Christmas
-          '2024-12-31', // New Year's Eve
-          '2025-01-01'  // New Year's Day
-        ]
-      });
-      return;
-    }
+    if (!this.api) return;
 
     try {
-      const year = this.currentMonth.getFullYear();
-      const month = this.currentMonth.getMonth();
-
-      // Get first and last days of visible calendar
-      const firstVisible = new Date(year, month, 1);
-      firstVisible.setDate(firstVisible.getDate() - firstVisible.getDay());
-
-      const lastVisible = new Date(firstVisible);
-      lastVisible.setDate(firstVisible.getDate() + 41);
-
-      const availabilityData = await this.availabilityChecker.checkAvailability(
-        this.formatDateString(firstVisible),
-        this.formatDateString(lastVisible)
-      );
+      // Get fully booked dates from the API
+      const fullyBookedDates = await this.api.getFullyBookedDates();
 
       // Update fully booked dates
-      this.updateAvailability(availabilityData);
+      this.updateAvailability({ fullyBookedDates });
 
     } catch (error) {
       console.warn('Failed to load calendar availability:', error);
@@ -3377,3 +3672,54 @@ if (window.CONFIG?.isDevelopment && window.CONFIG?.debug?.enableLogging) {
     window.bookingDebug.checkCORS();
   }, 1000);
 }
+// =============================================================================
+// GLOBAL PAYMENT INITIALIZATION FUNCTION
+// Exposed for three-step-modal.js compatibility
+// =============================================================================
+
+/**
+ * Initialize Square payment form
+ * Called by three-step-modal.js when step 3 is shown
+ */
+window.initializeSquarePayment = async function() {
+  console.log('🔧 initializeSquarePayment() called');
+  
+  if (window.squarePaymentInitialized) {
+    console.log('✓ Square payment already initialized');
+    return;
+  }
+  
+  try {
+    // Get the bookingModal instance if it exists
+    if (window.bookingModal && window.bookingModal.paymentProcessor) {
+      console.log('📦 Using existing PaymentProcessor from bookingModal');
+      await window.bookingModal.paymentProcessor.createCardPaymentForm();
+      window.squarePaymentInitialized = true;
+      console.log('✅ Square payment form created successfully');
+    } else {
+      // Create standalone PaymentProcessor
+      console.log('🆕 Creating standalone PaymentProcessor');
+      const PaymentProcessorClass = window.PaymentProcessor || PaymentProcessor;
+      const processor = new PaymentProcessorClass();
+      await processor.initialize();
+      await processor.createCardPaymentForm();
+      window.squarePaymentInitialized = true;
+      console.log('✅ Square payment form created successfully (standalone)');
+    }
+  } catch (error) {
+    console.error('❌ Failed to initialize Square payment:', error);
+    
+    // Show error in the card container
+    const cardContainer = document.getElementById('card-container');
+    if (cardContainer) {
+      cardContainer.innerHTML = `
+        <div style="padding: 1.5rem; background: #fee; border: 1px solid #fcc; border-radius: 8px; color: #c00;">
+          <strong>Payment Error:</strong> ${error.message}
+          <br><small>Please refresh the page and try again.</small>
+        </div>
+      `;
+    }
+  }
+};
+
+console.log('✅ window.initializeSquarePayment() is now available');
