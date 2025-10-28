@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script type="text/javascript" src="https://web.squarecdn.com/v1/square.js"></script>
+    <!-- Dynamically load Square SDK based on environment -->
+    <script type="text/javascript">
+      (function() {
+        const isLocalhost = window.location.hostname === 'localhost' ||
+                           window.location.hostname === '127.0.0.1' ||
+                           window.location.hostname.startsWith('192.168.');
+        const squareSDK = isLocalhost
+          ? 'https://sandbox.web.squarecdn.com/v1/square.js'  // Sandbox for development
+          : 'https://web.squarecdn.com/v1/square.js';         // Production
+        document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
+        console.log('🔧 Loading Square SDK:', squareSDK);
+      })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upper Arlington OH Dumpster Rental | $299 | Streamline</title>
