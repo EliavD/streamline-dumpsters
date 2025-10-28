@@ -105,6 +105,22 @@
   max-width: 480px;
 }
 
+/* Ensure junk confirmation content is visible */
+#junk-confirmation .confirmation__heading {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+#junk-confirmation .confirmation__description {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+#junk-confirmation .confirmation__details-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
 /* Header with Close Button */
 .three-step-modal__header--confirmation {
   display: flex;
