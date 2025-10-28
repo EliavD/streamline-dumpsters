@@ -73,9 +73,14 @@
   animation: fade-in 0.3s ease;
 }
 
-/* Junk Removal Confirmation - Make it work like booking modal steps */
+/* Junk Removal Confirmation - Hidden by default */
 #junk-confirmation.three-step__step--confirmation {
-  /* Remove absolute positioning - let it be a normal flex child */
+  display: none;
+}
+
+/* Junk Removal Confirmation - When visible, use flex layout */
+#junk-confirmation.three-step__step--confirmation[style*="display: flex"],
+#junkRemovalModal.showing-confirmation #junk-confirmation.three-step__step--confirmation {
   display: flex !important;
   flex-direction: column !important;
   flex: 1 1 auto !important;
