@@ -1709,13 +1709,13 @@ class PaymentProcessor {
       console.log('🔧 Initializing Square Payments:', {
         appId: this.appId,
         locationId: this.locationId,
-        environment: environment
+        environment: environment,
+        configSquare: window.CONFIG?.square
       });
 
-      // Initialize Square Payments with environment parameter
-      this.payments = await window.Square.payments(this.appId, this.locationId, {
-        environment: environment
-      });
+      // Initialize Square Payments with environment parameter as third argument
+      // Square SDK expects: Square.payments(appId, locationId, environment)
+      this.payments = await window.Square.payments(this.appId, this.locationId, environment);
       this.isInitialized = true;
 
       console.log('✓ Square Payments initialized successfully in', environment, 'mode');
