@@ -97,7 +97,7 @@ BROWSER SUPPORT:
 
 .contact-form input:invalid,
 .contact-form textarea:invalid {
-  border-color: #dc2626;
+  border-color: var(--color-error);
 }
 
 .contact-form input:invalid:focus,
@@ -127,7 +127,7 @@ BROWSER SUPPORT:
 
 .form-message.error {
   background: #fef2f2;
-  color: #dc2626;
+  color: var(--color-error);
   border: 1px solid #fecaca;
   display: block;
 }
