@@ -73,6 +73,18 @@
   animation: fade-in 0.3s ease;
 }
 
+/* Junk Removal Confirmation - Specific styling for modal context */
+#junk-confirmation.three-step__step--confirmation {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
+  border-radius: 20px;
+  z-index: 10;
+}
+
 /* Header with Close Button */
 .three-step-modal__header--confirmation {
   display: flex;
