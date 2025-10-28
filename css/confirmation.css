@@ -1,0 +1,268 @@
+/**
+ * ========================================
+ * BOOKING CONFIRMATION SCREEN (STEP 4)
+ * ========================================
+ * Styles for the "All set — let's roll!" confirmation screen
+ * Shown after successful dumpster rental booking payment
+ */
+
+/* Step 4 Container */
+.three-step__step--confirmation {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.three-step__step--confirmation.active {
+  display: flex;
+}
+
+/* Header with Close Button */
+.three-step-modal__header--confirmation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1rem 0;
+  background: transparent;
+  border-bottom: none;
+}
+
+.three-step-modal__header-spacer {
+  width: 48px; /* Balance the close button */
+}
+
+.three-step-modal__close-btn--confirmation {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: #111418;
+  cursor: pointer;
+  padding: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.three-step-modal__close-btn--confirmation:hover {
+  color: #617589;
+}
+
+/* Confirmation Body */
+.three-step-modal__body--confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Icon Wrapper - Dumpster with Checkmark */
+.confirmation__icon-wrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation__icon-dumpster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: rgba(1, 176, 187, 0.3); /* Teal at 30% opacity */
+}
+
+.confirmation__icon-check {
+  position: relative;
+  z-index: 10;
+  width: 56px;
+  height: 56px;
+  color: #01b0bb; /* Solid teal */
+}
+
+/* Heading */
+.confirmation__heading {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111418;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+/* Description */
+.confirmation__description {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #3d4855; /* Darker text color for better readability */
+  margin: 0 0 2rem;
+  max-width: 400px;
+}
+
+/* Details Card */
+.confirmation__details-card {
+  width: 100%;
+  background: #e8f9fa; /* Light teal background */
+  border: 1px solid #b3e5e9; /* Teal border */
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.confirmation__detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.confirmation__detail-row:not(:last-child) {
+  border-bottom: 1px solid #c7ecef; /* Lighter teal divider */
+}
+
+.confirmation__detail-label {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #617589;
+  flex-shrink: 0;
+}
+
+.confirmation__detail-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #111418;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* Action Buttons */
+.confirmation__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.confirmation__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  outline: none;
+}
+
+.confirmation__btn--primary {
+  background: #01b0bb;
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation__btn--primary:hover {
+  background: #019aa3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.confirmation__btn--primary:active {
+  background: #018892;
+  transform: translateY(1px);
+}
+
+.confirmation__btn--secondary {
+  background: transparent;
+  color: #01b0bb;
+  border: 1px solid rgba(1, 176, 187, 0.5);
+}
+
+.confirmation__btn--secondary:hover {
+  background: rgba(1, 176, 187, 0.1);
+  border-color: #01b0bb;
+}
+
+.confirmation__btn--secondary:active {
+  background: rgba(1, 176, 187, 0.15);
+  transform: translateY(1px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .confirmation__heading {
+    font-size: 1.5rem; /* 24px on mobile */
+  }
+
+  .confirmation__description {
+    font-size: 0.9375rem; /* 15px on mobile */
+  }
+
+  .three-step-modal__body--confirmation {
+    padding: 1.5rem 1rem;
+  }
+
+  .confirmation__icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+  }
+
+  .confirmation__icon-check {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Dark mode support (optional - matches design system) */
+@media (prefers-color-scheme: dark) {
+  .three-step-modal__close-btn--confirmation {
+    color: #e5e7eb;
+  }
+
+  .three-step-modal__close-btn--confirmation:hover {
+    color: #9ca3af;
+  }
+
+  .confirmation__heading {
+    color: #ffffff;
+  }
+
+  .confirmation__description {
+    color: #9ca3af;
+  }
+
+  .confirmation__details-card {
+    background: rgba(16, 25, 34, 0.5);
+    border-color: #374151;
+  }
+
+  .confirmation__detail-row:not(:last-child) {
+    border-color: #374151;
+  }
+
+  .confirmation__detail-label {
+    color: #9ca3af;
+  }
+
+  .confirmation__detail-value {
+    color: #e5e7eb;
+  }
+}

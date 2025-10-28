@@ -1,0 +1,116 @@
+<!-- Junk Removal Modal Component -->
+<!-- Styled to match the three-step booking modal design -->
+<div id="junkRemovalModal" class="modal modal--three-step" role="dialog" aria-modal="true"
+     aria-labelledby="junk-title" aria-hidden="true" hidden>
+  <div class="modal-content">
+
+    <!-- Modal Header -->
+    <header class="three-step-modal__header three-step-modal__header--step-1">
+      <h1 id="junk-title" class="three-step-modal__title">Request Junk Removal Service</h1>
+      <button type="button" class="three-step-modal__close-btn" id="closeJunkModal" aria-label="Close junk removal form">&times;</button>
+    </header>
+
+    <!-- Junk Removal Form -->
+    <form id="junkRemovalForm" novalidate>
+
+      <!-- Body -->
+      <div class="three-step-modal__body">
+
+        <!-- Contact Information Section -->
+        <div class="three-step__form-section">
+          <h2 class="three-step__form-section-title">Contact Information</h2>
+
+          <div class="three-step__form-group">
+            <label for="customerName" class="three-step__form-label">Full Name</label>
+            <input id="customerName" name="customerName" type="text" required
+                   class="three-step__form-input"
+                   autocomplete="name" aria-describedby="customerNameError"
+                   placeholder="John Doe">
+            <div class="three-step__error-message" id="customerNameError" role="alert"></div>
+          </div>
+
+          <div class="three-step__form-group">
+            <label for="customerPhone" class="three-step__form-label">Phone Number</label>
+            <input id="customerPhone" name="customerPhone" type="tel" required
+                   class="three-step__form-input"
+                   autocomplete="tel" aria-describedby="customerPhoneError"
+                   placeholder="(555) 123-4567">
+            <div class="three-step__error-message" id="customerPhoneError" role="alert"></div>
+          </div>
+
+          <div class="three-step__form-group">
+            <label for="customerEmail" class="three-step__form-label">
+              Email Address <span class="three-step__optional-label">(Optional)</span>
+            </label>
+            <input id="customerEmail" name="customerEmail" type="email"
+                   class="three-step__form-input"
+                   autocomplete="email" aria-describedby="customerEmailError"
+                   placeholder="john@example.com">
+            <div class="three-step__error-message" id="customerEmailError" role="alert"></div>
+          </div>
+
+          <div class="three-step__form-group">
+            <label for="customerZip" class="three-step__form-label">ZIP Code</label>
+            <input id="customerZip" name="customerZip" type="text" required
+                   class="three-step__form-input"
+                   autocomplete="postal-code" aria-describedby="customerZipError"
+                   placeholder="43085" maxlength="5" pattern="[0-9]{5}">
+            <div class="three-step__error-message" id="customerZipError" role="alert"></div>
+          </div>
+        </div>
+
+        <!-- Service Details Section -->
+        <div class="three-step__form-section">
+          <h2 class="three-step__form-section-title">Service Details</h2>
+
+          <div class="three-step__form-group">
+            <label for="serviceDescription" class="three-step__form-label">
+              What items need to be removed? <span class="three-step__optional-label">(Optional)</span>
+            </label>
+            <textarea id="serviceDescription" name="serviceDescription" rows="4"
+                      class="three-step__form-textarea"
+                      placeholder="Describe the items you need removed (furniture, appliances, debris, etc.)"
+                      aria-describedby="serviceDescriptionHelp"></textarea>
+            <div class="three-step__field-help" id="serviceDescriptionHelp">
+              Include quantity, size, and location details to help us provide an accurate quote
+            </div>
+          </div>
+
+          <div class="three-step__form-group">
+            <label for="servicePhotos" class="three-step__form-label">
+              Upload Photos <span class="three-step__optional-label">(Optional)</span>
+            </label>
+            <div class="photo-dropzone photo-upload-container" id="photoUploadZone">
+              <div class="upload-icon">📸</div>
+              <div class="upload-text">Click to upload or drag photos here</div>
+              <div class="upload-hint">Supports JPG, PNG up to 10MB each</div>
+              <input type="file" id="junkPhotos" name="servicePhotos"
+                     accept="image/jpeg,image/png,image/jpg"
+                     multiple hidden
+                     aria-describedby="servicePhotosHelp">
+            </div>
+            <div class="photo-preview-container photo-preview" id="photoPreview"></div>
+            <div class="three-step__field-help" id="servicePhotosHelp">
+              Photos help us provide a more accurate quote for your junk removal
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Status Messages -->
+        <div id="junk-form-status" class="form-status" role="status" aria-live="polite"></div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="three-step-modal__footer">
+        <button type="submit" class="three-step-modal__btn three-step-modal__btn-primary" id="submitJunkRequest">
+          Submit Request
+        </button>
+        <button type="button" class="three-step-modal__btn three-step-modal__btn-secondary" id="cancelJunkRequest">
+          Cancel
+        </button>
+      </footer>
+
+    </form>
+  </div>
+</div>

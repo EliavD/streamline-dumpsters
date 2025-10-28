@@ -1,0 +1,681 @@
+/*
+================================================================================
+THREE-STEP-MODAL.CSS - Modern Three-Step Booking Modal
+================================================================================
+
+PURPOSE:
+Modern, mobile-first three-step booking flow inspired by provided mockups.
+Converted from Tailwind CSS to vanilla CSS using existing design system.
+
+FEATURES:
+- Three-step progressive disclosure (dates → details → payment)
+- Step progress indicator
+- Mobile-optimized bottom sheet design
+- Smooth transitions between steps
+- Preserves all existing form field IDs and functionality
+
+DESIGN TOKENS:
+- Primary color: #01b0bb (from variables.css)
+- Uses existing CSS variable system
+- Matches site's design language
+
+================================================================================
+*/
+
+/* =============================================================================
+   MODAL OVERLAY & CONTAINER
+   ============================================================================= */
+
+/* Override base modal styles for three-step variant */
+.modal.modal--three-step {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0;
+}
+
+/* Keep the base modal's show/hide behavior */
+.modal.modal--three-step:not([hidden]) {
+  display: flex;
+}
+
+.modal.modal--three-step .modal-content {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  border-radius: 20px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border: none; /* Remove old modal border */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.modal.modal--three-step:not([hidden]) .modal-content {
+  transform: translateY(0);
+}
+
+/* Desktop: Center modal */
+@media (min-width: 768px) {
+  .modal.modal--three-step {
+    align-items: center;
+  }
+
+  .modal.modal--three-step .modal-content {
+    border-radius: 20px;
+    max-height: 85vh;
+  }
+}
+
+/* =============================================================================
+   MODAL HEADER
+   ============================================================================= */
+
+.three-step-modal__header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.three-step-modal__header--step-1 {
+  justify-content: space-between;
+}
+
+.three-step-modal__header--step-2,
+.three-step-modal__header--step-3 {
+  justify-content: center;
+  position: relative;
+}
+
+.three-step-modal__back-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 1rem;
+  transition: color 0.2s ease;
+}
+
+.three-step-modal__back-btn:hover {
+  color: var(--color-gray-900);
+}
+
+.three-step-modal__back-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.three-step-modal__close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease;
+}
+
+/* Position close button absolutely on steps 2 and 3 */
+.three-step-modal__header--step-2 .three-step-modal__close-btn,
+.three-step-modal__header--step-3 .three-step-modal__close-btn {
+  position: absolute;
+  right: 1rem;
+}
+
+.three-step-modal__close-btn:hover {
+  color: var(--color-gray-900);
+}
+
+.three-step-modal__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0;
+}
+
+/* =============================================================================
+   STEP PROGRESS INDICATOR
+   ============================================================================= */
+
+.three-step-progress {
+  padding: 1.5rem 1.5rem 1rem;
+  flex-shrink: 0;
+}
+
+.three-step-progress__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-600);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.three-step-progress__bar {
+  width: 100%;
+  height: 0.5rem;
+  background-color: var(--color-gray-200);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.three-step-progress__fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.three-step-progress__fill--step-1 {
+  width: 33.33%;
+}
+
+.three-step-progress__fill--step-2 {
+  width: 66.66%;
+}
+
+.three-step-progress__fill--step-3 {
+  width: 100%;
+}
+
+/* =============================================================================
+   MODAL BODY (SCROLLABLE CONTENT)
+   ============================================================================= */
+
+.three-step-modal__body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =============================================================================
+   STEP CONTAINERS
+   ============================================================================= */
+
+.three-step__step {
+  display: none;
+}
+
+.three-step__step.active {
+  display: block;
+  animation: fadeSlideIn 0.3s ease;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =============================================================================
+   STEP 1: DATE SELECTION
+   ============================================================================= */
+
+.three-step__calendar-wrapper {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.three-step__date-summary {
+  background: rgba(1, 176, 187, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.three-step__date-summary-item {
+  text-align: center;
+  flex: 1;
+}
+
+.three-step__date-summary-label {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.three-step__date-summary-value {
+  font-weight: 700;
+  color: var(--color-gray-900);
+  font-size: 0.9375rem;
+}
+
+.three-step__time-section {
+  margin-top: 1.5rem;
+}
+
+.three-step__section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+}
+
+/* Notice section for rental period information */
+.three-step__notice {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-primary-50, #f0fdfe);
+  border-left: 3px solid var(--color-primary-500, #01b0bb);
+  border-radius: 6px;
+}
+
+.three-step__notice-text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-gray-700, #334155);
+  line-height: 1.5;
+}
+
+.three-step__time-select {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--color-gray-900);
+  background-color: white;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 3rem;
+  transition: border-color 0.2s ease;
+}
+
+.three-step__time-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+/* =============================================================================
+   STEP 2: DELIVERY DETAILS & CONTACT INFO
+   ============================================================================= */
+
+.three-step__form-section {
+  margin-bottom: 2rem;
+}
+
+.three-step__form-section:last-child {
+  margin-bottom: 0;
+}
+
+.three-step__form-section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 1.5rem;
+}
+
+.three-step__form-group {
+  margin-bottom: 1rem;
+}
+
+.three-step__form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-gray-700);
+  margin-bottom: 0.375rem;
+}
+
+.three-step__form-input,
+.three-step__form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--color-gray-900);
+  background-color: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.three-step__form-input::placeholder,
+.three-step__form-textarea::placeholder {
+  color: var(--color-gray-400);
+}
+
+.three-step__form-input:focus,
+.three-step__form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+.three-step__form-input.error,
+.three-step__form-textarea.error {
+  border-color: #dc2626;
+}
+
+.three-step__form-textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+.three-step__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.three-step__optional-label {
+  color: var(--color-gray-500);
+  font-weight: 400;
+}
+
+/* =============================================================================
+   STEP 3: CHECKOUT & PAYMENT
+   ============================================================================= */
+
+.three-step__payment-card {
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.three-step__payment-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin-bottom: 1rem;
+}
+
+.three-step__payment-summary {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.three-step__payment-line-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.three-step__payment-line-item--total {
+  font-weight: 700;
+}
+
+.three-step__payment-divider {
+  height: 1px;
+  background-color: var(--color-gray-300);
+  margin: 0.75rem 0;
+}
+
+.three-step__payment-total {
+  font-size: 1rem;
+  color: var(--color-gray-900);
+}
+
+.three-step__payment-amount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.three-step__payment-description {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+  line-height: 1.5;
+}
+
+.three-step__payment-description p {
+  margin: 0 0 0.5rem 0;
+}
+
+.three-step__payment-description p:last-child {
+  margin-bottom: 0;
+}
+
+.three-step__square-container {
+  min-height: 10rem;
+  background-color: var(--color-gray-50);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.three-step__square-placeholder {
+  color: var(--color-gray-500);
+  font-size: 0.875rem;
+}
+
+.three-step__terms-wrapper {
+  display: flex;
+  align-items: start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.three-step__terms-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  flex-shrink: 0;
+  border-radius: 0.25rem;
+  border: 2px solid var(--color-gray-300);
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
+.three-step__terms-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+.three-step__terms-label {
+  font-size: 0.875rem;
+  color: var(--color-gray-900);
+  line-height: 1.5;
+}
+
+.three-step__terms-label a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.three-step__terms-label a:hover {
+  text-decoration: underline;
+}
+
+/* =============================================================================
+   MODAL FOOTER
+   ============================================================================= */
+
+.three-step-modal__footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-gray-200);
+  flex-shrink: 0;
+  background: white;
+}
+
+.three-step-modal__footer--step-2 {
+  display: flex;
+  gap: 1rem;
+}
+
+.three-step-modal__btn {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.three-step-modal__btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.three-step-modal__btn-primary:hover {
+  background-color: var(--color-primary-700);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(1, 176, 187, 0.3);
+}
+
+.three-step-modal__btn-primary:active {
+  transform: translateY(0);
+}
+
+.three-step-modal__btn-primary:disabled {
+  background-color: var(--color-gray-300);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.three-step-modal__btn-secondary {
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-800);
+}
+
+.three-step-modal__btn-secondary:hover {
+  background-color: var(--color-gray-300);
+}
+
+.three-step-modal__btn--half {
+  width: auto;
+  flex: 1;
+}
+
+/* =============================================================================
+   ERROR MESSAGES
+   ============================================================================= */
+
+.three-step__error-message {
+  font-size: 0.875rem;
+  color: #dc2626;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+.three-step__error-message.visible {
+  display: block;
+}
+
+.three-step__field-help {
+  font-size: 0.8125rem;
+  color: var(--color-gray-500);
+  margin-top: 0.375rem;
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   LOADING STATES
+   ============================================================================= */
+
+.three-step__loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.three-step__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =============================================================================
+   MOBILE PULL HANDLE (Step 2 style)
+   ============================================================================= */
+
+.three-step-modal__pull-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+  flex-shrink: 0;
+}
+
+.three-step-modal__pull-bar {
+  width: 2.5rem;
+  height: 0.375rem;
+  background-color: var(--color-gray-300);
+  border-radius: 9999px;
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+.three-step__hidden {
+  display: none !important;
+}
+
+.three-step__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =============================================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================================= */
+
+@media (min-width: 640px) {
+  .three-step-modal__body {
+    padding: 2rem;
+  }
+
+  .three-step__section-title {
+    font-size: 1.5rem;
+  }
+
+  .three-step__form-section-title {
+    font-size: 1.75rem;
+  }
+}
