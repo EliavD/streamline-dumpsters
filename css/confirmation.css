@@ -73,30 +73,25 @@
   animation: fade-in 0.3s ease;
 }
 
-/* Junk Removal Confirmation - Specific styling for modal context */
+/* Junk Removal Confirmation - Make it work like booking modal steps */
 #junk-confirmation.three-step__step--confirmation {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: white;
-  border-radius: 20px;
-  z-index: 10;
-  display: flex !important;
+  /* Remove absolute positioning - let it be a normal flex child */
+  display: flex;
   flex-direction: column;
-  align-items: stretch;
-  overflow-y: auto;
+  flex: 1;
+  /* Fill the modal-content container */
+  min-height: 0;
 }
 
-/* Ensure junk confirmation body takes full width */
+/* Ensure junk confirmation body is centered and scrollable */
 #junk-confirmation .three-step-modal__body--confirmation {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 100%;
-  padding: 3rem 1.5rem;
+  align-items: center;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
 }
 
 /* Header with Close Button */
