@@ -105,20 +105,48 @@
   max-width: 480px;
 }
 
-/* Ensure junk confirmation content is visible */
-#junk-confirmation .confirmation__heading {
+/* Ensure junk confirmation content is visible - override any animations */
+#junkRemovalModal #junk-confirmation .confirmation__heading {
   opacity: 1 !important;
   transform: translateY(0) !important;
+  color: #111418 !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important; /* Disable all animations */
+  margin: 0 0 1rem !important;
 }
 
-#junk-confirmation .confirmation__description {
+#junkRemovalModal #junk-confirmation .confirmation__description {
   opacity: 1 !important;
   transform: translateY(0) !important;
+  color: #3d4855 !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important; /* Disable all animations */
+  margin: 0 0 2.5rem !important;
+  max-width: 420px !important;
 }
 
-#junk-confirmation .confirmation__details-card {
+#junkRemovalModal #junk-confirmation .confirmation__details-card {
   opacity: 1 !important;
   transform: translateY(0) !important;
+  background: #e8f9fa !important;
+  border: 1px solid #b3e5e9 !important;
+  border-radius: 0.75rem !important;
+  padding: 1.25rem 1.5rem !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important; /* Disable all animations */
+  width: 100% !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 2px 8px rgba(1, 176, 187, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
 }
 
 /* Header with Close Button */
