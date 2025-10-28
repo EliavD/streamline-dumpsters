@@ -40,31 +40,25 @@ document.addEventListener('DOMContentLoaded', function() {
     let autoScrollInterval;
     let reviewsPerView = 1;
 
-    // Fallback reviews in case API fails
+    // Real Google reviews (manually updated)
     const fallbackReviews = [
         {
-            author_name: "Sarah Johnson",
+            author_name: "Dan Gore",
             rating: 5,
-            text: "Excellent service! Same-day delivery as promised and the dumpster was perfect for our home renovation project. Very professional and transparent pricing.",
-            time: Date.now() - 86400000 // 1 day ago
+            text: "We had a great experience - Responsive, On time, easy to work with.",
+            time: new Date('2025-08-20').getTime()
         },
         {
-            author_name: "Mike Chen",
+            author_name: "Nick Fire",
             rating: 5,
-            text: "Streamline Dumpsters made our garage cleanout so much easier. Fair pricing, friendly service, and they picked it up right on time. Highly recommend!",
-            time: Date.now() - 172800000 // 2 days ago
+            text: "Amazing service! Thank you very much",
+            time: new Date('2025-06-26').getTime()
         },
         {
-            author_name: "Jennifer Davis",
+            author_name: "Rebecca Levings",
             rating: 5,
-            text: "Great local company! Used them for our kitchen remodel debris. Dumpster was clean, delivered exactly when they said it would be. Will use again.",
-            time: Date.now() - 259200000 // 3 days ago
-        },
-        {
-            author_name: "Robert Wilson",
-            rating: 4,
-            text: "Professional service from start to finish. The team was responsive and the pricing was very competitive. Made our construction project much smoother.",
-            time: Date.now() - 345600000 // 4 days ago
+            text: "Eli was very helpful explaining the dumpster process to me. Very pr...",
+            time: new Date('2025-06-25').getTime()
         }
     ];
 
@@ -72,6 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
         updateReviewsPerView();
         setupEventListeners();
+
+        // Clear old cache on init to force fresh fetch (comment out after first load)
+        // localStorage.removeItem('streamline_reviews');
+
         loadReviews();
 
         console.log('Reviews system initialized');
@@ -80,12 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update reviews per view based on screen size
     function updateReviewsPerView() {
         const width = window.innerWidth;
-        if (width >= 1024) {
-            reviewsPerView = config.reviewsPerView.desktop;
-        } else if (width >= 768) {
-            reviewsPerView = config.reviewsPerView.tablet;
+        if (width >= 768) {
+            // Desktop: show all 3, no carousel
+            reviewsPerView = 3;
         } else {
-            reviewsPerView = config.reviewsPerView.mobile;
+            // Mobile: show 1 at a time with carousel
+            reviewsPerView = 1;
         }
     }
 
@@ -145,46 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Load reviews from backend proxy or fallback
-    async function loadReviews() {
-        try {
-            // First try to load from cache
-            const cachedReviews = getCachedReviews();
-            if (cachedReviews && cachedReviews.length > 0) {
-                reviews = cachedReviews;
-                displayReviews();
-                startAutoScroll();
-                return;
-            }
-
-            // Try to fetch from backend proxy
-            const response = await fetch('/api/reviews', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                if (data.reviews && data.reviews.length > 0) {
-                    reviews = filterAndSortReviews(data.reviews);
-                    cacheReviews(reviews);
-                    displayReviews();
-                    startAutoScroll();
-                    console.log(`Loaded ${reviews.length} reviews from API`);
-                    return;
-                }
-            }
-
-            throw new Error('No reviews received from API');
-
-        } catch (error) {
-            console.warn('Failed to load reviews from API, using fallback:', error);
-            reviews = fallbackReviews;
-            displayReviews();
-            startAutoScroll();
-        }
+    // Load reviews - using manual reviews (no API needed)
+    function loadReviews() {
+        // Use the manually curated reviews
+        reviews = fallbackReviews;
+        displayReviews();
+        startAutoScroll();
+        console.log(`Loaded ${reviews.length} reviews from manual data`);
     }
 
     // Filter and sort reviews
@@ -242,18 +207,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function createReviewCard(review) {
         const stars = generateStarRating(review.rating);
         const timeAgo = formatTimeAgo(review.time);
+        const truncatedText = review.text.length > 100 ? review.text.substring(0, 100) + '...' : review.text;
+        const initial = review.author_name.charAt(0).toUpperCase();
+        const googleMapsUrl = 'https://maps.app.goo.gl/pGpHk9GPgeypMW2z7';
 
         return `
             <div class="review-card">
                 <div class="review-rating">
                     ${stars}
                 </div>
-                <p class="review-text">"${escapeHtml(review.text)}"</p>
+                <p class="review-text">"${escapeHtml(truncatedText)}"</p>
+                <a href="${googleMapsUrl}" class="review-link" target="_blank" rel="noopener noreferrer">Read full review ›</a>
                 <div class="review-author">
-                    <div class="author-img"></div>
+                    <div class="author-img">${initial}</div>
                     <div class="author-info">
                         <p class="author-name">${escapeHtml(review.author_name)}</p>
-                        <p class="author-source">Google • ${timeAgo}</p>
+                        <p class="author-source"><a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">${timeAgo}</a></p>
                     </div>
                 </div>
             </div>
@@ -347,11 +316,46 @@ document.addEventListener('DOMContentLoaded', function() {
 
         leftBtn.disabled = currentIndex === 0;
         rightBtn.disabled = currentIndex >= maxIndex;
+
+        updateNavigationDots();
     }
 
-    // Start auto-scroll
+    // Create and update navigation dots
+    function updateNavigationDots() {
+        const dotsContainer = document.getElementById('reviewDots');
+        if (!dotsContainer || reviews.length <= reviewsPerView) return;
+
+        const totalPages = Math.ceil(reviews.length / reviewsPerView);
+        const currentPage = Math.floor(currentIndex / reviewsPerView);
+
+        // Create dots if they don't exist
+        if (dotsContainer.children.length !== totalPages) {
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('button');
+                dot.classList.add('carousel-dot');
+                dot.setAttribute('aria-label', `Go to page ${i + 1}`);
+                dot.addEventListener('click', () => {
+                    currentIndex = i * reviewsPerView;
+                    updateCarouselPosition();
+                    updateNavigationButtons();
+                    resetAutoScroll();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Update active state
+        const dots = dotsContainer.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentPage);
+        });
+    }
+
+    // Start auto-scroll (only on mobile)
     function startAutoScroll() {
         if (reviews.length <= reviewsPerView) return;
+        if (window.innerWidth >= 768) return; // No auto-scroll on desktop
 
         clearInterval(autoScrollInterval);
         autoScrollInterval = setInterval(() => {

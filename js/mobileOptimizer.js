@@ -728,7 +728,6 @@ class MobileOptimizer {
                     '/css/base.css',
                     '/css/location-page.css',
                     '/js/locationData.js',
-                    '/js/navigation.js',
                     // Add other critical resources
                 ]);
             });

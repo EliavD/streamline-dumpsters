@@ -8,7 +8,7 @@
  * - Handle junk removal bid request modal functionality
  * - Advanced photo upload with drag-and-drop and validation
  * - Comprehensive form validation with real-time feedback
- * - Integrate with Airtable for data storage
+ * - Ready for backend integration
  *
  * PHASE 2 FEATURES:
  * - PhotoUploadManager for advanced file handling
@@ -308,19 +308,12 @@ class JunkRemovalValidator {
         { test: (value) => this.isValidPhone(value), message: 'Please enter a valid phone number (e.g., (555) 123-4567)' }
       ],
       customerEmail: [
-        { test: (value) => value && value.length > 0, message: 'Email address is required' },
-        { test: (value) => this.isValidEmail(value), message: 'Please enter a valid email address' }
+        // Email is optional - only validate format if provided
+        { test: (value) => !value || this.isValidEmail(value), message: 'Please enter a valid email address' }
       ],
-      serviceAddress: [
-        { test: (value) => value && value.length >= 5, message: 'Service address is required (minimum 5 characters)' }
-      ],
-      serviceCity: [
-        { test: (value) => value && value.length >= 2, message: 'City is required (minimum 2 characters)' },
-        { test: (value) => /^[a-zA-Z\s'-]+$/.test(value), message: 'City can only contain letters, spaces, hyphens, and apostrophes' }
-      ],
-      serviceZip: [
-        { test: (value) => value && value.length > 0, message: 'ZIP code is required' },
-        { test: (value) => /^\d{5}(-\d{4})?$/.test(value), message: 'Please enter a valid ZIP code (12345 or 12345-6789)' }
+      customerZip: [
+        { test: (value) => value && value.length > 0, message: 'Zip code is required' },
+        { test: (value) => /^\d{5}$/.test(value), message: 'Please enter a valid 5-digit zip code' }
       ]
     };
 
@@ -341,6 +334,11 @@ class JunkRemovalValidator {
   validateField(fieldName, value) {
     const rules = this.validationRules[fieldName];
     if (!rules) return { isValid: true, errors: [] };
+
+    // Skip validation for optional empty email field
+    if (fieldName === 'customerEmail' && (!value || value.trim() === '')) {
+      return { isValid: true, errors: [] };
+    }
 
     const errors = [];
     for (const rule of rules) {
@@ -547,17 +545,24 @@ class JunkRemovalModal {
             button.addEventListener('click', this.openModal);
         });
 
-        // Close modal elements
-        const closeButton = this.modal.querySelector('.modal__close');
-        const overlay = this.modal.querySelector('.modal__overlay');
+        // Close modal elements - updated for three-step modal styling
+        const closeButton = this.modal.querySelector('.three-step-modal__close-btn');
+        const cancelButton = this.modal.querySelector('#cancelJunkRequest');
 
         if (closeButton) {
             closeButton.addEventListener('click', this.closeModal);
         }
 
-        if (overlay) {
-            overlay.addEventListener('click', this.handleOutsideClick);
+        if (cancelButton) {
+            cancelButton.addEventListener('click', this.closeModal);
         }
+
+        // Click outside modal to close
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) {
+                this.closeModal();
+            }
+        });
 
         // Form submission
         this.form.addEventListener('submit', this.handleFormSubmit);
@@ -649,7 +654,8 @@ class JunkRemovalModal {
             // Store previous focus
             this.previousFocus = document.activeElement;
 
-            // Show modal
+            // Show modal - updated for three-step modal styling
+            this.modal.hidden = false;
             this.modal.style.display = 'flex';
             this.modal.setAttribute('aria-hidden', 'false');
 
@@ -692,7 +698,8 @@ class JunkRemovalModal {
         }
 
         try {
-            // Hide modal
+            // Hide modal - updated for three-step modal styling
+            this.modal.hidden = true;
             this.modal.style.display = 'none';
             this.modal.setAttribute('aria-hidden', 'true');
 
@@ -1049,9 +1056,11 @@ class JunkRemovalModal {
             customerName: formData.get('customerName'),
             customerEmail: formData.get('customerEmail'),
             customerPhone: formData.get('customerPhone'),
+            customerZip: formData.get('customerZip'),
             serviceAddress: formData.get('serviceAddress'),
             serviceCity: formData.get('serviceCity'),
             serviceZip: formData.get('serviceZip'),
+            serviceDescription: formData.get('serviceDescription'),
             junkDescription: formData.get('junkDescription'),
             additionalNotes: formData.get('additionalNotes'),
             photos: uploadedFiles,
@@ -1063,36 +1072,57 @@ class JunkRemovalModal {
         return data;
     }
 
-    // Submit to backend (placeholder for Phase 2)
+    // Submit to backend (Google Apps Script)
     async submitToBackend(formData) {
         console.log('🚀 Submitting to backend...');
 
+        // Backend URL - hardcoded since .env isn't accessible in frontend
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyJrogqdGeTweEI0pSRKqNB2VaoWglZOsPmMrPILEXw4BkzE4bXC42K0JRVfaBqhKYT3g/exec';
+
         try {
-            // Check if AirtableService is available
-            if (typeof AirtableService === 'undefined') {
-                console.warn('⚠️ AirtableService not available, using fallback simulation');
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                return { success: true, message: 'Simulated submission successful' };
+            // Prepare data for backend
+            // Combine address fields if available
+            let fullAddress = '';
+            if (formData.serviceAddress) {
+                fullAddress = formData.serviceAddress;
+            }
+            if (formData.customerZip) {
+                fullAddress = fullAddress ? `${fullAddress}, ${formData.customerZip}` : formData.customerZip;
             }
 
-            // Use Airtable integration for real submission
-            const airtableService = new AirtableService();
-            const result = await airtableService.createRecord(formData);
+            // Convert photos to base64
+            const photoPromises = formData.photos.map(file => this.convertPhotoToBase64(file));
+            const photoData = await Promise.all(photoPromises);
 
-            if (result.success) {
-                console.log('✅ Successfully submitted to Airtable:', result.recordId);
-                return {
-                    success: true,
-                    message: 'Your junk removal request has been submitted successfully!',
-                    recordId: result.recordId
-                };
-            } else {
-                console.error('❌ Airtable submission failed:', result.error);
-                return {
-                    success: false,
-                    message: `Submission failed: ${result.error}`
-                };
-            }
+            const payload = {
+                name: formData.customerName,
+                number: formData.customerPhone,
+                email: formData.customerEmail || '',
+                address: fullAddress,
+                notes: formData.serviceDescription || formData.junkDescription || formData.additionalNotes || '',
+                photos: photoData
+            };
+
+            console.log('📋 Submitting payload:', { ...payload, photos: `${photoData.length} photos` });
+
+            // Submit to Google Apps Script backend
+            const response = await fetch(BACKEND_URL, {
+                method: 'POST',
+                mode: 'no-cors', // Required for Google Apps Script
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload)
+            });
+
+            // Note: no-cors mode doesn't allow reading response
+            // So we assume success if no error was thrown
+            console.log('✅ Form submitted successfully');
+
+            return {
+                success: true,
+                message: 'Your junk removal request has been submitted successfully!'
+            };
 
         } catch (error) {
             console.error('❌ Backend submission error:', error);
@@ -1101,6 +1131,29 @@ class JunkRemovalModal {
                 message: 'An error occurred while submitting your request. Please try again.'
             };
         }
+    }
+
+    // Convert photo file to base64
+    async convertPhotoToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                resolve({
+                    name: file.name,
+                    data: e.target.result, // base64 data URL
+                    mimeType: file.type,
+                    size: file.size
+                });
+            };
+
+            reader.onerror = (error) => {
+                console.error('Error reading file:', error);
+                reject(error);
+            };
+
+            reader.readAsDataURL(file);
+        });
     }
 
     // Show success message
@@ -1170,8 +1223,8 @@ class JunkRemovalModal {
     }
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Initialize the junk removal modal after modals are loaded
+function initializeJunkRemovalModal() {
     // Create global instance
     window.junkRemovalModal = new JunkRemovalModal();
 
@@ -1182,6 +1235,17 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ Junk removal modal system ready');
     } else {
         console.error('❌ Failed to initialize junk removal modal system');
+    }
+}
+
+// Wait for modals to be loaded by modal-loader.js
+document.addEventListener('modalsLoaded', initializeJunkRemovalModal);
+
+// Fallback: If modalsLoaded event already fired or modal-loader not present
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if modal already exists (direct HTML, not loaded dynamically)
+    if (document.getElementById('junkRemovalModal')) {
+        initializeJunkRemovalModal();
     }
 });
 

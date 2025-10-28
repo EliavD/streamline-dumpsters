@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configuration
     const config = {
         closeOthersOnOpen: false, // Set to true for traditional accordion behavior
-        animationDuration: 300, // Should match CSS transition duration
+        animationDuration: 400, // Should match CSS transition duration
         enableKeyboardNavigation: true,
         announceStateChanges: true
     };

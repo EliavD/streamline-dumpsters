@@ -21,9 +21,7 @@ ACCESSIBILITY:
 - Keyboard navigation support
 - Screen reader friendly error messages
 
-BACKEND REQUIREMENT:
-This script sends data to a placeholder API endpoint (/api/contact).
-A secure backend implementation is required to actually process form submissions.
+BACKEND SETUP:This script requires a Google Apps Script backend to process form submissions.See CONTACT_FORM_SETUP_GUIDE.md in the project root for complete setup instructions.Update line 47 with your deployed Google Apps Script URL.
 
 BROWSER SUPPORT:
 - Modern browsers (Chrome 70+, Firefox 65+, Safari 12+, Edge 79+)
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Configuration
     const config = {
-        apiEndpoint: '/api/contact', // Placeholder - requires backend implementation
+        apiEndpoint: 'https://script.google.com/macros/s/AKfycbwUMKj_F-4D0bOZmcrKH627eR_OeJUiYX1dIbXI11FiubbElP7JmmlnL6YrlZbPZ_xM/exec',
         submitTimeout: 10000, // 10 seconds
         enableClientValidation: true
     };
@@ -74,11 +72,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const requiredFields = contactForm.querySelectorAll('[required]');
 
         requiredFields.forEach(field => {
+            // Only validate on blur if the field has content
+            // Don't validate empty fields on blur - only validate on submit
             field.addEventListener('blur', function() {
-                validateField(field);
+                // Only validate if field has content
+                if (field.value.trim().length > 0) {
+                    validateField(field);
+                }
             });
 
             field.addEventListener('input', function() {
+                // Clear any existing errors when user starts typing
                 clearFieldError(field);
             });
         });
@@ -115,13 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Show loading state
+        // IMPORTANT: Collect form data BEFORE disabling fields!
+        const formData = collectFormData();
+
+        // Show loading state (this disables fields, so must come after collecting data)
         setFormLoading(true);
         showFormMessage('Sending your message...', 'loading');
 
         try {
-            // Collect form data
-            const formData = collectFormData();
 
             // Submit form
             const response = await submitForm(formData);
@@ -326,10 +331,14 @@ document.addEventListener('DOMContentLoaded', function() {
             data[key] = value.trim();
         }
 
+        console.log('Form data collected:', data);
+
         // Add metadata
         data.timestamp = new Date().toISOString();
         data.source = 'website_contact_form';
         data.userAgent = navigator.userAgent;
+
+        console.log('Final data to send:', data);
 
         return data;
     }
@@ -347,20 +356,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const response = await fetch(config.apiEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'Content-Type': 'text/plain'
                 },
                 body: JSON.stringify(formData),
-                signal: controller.signal
+                signal: controller.signal,
+                redirect: 'follow'
             });
 
             clearTimeout(timeoutId);
 
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            // Try to read the response
+            try {
+                const result = await response.json();
+                return result;
+            } catch (e) {
+                // If JSON parsing fails but no error was thrown, assume success
+                if (response.status === 200 || response.status === 0) {
+                    return { success: true };
+                }
+                throw new Error('Invalid response from server');
             }
-
-            return await response.json();
 
         } catch (error) {
             clearTimeout(timeoutId);

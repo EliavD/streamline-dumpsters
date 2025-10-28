@@ -13,11 +13,11 @@ class LocationCarousel {
         this.indicatorsContainer = this.carousel.querySelector('#carouselIndicators');
 
         this.currentIndex = 0;
-        this.cardWidth = 220; // Card width + gap
+        this.cardWidth = this.getCardWidth(); // Dynamic card width + gap
         this.cardsPerView = this.getCardsPerView();
         this.maxIndex = Math.max(0, this.cards.length - this.cardsPerView);
         this.autoPlayInterval = null;
-        this.autoPlayDelay = 4000;
+        this.autoPlayDelay = 6000; // Slower: 6 seconds instead of 4
         this.isAutoPlaying = true;
 
         // Touch/swipe properties
@@ -31,19 +31,54 @@ class LocationCarousel {
     }
 
     init() {
-        this.createIndicators();
-        this.updateCarouselView();
-        this.attachEventListeners();
-        this.handleResize();
-        this.startAutoPlay();
+        // Wait for layout to settle before initializing
+        setTimeout(() => {
+            this.cardWidth = this.getCardWidth();
+            this.cardsPerView = this.getCardsPerView();
+            this.maxIndex = Math.max(0, this.cards.length - this.cardsPerView);
+
+            // Debug info for mobile
+            if (window.innerWidth <= 480) {
+                console.log('Mobile carousel init:', {
+                    cardWidth: this.cardWidth,
+                    cardsPerView: this.cardsPerView,
+                    maxIndex: this.maxIndex,
+                    totalCards: this.cards.length
+                });
+            }
+
+            this.createIndicators();
+            this.updateCarouselView();
+            this.attachEventListeners();
+            this.startAutoPlay();
+        }, 200); // Increased timeout for better layout settling
+    }
+
+    getCardWidth() {
+        // Calculate actual card width including gap
+        if (this.cards.length > 0) {
+            const card = this.cards[0];
+            const cardRect = card.getBoundingClientRect();
+            const computedStyle = window.getComputedStyle(this.track);
+            const gap = parseInt(computedStyle.gap) || 16;
+            return cardRect.width + gap;
+        }
+
+        // Fallback values based on screen size
+        if (window.innerWidth <= 480) return 166; // 150px + 16px gap
+        if (window.innerWidth <= 768) return 196; // 180px + 16px gap
+        return 216; // 200px + 16px gap
     }
 
     getCardsPerView() {
         const containerWidth = this.carousel.querySelector('.carousel-container').clientWidth;
+        const padding = window.innerWidth <= 480 ? 90 : (window.innerWidth <= 768 ? 100 : 120); // Account for nav buttons
+        const availableWidth = containerWidth - padding;
+
         if (window.innerWidth <= 480) return 1;
         if (window.innerWidth <= 768) return 2;
         if (window.innerWidth <= 1024) return 3;
-        return Math.floor(containerWidth / this.cardWidth);
+        return Math.floor(availableWidth / this.cardWidth);
     }
 
     createIndicators() {
@@ -52,7 +87,7 @@ class LocationCarousel {
 
         for (let i = 0; i < totalSlides; i++) {
             const dot = document.createElement('button');
-            dot.classList.add('carousel-dot');
+            dot.classList.add('carousel-indicator');
             dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
             dot.addEventListener('click', () => this.goToSlide(i));
             this.indicatorsContainer.appendChild(dot);
@@ -64,12 +99,12 @@ class LocationCarousel {
         const offset = -this.currentIndex * this.cardWidth;
         this.track.style.transform = `translateX(${offset}px)`;
 
-        // Update navigation buttons
-        this.prevBtn.disabled = this.currentIndex === 0;
-        this.nextBtn.disabled = this.currentIndex >= this.maxIndex;
+        // Navigation buttons always enabled for infinite loop
+        this.prevBtn.disabled = false;
+        this.nextBtn.disabled = false;
 
         // Update indicators
-        const dots = this.indicatorsContainer.querySelectorAll('.carousel-dot');
+        const dots = this.indicatorsContainer.querySelectorAll('.carousel-indicator');
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === this.currentIndex);
         });
@@ -112,18 +147,16 @@ class LocationCarousel {
     }
 
     nextSlide() {
-        if (this.currentIndex < this.maxIndex) {
-            this.currentIndex++;
-        } else {
+        this.currentIndex++;
+        if (this.currentIndex > this.maxIndex) {
             this.currentIndex = 0; // Loop back to start
         }
         this.updateCarouselView();
     }
 
     prevSlide() {
-        if (this.currentIndex > 0) {
-            this.currentIndex--;
-        } else {
+        this.currentIndex--;
+        if (this.currentIndex < 0) {
             this.currentIndex = this.maxIndex; // Loop to end
         }
         this.updateCarouselView();
@@ -224,9 +257,13 @@ class LocationCarousel {
             }
         });
 
-        // Window resize handler
+        // Window resize handler with debounce
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            this.handleResize();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                this.handleResize();
+            }, 100);
         });
     }
 
@@ -300,7 +337,8 @@ class LocationCarousel {
     }
 
     handleResize() {
-        // Recalculate cards per view and max index
+        // Recalculate card width, cards per view and max index
+        this.cardWidth = this.getCardWidth();
         const newCardsPerView = this.getCardsPerView();
         const newMaxIndex = Math.max(0, this.cards.length - newCardsPerView);
 
@@ -314,6 +352,9 @@ class LocationCarousel {
             }
 
             this.createIndicators();
+            this.updateCarouselView();
+        } else {
+            // Even if cards per view didn't change, card width might have
             this.updateCarouselView();
         }
     }
@@ -352,3 +393,134 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         }
     });
 }
+
+/**
+ * ================================================================================
+ * GALLERY CAROUSEL
+ * Service Gallery Photo Carousel on Service Area Page
+ * ================================================================================
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+  const track = document.querySelector('.gallery-track');
+  const items = document.querySelectorAll('.gallery-item');
+  const prevButton = document.querySelector('.gallery-nav-prev');
+  const nextButton = document.querySelector('.gallery-nav-next');
+  const dotsContainer = document.getElementById('galleryDots');
+
+  if (!track || !items.length) return;
+
+  let currentIndex = 0;
+  const totalItems = items.length;
+
+  // Create dots
+  function createDots() {
+    for (let i = 0; i < totalItems; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('gallery-dot');
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      if (i === 0) dot.classList.add('active');
+
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  // Update dots
+  function updateDots() {
+    const dots = document.querySelectorAll('.gallery-dot');
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+
+  // Go to specific slide
+  function goToSlide(index) {
+    currentIndex = index;
+    const offset = -currentIndex * 100;
+    track.style.transform = `translateX(${offset}%)`;
+    updateDots();
+  }
+
+  // Next slide
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalItems;
+    goToSlide(currentIndex);
+  }
+
+  // Previous slide
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    goToSlide(currentIndex);
+  }
+
+  // Event listeners
+  if (nextButton) nextButton.addEventListener('click', nextSlide);
+  if (prevButton) prevButton.addEventListener('click', prevSlide);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+
+  // Touch/Swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let isSwiping = false;
+
+  track.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].clientX;
+    isSwiping = true;
+    stopAutoplay();
+  }, { passive: true });
+
+  track.addEventListener('touchmove', function(e) {
+    if (!isSwiping) return;
+    touchEndX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  track.addEventListener('touchend', function(e) {
+    if (!isSwiping) return;
+    isSwiping = false;
+    handleSwipe();
+    startAutoplay();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const swipeDistance = touchEndX - touchStartX;
+
+    if (Math.abs(swipeDistance) > swipeThreshold) {
+      if (swipeDistance < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+
+    touchStartX = 0;
+    touchEndX = 0;
+  }
+
+  // Auto-play (optional - 5 second interval)
+  let autoplayInterval = setInterval(nextSlide, 5000);
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  function startAutoplay() {
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+
+  // Pause on hover
+  const galleryWrapper = document.querySelector('.gallery-carousel-wrapper');
+  if (galleryWrapper) {
+    galleryWrapper.addEventListener('mouseenter', stopAutoplay);
+    galleryWrapper.addEventListener('mouseleave', startAutoplay);
+  }
+
+  // Initialize
+  createDots();
+});
