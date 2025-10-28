@@ -82,17 +82,22 @@
   /* Fill the modal-content container completely */
   min-height: 100%;
   height: 100%;
+  /* Center all children vertically and horizontally */
+  justify-content: center;
+  align-items: center;
 }
 
 /* Ensure junk confirmation body is centered and scrollable */
 #junk-confirmation .three-step-modal__body--confirmation {
-  flex: 1;
+  flex: 0 1 auto;  /* Don't expand, just take needed space */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow-y: auto;
   padding: 2rem 1.5rem;
+  width: 100%;
+  max-width: 480px;
 }
 
 /* Header with Close Button */
