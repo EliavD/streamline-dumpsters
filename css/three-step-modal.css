@@ -218,7 +218,8 @@ DESIGN TOKENS:
 }
 
 /* When junk form is hidden, remove it from layout completely */
-#junkRemovalForm[style*="display: none"] {
+#junkRemovalForm[style*="display: none"],
+#junkRemovalModal.showing-confirmation #junkRemovalForm {
   display: none !important;
   position: absolute;
   visibility: hidden;
