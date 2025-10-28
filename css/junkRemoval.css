@@ -20,31 +20,40 @@
  * ================================================================================
  */
 
-/* Photo Upload Area */
-.photo-upload-area {
+/* Photo Upload Area - Consolidated */
+.photo-upload-area,
+.photo-upload {
   margin-bottom: 2rem;
 }
 
-.upload-dropzone {
-  border: 2px dashed #d1d5db;
-  border-radius: var(--radius, 12px);
+/* Unified dropzone styling */
+.upload-dropzone,
+.photo-dropzone {
+  border: 2px dashed var(--border-color-medium);
+  border-radius: var(--radius-lg);
   padding: 3rem 2rem;
   text-align: center;
-  background: #fafafa;
-  transition: all 0.3s ease;
+  background: var(--bg-muted);
+  transition: all var(--transition-base);
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
-.upload-dropzone:hover {
-  border-color: var(--color-primary, #3b82f6);
-  background: #f0f9ff;
+.upload-dropzone:hover,
+.upload-dropzone:focus,
+.photo-dropzone:hover,
+.photo-dropzone:focus {
+  border-color: var(--color-primary);
+  background: var(--bg-brand-light);
+  outline: none;
 }
 
-.upload-dropzone.drag-over {
-  border-color: var(--color-primary, #3b82f6);
-  background: #dbeafe;
+.upload-dropzone.drag-over,
+.upload-dropzone.uploading,
+.photo-dropzone--dragover {
+  border-color: var(--color-primary);
+  background: var(--bg-brand-light);
   transform: scale(1.02);
 }
 
@@ -53,23 +62,40 @@
   opacity: 0.7;
 }
 
-.upload-icon {
+.photo-dropzone__content {
+  pointer-events: none;
+}
+
+/* Upload icons and text */
+.upload-icon,
+.photo-dropzone__icon {
   font-size: 3rem;
   margin-bottom: 1rem;
   display: block;
+  opacity: 0.6;
 }
 
-.upload-text {
+.upload-text,
+.photo-dropzone__text strong {
   font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-primary, #1f2937);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
   margin-bottom: 0.5rem;
+  display: block;
 }
 
-.upload-subtext {
-  color: #6b7280;
-  font-size: 0.9rem;
+.upload-subtext,
+.photo-dropzone__subtext {
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
   margin: 0;
+}
+
+.photo-upload__counter {
+  margin-top: 1rem;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  text-align: center;
 }
 
 #photoInput {
@@ -80,67 +106,6 @@
   left: 0;
   opacity: 0;
   cursor: pointer;
-}
-
-/* Legacy support for existing photo upload classes */
-.photo-upload {
-  margin: 1.5rem 0;
-}
-
-.photo-dropzone {
-  border: 2px dashed #d1d5db;
-  border-radius: var(--radius, 12px);
-  padding: 3rem 2rem;
-  text-align: center;
-  background: #fafafa;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.photo-dropzone:hover,
-.photo-dropzone:focus {
-  border-color: var(--color-primary, #3b82f6);
-  background: #f0f9ff;
-  outline: none;
-}
-
-.photo-dropzone--dragover {
-  border-color: var(--color-primary, #3b82f6);
-  background: #dbeafe;
-  transform: scale(1.02);
-}
-
-.photo-dropzone__content {
-  pointer-events: none;
-}
-
-.photo-dropzone__icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.6;
-  display: block;
-}
-
-.photo-dropzone__text strong {
-  color: var(--color-text-primary, #1f2937);
-  font-size: 1.1rem;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.photo-dropzone__subtext {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.photo-upload__counter {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-  color: var(--color-text-secondary, #6b7280);
-  text-align: center;
 }
 
 /* Photo Preview Grid */
