@@ -31,17 +31,11 @@ const ENV_CONFIG = {
   development: {
     // Square Payment Integration (Sandbox)
     square: {
-      appId: 'sandbox-sq0idb-DEVELOPMENT_APP_ID', // Replace with actual sandbox app ID
-      locationId: 'DEVELOPMENT_LOCATION_ID', // Replace with actual sandbox location ID
+      appId: 'sandbox-sq0idb-la5vJJA2HLYjNQN7LaOpxQ',
+      locationId: 'L56XRKHH91SEX',
       environment: 'sandbox'
     },
 
-    // Airtable Database Integration
-    airtable: {
-      baseId: 'appVWTrDeIEKyRP47', // Your actual development base ID
-      apiToken: 'patHviyzeY7J0TaHh', // Your actual development token
-      rateLimitDelay: 200 // Milliseconds between requests
-    },
 
     // Cloudinary Image Upload
     cloudinary: {
@@ -79,17 +73,11 @@ const ENV_CONFIG = {
   production: {
     // Square Payment Integration (Production)
     square: {
-      appId: 'PRODUCTION_APP_ID', // Replace with actual production app ID
-      locationId: 'PRODUCTION_LOCATION_ID', // Replace with actual production location ID
+      appId: 'sq0idp-8ppjtDG8I7H8kNx2WfH5LQ',
+      locationId: 'L9MVPB33HG9N0',
       environment: 'production'
     },
 
-    // Airtable Database Integration
-    airtable: {
-      baseId: 'appVWTrDeIEKyRP47', // Your actual production base ID
-      apiToken: 'patHviyzeY7J0TaHh', // Your actual production token (consider server-side proxy for security)
-      rateLimitDelay: 200
-    },
 
     // Cloudinary Image Upload
     cloudinary: {
@@ -136,6 +124,14 @@ function detectEnvironment() {
   const hostname = window.location.hostname;
   const protocol = window.location.protocol;
 
+  // SPECIAL CASE: HTTPS localhost = production mode for Square testing
+  // This allows testing production Square SDK on local HTTPS server
+  if (protocol === 'https:' && (hostname === 'localhost' || hostname === '127.0.0.1')) {
+    console.warn('🔒 HTTPS localhost detected - Using PRODUCTION mode for Square testing');
+    console.warn('⚠️  WARNING: Real charges will be processed!');
+    return 'production';
+  }
+
   // Development indicators
   const isDevelopment = hostname === 'localhost' ||
                        hostname === '127.0.0.1' ||
@@ -145,9 +141,13 @@ function detectEnvironment() {
                        protocol === 'file:';
 
   if (isDevelopment) {
-    console.warn('🏠 Running in development mode - CORS issues may occur');
-    console.warn('💡 If you see CORS errors, add headers to your Google Apps Script');
-    console.warn('📍 Current origin:', window.location.origin);
+    if (typeof window.Logger !== 'undefined' && window.console.warn) {
+      console.warn('🏠 Running in development mode - CORS issues may occur');
+      console.warn('💡 If you see CORS errors, add headers to your Google Apps Script');
+      console.warn('📍 Current origin:', window.location.origin);
+    } else {
+      console.warn('🏠 Running in development mode - CORS issues may occur');
+    }
     return 'development';
   }
 
@@ -222,7 +222,7 @@ CONFIG.pricing = {
 // Booking Configuration for Modal System
 CONFIG.booking = {
   // Google Apps Script Backend URL
-  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycby1dsj4lzLMRPvnWdQwb8zHo0RC48-pABdVlbEsvAJsRUXCm0zdDoa5btwd1x1Ku99J7Q/exec',
+  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbz3izZhWmPkn1K2vkQK8l4KShAjyDXIn-Ouf3xbACU9Rouu0IklTfK4Dj-WeKf2YoClxQ/exec',
 
   // Booking Constraints
   BOOKING_PRICE: 299,
@@ -251,21 +251,6 @@ CONFIG.booking = {
 
 // Junk Removal Configuration for Modal System
 CONFIG.junkRemoval = {
-  // Enhanced Airtable Database Integration for Testing
-  AIRTABLE_BASE_ID: 'appVWTrDeIEKyRP47', // Your actual Airtable base ID
-  AIRTABLE_TABLE_NAME: 'Junk Removal Requests',
-  AIRTABLE_API_KEY: 'patHviyzeY7J0TaHh', // Your actual Airtable personal access token
-  AIRTABLE_API_URL: 'https://api.airtable.com/v0',
-
-  // Airtable Field Mapping (matching your actual table structure)
-  AIRTABLE_FIELDS: {
-    name: 'Name',                    // Single line text
-    email: 'email',                  // Email field type
-    phone: 'Phone number',           // Phone number field type
-    address: 'Address',              // Single line text (combined address)
-    photos: 'Photos'                 // Attachment field
-    // Note: No separate city, zip, description, submissionDate, or status fields
-  },
 
   // Photo Upload Constraints
   MAX_PHOTOS: 5,
@@ -299,11 +284,7 @@ CONFIG.junkRemoval = {
   // Debug and Testing Configuration
   DEBUG: {
     ENABLE_CONSOLE_LOGGING: true,
-    ENABLE_NETWORK_MONITORING: true,
-    ENABLE_FORM_STATE_TRACKING: true,
-    SIMULATE_API_DELAYS: false,
-    MOCK_AIRTABLE_RESPONSES: false,
-    LOG_LEVEL: 'verbose' // 'minimal', 'normal', 'verbose'
+    LOG_LEVEL: 'normal' // 'minimal', 'normal', 'verbose'
   }
 };
 
@@ -366,12 +347,21 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Development logging
 if (CONFIG.debug.enableLogging) {
-  console.log('🔧 Configuration loaded:', {
-    environment: CURRENT_ENV,
-    api: CONFIG.api.baseUrl,
-    features: CONFIG.features,
-    debug: CONFIG.debug
-  });
+  if (typeof window.Logger !== 'undefined' && window.console.log) {
+    console.log('🔧 Configuration loaded:', {
+      environment: CURRENT_ENV,
+      api: CONFIG.api.baseUrl,
+      features: CONFIG.features,
+      debug: CONFIG.debug
+    });
+  } else {
+    console.log('🔧 Configuration loaded:', {
+      environment: CURRENT_ENV,
+      api: CONFIG.api.baseUrl,
+      features: CONFIG.features,
+      debug: CONFIG.debug
+    });
+  }
 }
 
 /**
