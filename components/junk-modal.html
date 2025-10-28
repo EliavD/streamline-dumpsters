@@ -112,5 +112,67 @@
       </footer>
 
     </form>
+
+    <!-- CONFIRMATION SCREEN: After successful submission -->
+    <div id="junk-confirmation" class="three-step__step three-step__step--confirmation junk-confirmation" style="display: none;">
+      <!-- Header with Close Button -->
+      <header class="three-step-modal__header three-step-modal__header--confirmation">
+        <div class="three-step-modal__header-spacer"></div>
+        <button type="button" class="three-step-modal__close-btn three-step-modal__close-btn--confirmation" id="closeJunkConfirmation" aria-label="Close confirmation">&times;</button>
+      </header>
+
+      <!-- Confirmation Content -->
+      <div class="three-step-modal__body three-step-modal__body--confirmation">
+        <!-- Success Icon: Checkmark -->
+        <div class="confirmation__icon-wrapper">
+          <!-- Checkmark SVG (solid teal) with circle background -->
+          <svg class="confirmation__icon-circle" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="60" r="58" stroke="currentColor" stroke-width="3" fill="none"/>
+          </svg>
+          <svg class="confirmation__icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="confirmation__heading">Request Received!</h1>
+
+        <!-- Description -->
+        <p class="confirmation__description">
+          Thanks for choosing Streamline Dumpsters for your junk removal needs. We'll review your photos and send you a custom quote within 24 hours.
+        </p>
+
+        <!-- Request Details Card -->
+        <div class="confirmation__details-card">
+          <div class="confirmation__detail-row">
+            <span class="confirmation__detail-label">Service Type:</span>
+            <span class="confirmation__detail-value" id="confirmServiceType">-</span>
+          </div>
+          <div class="confirmation__detail-row">
+            <span class="confirmation__detail-label">Name:</span>
+            <span class="confirmation__detail-value" id="confirmName">-</span>
+          </div>
+          <div class="confirmation__detail-row">
+            <span class="confirmation__detail-label">Email:</span>
+            <span class="confirmation__detail-value" id="confirmEmail">-</span>
+          </div>
+          <div class="confirmation__detail-row">
+            <span class="confirmation__detail-label">Photos Uploaded:</span>
+            <span class="confirmation__detail-value" id="confirmPhotoCount">-</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="confirmation__actions">
+          <button type="button" class="confirmation__btn confirmation__btn--primary" id="submitAnotherJunkRequest">
+            Submit Another Request
+          </button>
+          <button type="button" class="confirmation__btn confirmation__btn--secondary" id="junkBackToHome">
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>

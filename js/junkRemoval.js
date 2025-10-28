@@ -718,6 +718,13 @@ class JunkRemovalModal {
                 this.previousFocus = null;
             }
 
+            // Reset confirmation screen state
+            const confirmationScreen = document.getElementById('junk-confirmation');
+            if (confirmationScreen && confirmationScreen.style.display === 'flex') {
+                confirmationScreen.style.display = 'none';
+                this.form.style.display = 'block';
+            }
+
             // Reset form
             this.resetForm();
 
@@ -1025,10 +1032,8 @@ class JunkRemovalModal {
             const result = await this.submitToBackend(formData);
 
             if (result.success) {
-                this.validator.showFormSuccess('Your junk removal request has been submitted successfully!');
-                setTimeout(() => {
-                    this.closeModal();
-                }, 2000);
+                // Show confirmation screen instead of auto-closing
+                this.showConfirmationScreen(formData);
             } else {
                 this.validator.showFormError(result.message || 'Failed to submit request. Please try again.');
             }
@@ -1220,6 +1225,69 @@ class JunkRemovalModal {
         this.validator.clearFormStatus();
 
         console.log('🧹 Form reset to initial state (Phase 2)');
+    }
+
+    /**
+     * Show confirmation screen after successful submission
+     */
+    showConfirmationScreen(formData) {
+        console.log('🎉 Showing junk removal confirmation screen');
+
+        // Get service type from form
+        const serviceTypeSelect = this.form.querySelector('#serviceType');
+        const serviceType = serviceTypeSelect ? serviceTypeSelect.options[serviceTypeSelect.selectedIndex].text : 'Junk Removal';
+
+        // Populate confirmation fields
+        document.getElementById('confirmServiceType').textContent = serviceType;
+        document.getElementById('confirmName').textContent = formData.customerName || '-';
+        document.getElementById('confirmEmail').textContent = formData.customerEmail || 'Not provided';
+        document.getElementById('confirmPhotoCount').textContent = formData.photoCount > 0 ? `${formData.photoCount} photo${formData.photoCount !== 1 ? 's' : ''}` : 'None';
+
+        // Hide form, show confirmation
+        this.form.style.display = 'none';
+        const confirmationScreen = document.getElementById('junk-confirmation');
+        if (confirmationScreen) {
+            confirmationScreen.style.display = 'flex';
+        }
+
+        // Setup button handlers
+        this.setupConfirmationButtons();
+    }
+
+    /**
+     * Setup button handlers for confirmation screen
+     */
+    setupConfirmationButtons() {
+        // "Submit Another Request" button
+        const submitAnotherBtn = document.getElementById('submitAnotherJunkRequest');
+        if (submitAnotherBtn) {
+            submitAnotherBtn.onclick = () => {
+                console.log('🔄 Submit Another Request clicked');
+                // Hide confirmation, show form
+                document.getElementById('junk-confirmation').style.display = 'none';
+                this.form.style.display = 'block';
+                // Reset form completely
+                this.resetForm();
+            };
+        }
+
+        // "Back to Home" button
+        const backToHomeBtn = document.getElementById('junkBackToHome');
+        if (backToHomeBtn) {
+            backToHomeBtn.onclick = () => {
+                console.log('🏠 Back to Home clicked');
+                this.closeModal();
+            };
+        }
+
+        // Close button in confirmation header
+        const closeConfirmationBtn = document.getElementById('closeJunkConfirmation');
+        if (closeConfirmationBtn) {
+            closeConfirmationBtn.onclick = () => {
+                console.log('❌ Confirmation close clicked');
+                this.closeModal();
+            };
+        }
     }
 }
 
