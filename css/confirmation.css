@@ -149,6 +149,11 @@
   box-shadow: 0 2px 8px rgba(1, 176, 187, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
 }
 
+#junkRemovalModal #junk-confirmation .confirmation__detail-value {
+  color: #111418 !important; /* Black text for detail values */
+  font-weight: 600 !important;
+}
+
 /* Header with Close Button */
 .three-step-modal__header--confirmation {
   display: flex;
