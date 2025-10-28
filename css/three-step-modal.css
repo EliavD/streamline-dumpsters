@@ -41,7 +41,7 @@ DESIGN TOKENS:
 .modal.modal--three-step .modal-content {
   background: white;
   width: 100%;
-  max-width: 480px;
+  max-width: 560px; /* Increased from 480px for better form layout */
   margin: auto;
   border-radius: 20px;
   max-height: 90vh;
@@ -198,6 +198,23 @@ DESIGN TOKENS:
   overflow-y: auto;
   flex: 1;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Junk Removal Form - Make it fill the modal properly */
+#junkRemovalForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+#junkRemovalForm .three-step-modal__body {
+  flex: 1;
+  overflow-y: auto;
+}
+
+#junkRemovalForm .three-step-modal__footer {
+  flex-shrink: 0;
 }
 
 /* =============================================================================
