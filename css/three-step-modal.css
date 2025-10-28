@@ -217,6 +217,13 @@ DESIGN TOKENS:
   flex-shrink: 0;
 }
 
+/* When junk form is hidden, remove it from layout completely */
+#junkRemovalForm[style*="display: none"] {
+  display: none !important;
+  position: absolute;
+  visibility: hidden;
+}
+
 /* =============================================================================
    STEP CONTAINERS
    ============================================================================= */
