@@ -1703,10 +1703,22 @@ class PaymentProcessor {
         throw new Error('Square payment credentials not configured');
       }
 
-      this.payments = window.Square.payments(this.appId, this.locationId);
+      // Get environment from CONFIG (sandbox or production)
+      const environment = window.CONFIG?.square?.environment || 'production';
+
+      console.log('🔧 Initializing Square Payments:', {
+        appId: this.appId,
+        locationId: this.locationId,
+        environment: environment
+      });
+
+      // Initialize Square Payments with environment parameter
+      this.payments = await window.Square.payments(this.appId, this.locationId, {
+        environment: environment
+      });
       this.isInitialized = true;
 
-      console.log('✓ Square Payments initialized successfully');
+      console.log('✓ Square Payments initialized successfully in', environment, 'mode');
       return true;
     } catch (error) {
       console.error('Square Payments initialization failed:', error);
