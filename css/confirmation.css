@@ -83,6 +83,20 @@
   background: white;
   border-radius: 20px;
   z-index: 10;
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+}
+
+/* Ensure junk confirmation body takes full width */
+#junk-confirmation .three-step-modal__body--confirmation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  padding: 3rem 1.5rem;
 }
 
 /* Header with Close Button */
