@@ -76,11 +76,12 @@
 /* Junk Removal Confirmation - Make it work like booking modal steps */
 #junk-confirmation.three-step__step--confirmation {
   /* Remove absolute positioning - let it be a normal flex child */
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  /* Fill the modal-content container */
-  min-height: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  /* Fill the modal-content container completely */
+  min-height: 100%;
+  height: 100%;
 }
 
 /* Ensure junk confirmation body is centered and scrollable */
