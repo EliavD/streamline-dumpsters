@@ -725,6 +725,9 @@ class JunkRemovalModal {
                 this.form.style.display = 'block';
             }
 
+            // Remove confirmation class from modal
+            this.modal.classList.remove('showing-confirmation');
+
             // Reset form
             this.resetForm();
 
@@ -1250,6 +1253,9 @@ class JunkRemovalModal {
             confirmationScreen.style.display = 'flex';
         }
 
+        // Add class to modal to hide external header
+        this.modal.classList.add('showing-confirmation');
+
         // Setup button handlers
         this.setupConfirmationButtons();
     }
@@ -1266,6 +1272,8 @@ class JunkRemovalModal {
                 // Hide confirmation, show form
                 document.getElementById('junk-confirmation').style.display = 'none';
                 this.form.style.display = 'block';
+                // Remove confirmation class from modal
+                this.modal.classList.remove('showing-confirmation');
                 // Reset form completely
                 this.resetForm();
             };

@@ -224,6 +224,17 @@ DESIGN TOKENS:
   visibility: hidden;
 }
 
+/* Hide the junk modal header when confirmation is shown */
+#junkRemovalModal .three-step-modal__header--step-1 {
+  flex-shrink: 0;
+}
+
+/* When confirmation is visible, hide the external header */
+#junkRemovalModal:has(#junk-confirmation[style*="display: flex"]) .three-step-modal__header--step-1,
+#junkRemovalModal.showing-confirmation .three-step-modal__header--step-1 {
+  display: none !important;
+}
+
 /* =============================================================================
    STEP CONTAINERS
    ============================================================================= */
