@@ -277,6 +277,21 @@
   animation: fade-in-up 0.5s ease 0.4s both;
 }
 
+/* Ensure booking modal confirmation heading matches junk removal styling */
+#bookingModal .confirmation__heading {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  color: #111418 !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important;
+  margin: 0 0 1rem !important;
+}
+
 /* Description */
 .confirmation__description {
   font-size: 1rem;
@@ -286,6 +301,21 @@
   margin: 0 0 2.5rem;
   max-width: 420px;
   animation: fade-in-up 0.5s ease 0.6s both;
+}
+
+/* Ensure booking modal confirmation description matches junk removal styling */
+#bookingModal .confirmation__description {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  color: #3d4855 !important;
+  font-size: 1rem !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important;
+  margin: 0 0 2.5rem !important;
+  max-width: 420px !important;
 }
 
 /* Details Card */
@@ -307,6 +337,27 @@
   box-shadow:
     0 4px 12px rgba(1, 176, 187, 0.12),
     0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Ensure booking modal confirmation details card matches junk removal styling */
+#bookingModal .confirmation__details-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  background: #e8f9fa !important;
+  border: 1px solid #b3e5e9 !important;
+  border-radius: 0.75rem !important;
+  padding: 1.25rem 1.5rem !important;
+  display: block !important;
+  visibility: visible !important;
+  animation: none !important;
+  width: 100% !important;
+  margin-bottom: 2rem !important;
+  box-shadow: 0 2px 8px rgba(1, 176, 187, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+#bookingModal .confirmation__detail-value {
+  color: #111418 !important; /* Black text for detail values */
+  font-weight: 600 !important;
 }
 
 .confirmation__detail-row {
