@@ -1,0 +1,157 @@
+/*
+================================================================================
+ACCESSIBILITY.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Accessibility & Focus
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   INTERACTIVE ELEMENTS - Links, buttons, and form controls
+   ============================================================================ */
+
+/*
+ * Link styles with accessibility considerations
+ * Provides clear visual feedback and smooth transitions
+ */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: all var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration-thickness: 2px;
+}
+
+/*
+ * Focus styles for accessibility - Keyboard navigation ONLY
+ * Ensures keyboard navigation is clearly visible
+ * Only appears when navigating with Tab key, not on mouse clicks
+ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #00828a;
+  outline-offset: 2px;
+}
+
+/* Remove default outline on mouse click - focus-visible handles keyboard */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================================
+   ACCESSIBILITY & UTILITY - Screen readers, motion, and helper classes
+   ============================================================================ */
+
+/*
+ * Screen reader only content
+ * Hides content visually but keeps it available to assistive technology
+ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Respect user motion preferences
+ * Reduces motion for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITY FOUNDATION - Enhanced focus and screen reader support
+   ============================================================================ */
+
+/*
+ * Enhanced focus styles for accessibility
+ * Removes default browser outline and provides consistent, prominent focus indicators
+ * Meets WCAG 2.1 AA requirements for focus visibility
+ */
+*:focus {
+  outline: none;                   /* Remove default browser outline */
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring); /* Prominent focus ring */
+  border-radius: var(--radius-sm);
+}
+
+/*
+ * Skip to content link for keyboard navigation
+ * Allows users to bypass navigation and jump to main content
+ * Hidden by default, visible when focused
+ */
+.skip-to-content {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+  font-weight: 600;
+  transition: top var(--transition-fast);
+}
+
+.skip-to-content:focus {
+  top: 6px;                        /* Slide down when focused */
+}
+
+/*
+ * Screen reader only content (enhanced version)
+ * Hides content visually but keeps it available to assistive technology
+ * More robust than basic sr-only class
+ */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/*
+ * Focus within containers
+ * Enhances focus visibility for complex interactive components
+ */

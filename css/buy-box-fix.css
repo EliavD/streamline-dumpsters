@@ -1,0 +1,25 @@
+/* Buy Box Click Fix */
+.buy-box {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.buy-box.selected {
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Ensure buttons are always clickable */
+.buy-box .btn {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* Remove any accidental selection on page load */
+.buy-box:not(.manually-selected) {
+  outline: none;
+  box-shadow: none;
+}

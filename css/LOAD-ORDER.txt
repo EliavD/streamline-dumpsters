@@ -1,0 +1,39 @@
+/*
+================================================================================
+CSS LOAD ORDER - Streamline Dumpsters Ltd.
+================================================================================
+
+IMPORTANT: CSS files must be loaded in this exact order to preserve behavior
+
+USAGE: Replace the single base.css link with these links in your HTML:
+
+<!-- Core Foundation (Load First) -->
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+
+<!-- Typography & Basic Elements -->
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/media.css">
+
+<!-- Layout System -->
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/utilities.css">
+
+<!-- Components -->
+<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/forms.css">
+<link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/components.css">
+
+<!-- Accessibility & Responsive -->
+<link rel="stylesheet" href="css/accessibility.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+<!-- Page-Specific (keep existing) -->
+<link rel="stylesheet" href="css/index.css">
+<!-- or location-page.css, service-area.css, etc. -->
+
+================================================================================
+*/

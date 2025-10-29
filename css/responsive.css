@@ -1,0 +1,280 @@
+/*
+================================================================================
+RESPONSIVE.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Responsive Breakpoints
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   RESPONSIVE BREAKPOINT FRAMEWORK - Mobile-first media queries
+   ============================================================================ */
+
+/*
+ * MOBILE FIRST APPROACH
+ * Base styles above are mobile (320px+) defaults
+ * Media queries below enhance layouts for larger screens
+ *
+ * Breakpoint Strategy:
+ * - Mobile (default): 320px - 767px (phones)
+ * - Tablet (md): 768px - 1023px (tablets, small laptops)
+ * - Desktop (lg): 1024px+ (large laptops, desktops)
+ */
+
+/*
+ * TABLET BREAKPOINT (768px+)
+ * Enhanced layouts for medium screens
+ * Typically tablets in landscape, small laptops
+ */
+@media (min-width: 768px) {
+
+  /* Container gets larger padding for better use of space */
+  .container {
+    padding-left: var(--container-pad-lg);  /* 2rem (32px) on tablet+ */
+    padding-right: var(--container-pad-lg);
+  }
+
+  /* Enhanced header for tablet */
+  .header-inner {
+    padding: 0 var(--container-pad-lg);
+    min-height: 80px;
+  }
+
+  /* Column layout becomes two-column on tablet */
+
+  /* Enhanced focus states for larger screens */
+  *:focus-visible {
+    box-shadow: 0 0 0 4px var(--focus-ring); /* Larger focus ring on bigger screens */
+  }
+
+  /* Header gets larger padding and height */
+  .header-inner {
+    padding: 0 var(--container-pad-lg);
+    min-height: 72px;              /* Larger header on tablet+ */
+  }
+
+  /* Logo scales up for better visibility */
+  .logo-img {
+    height: 85px;
+    width: auto;
+    max-width: 250px;
+  }
+
+  /* Navigation becomes horizontal inline layout */
+  .main-nav {
+    display: block;                /* Always visible on tablet+ */
+    position: static;
+  }
+
+  .nav-list {
+    flex-direction: row;           /* Horizontal layout */
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* Reset mobile centering on desktop */
+  .nav-list li:last-child {
+    display: block;
+    padding: 0;
+  }
+
+  /* Navigation links become compact inline elements */
+  .nav-link {
+    padding: 0.5rem 1rem;
+    border-bottom: none;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    background: transparent;
+    margin-bottom: 0;
+    min-height: auto;
+    display: inline-block;
+    color: var(--text-primary);
+  }
+
+  .nav-link:hover {
+    color: var(--color-primary-600);
+    background-color: var(--color-primary-50);
+  }
+
+  /* Reset Book Now button for desktop */
+  .nav-list .btn {
+    width: auto;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-list .btn:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+  }
+
+  /* CTA becomes compact inline button */
+  .nav-cta {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: var(--fz-sm);
+  }
+
+  /* Hide mobile toggle on tablet+ */
+  .nav-toggle {
+    display: none;
+  }
+
+  /* Footer inner gets enhanced padding */
+  .footer-inner {
+    padding: 3rem var(--container-pad-lg) 2rem;
+  }
+
+  /* Footer grid maintains layout with wrapper */
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 2fr;  /* Company, Services, then Quick Links + Hours wrapper (2x width) */
+  }
+
+  /* Footer sections get horizontal spacing */
+  .footer-section h3 {
+    font-size: 1.25rem;                  /* 20px on tablet+ */
+  }
+
+  /* Social links get enhanced spacing */
+
+  /* Button hover effects enhanced on devices with hover capability */
+  @media (hover: hover) {
+    .btn--primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+  }
+}
+
+/*
+ * DESKTOP BREAKPOINT (1024px+)
+ * Full desktop layouts and enhancements
+ * Large laptops, desktops, and external monitors
+ */
+@media (min-width: 1024px) {
+
+  /* Typography reaches full desktop scale */
+  :root {             /* 44px on desktop */             /* 36px on desktop */             /* 28px on desktop */
+  }
+
+  /* Header reaches full desktop height */
+  .header-inner {
+    min-height: 80px;              /* Larger header on desktop */
+  }
+
+  /* Logo reaches full desktop size */
+  .logo-img {
+    height: 95px;
+    width: auto;
+    max-width: 280px;
+  }
+
+  /* Enhanced spacing for navigation elements */
+  .nav-list {
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .nav-cta {
+    padding: 0.75rem 1.5rem;
+    font-size: var(--fz-base);
+  }
+
+  /* Footer reaches full desktop spacing */
+  .footer-inner {
+    padding: 4rem var(--container-pad-lg) 2rem;
+  }
+
+  /* Footer grid gets enhanced gap */
+  .footer-grid {
+    gap: 3rem;
+  }
+
+  /* Enhanced footer navigation layout */
+  .footer-nav {
+    gap: 0.75rem;
+  }
+
+  /* Footer bottom section gets enhanced layout */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  /* More sophisticated hover states on desktop (assumes mouse input) */
+  @media (hover: hover) {
+    a:hover {
+      transform: translateY(-1px);  /* Subtle lift effect */
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-link:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+/*
+ * PRINT STYLES
+ * Optimized styles for printing
+ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .skip-to-content,
+  .sr-only {
+    display: none !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
+/*
+ * HIGH CONTRAST MODE SUPPORT
+ * Enhanced visibility for users with contrast preferences
+ */
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #0066CC;
+    --color-primary-dark: #004499;
+    --focus-ring: rgba(0, 102, 204, 0.5);
+  }
+
+  *:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
+  }
+}

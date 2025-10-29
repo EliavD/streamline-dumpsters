@@ -1,0 +1,94 @@
+/*
+================================================================================
+LAYOUT.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Container & Layout System
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   CONTAINER & LAYOUT SYSTEM - Responsive layout foundation
+   ============================================================================ */
+
+/*
+ * Main container class for content centering and responsive padding
+ * Provides consistent maximum width and horizontal spacing across all breakpoints
+ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);     /* 1200px maximum width for readability */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-pad);   /* 1rem (16px) on mobile */
+  padding-right: var(--container-pad);
+}
+
+/*
+ * Row and column layout helpers
+ * Simple flexbox-based grid system for responsive layouts
+ */
+
+/*
+ * Column classes for responsive layouts
+ * Mobile-first approach with breakpoint-specific widths
+ */
+
+/* ============================================================================
+   UTILITY CLASSES - Common helper classes
+   ============================================================================ */
+
+/*
+ * Text alignment utilities
+ * Provides consistent text alignment options
+ */
+.text-center {
+  text-align: center;
+}
+
+/*
+ * Muted text utility
+ * For secondary information, captions, and de-emphasized content
+ * WCAG AA compliant color contrast ratio maintained
+ */
+.muted {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+/*
+ * Prevent text selection utility
+ * Useful for UI elements that shouldn't be selectable
+ */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+ * Display utilities
+ * Common visibility and display helpers
+ */
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}

@@ -497,21 +497,10 @@ DESIGN TOKENS:
   min-height: 10rem;
   background-color: var(--color-gray-50);
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
-  /* Remove flex centering to allow Square SDK fields to render */
-  /* display: flex; */
-  /* align-items: center; */
-  /* justify-content: center; */
-}
-
-/* Ensure Square SDK elements are visible */
-.three-step__square-container .sq-card-wrapper,
-.three-step__square-container iframe {
-  width: 100% !important;
-  min-height: 120px !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }
 
 .three-step__square-placeholder {

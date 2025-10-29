@@ -1,0 +1,388 @@
+/*
+================================================================================
+HERO.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Hero Section
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   HERO SECTION - Modern hero with responsive two-column layout
+   ============================================================================ */
+
+/*
+ * Hero section styling
+ * Two-column layout maintained across all screen sizes with responsive image and overlay
+ * Uses modern CSS for backdrop effects and responsive typography
+ */
+.hero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 60vh;
+  overflow: hidden;
+  position: relative;
+  background: var(--color-primary-600);
+}
+
+/* Hero with background image - Two-column split design */
+.hero:not(.hero--faq):not(.hero--contact) {
+  background-image: url('../assets/img/PlainCityDumpster14yd.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Hero image side (left column) */
+.hero img {
+  flex: 1;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  min-height: 60vh;
+}
+
+/* Hero overlay/content container (right column) */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(0, 20, 40, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Hero content styling with responsive typography */
+.hero-content {
+  flex: 1;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Headline with clamp() and max-width for readability */
+.hero-content h1 {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  max-width: 18ch;
+  font-weight: var(--fw-extrabold);
+  color: var(--text-inverse);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtext with clamp() and max-width */
+.hero-content h2 {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  max-width: 30ch;
+  font-weight: var(--fw-medium);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive button styling */
+.hero-content .btn {
+  align-self: flex-start;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  animation: fadeInUp 1s ease-out 0.3s both;
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-content .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Page-specific hero variants */
+.hero--faq {
+  min-height: 40vh;
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 50%, var(--color-accent-600) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero--contact {
+  min-height: 40vh;
+  background-image: url('../assets/img/plaincity.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Maintain overlay structure for FAQ and Contact pages */
+.hero--faq .hero-overlay {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  text-align: center;
+}
+
+.hero--contact .hero-overlay {
+  position: relative;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero--contact .hero-content {
+  max-width: 600px;
+  text-align: center;
+}
+
+.hero--contact .hero-content h1,
+.hero--contact .hero-content h2 {
+  text-align: center;
+}
+
+/* Booking Hero */
+.hero--booking {
+  min-height: 60vh;
+  background-image: url('../assets/img/plaincity.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.hero-overlay--booking {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+}
+
+.hero--booking .hero-content {
+  max-width: 600px;
+  text-align: left;
+  color: white;
+}
+
+.hero--booking .hero-content h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero--booking .hero-content h2 {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 1rem;
+  font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.hero--booking .hero-content p {
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Mobile: Full width overlay */
+@media (max-width: 767px) {
+  .hero-overlay--booking {
+    width: 100%;
+    background: rgba(15, 23, 42, 0.75);
+    padding: 2rem 1rem;
+  }
+
+  .hero--booking .hero-content {
+    text-align: center;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .hero--booking {
+    min-height: 50vh;
+  }
+
+  .hero-overlay--booking {
+    padding: 1.5rem 1rem;
+  }
+
+  .hero--booking .hero-content h1 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero--booking .hero-content h2 {
+    font-size: clamp(0.9rem, 4vw, 1.25rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .hero--booking .hero-content p {
+    font-size: clamp(0.85rem, 3.5vw, 1rem);
+    line-height: 1.5;
+  }
+}
+
+/* Very small screens (370px and below) */
+@media (max-width: 370px) {
+  .hero--booking {
+    min-height: 45vh;
+  }
+
+  .hero-overlay--booking {
+    padding: 1rem 0.75rem;
+  }
+
+  .hero--booking .hero-content {
+    max-width: 100%;
+  }
+
+  .hero--booking .hero-content h1 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .hero--booking .hero-content h2 {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero--booking .hero-content p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+/* Hero animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile responsive adjustments - maintain asymmetrical layout */
+@media (max-width: 768px) {
+  .hero {
+    min-height: clamp(45vh, 50vh, 60vh);
+  }
+
+  .hero--faq,
+  .hero--contact {
+    min-height: clamp(30vh, 35vh, 40vh);
+  }
+
+  /* Keep overlay width at 55% to maintain asymmetrical design */
+  .hero-overlay {
+    width: 55%;
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .hero-content {
+    padding: clamp(0.75rem, 3vw, 1.5rem);
+  }
+
+  /* Optimized mobile typography - better text grouping */
+  .hero-content h1 {
+    font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    max-width: 14ch;
+    font-weight: var(--fw-extrabold);
+    color: var(--text-inverse);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-content h2 {
+    font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+    max-width: 26ch;
+    font-weight: var(--fw-medium);
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-content .btn {
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+    padding: clamp(0.6rem, 1.8vw, 0.75rem) clamp(1rem, 3vw, 1.4rem);
+    border-radius: 6px;
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* Extra small screens - maintain asymmetrical layout with smaller text */
+@media (max-width: 480px) {
+  .hero {
+    min-height: clamp(40vh, 45vh, 55vh);
+  }
+
+  /* Keep overlay at 60% for better text space on very small screens */
+  .hero-overlay {
+    width: 60%;
+  }
+
+  .hero-content {
+    padding: clamp(0.5rem, 2.5vw, 1rem);
+  }
+
+  .hero-content h1 {
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    max-width: 12ch;
+    line-height: 1.15;
+  }
+
+  .hero-content h2 {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    max-width: 24ch;
+    line-height: 1.35;
+  }
+
+  .hero-content .btn {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.9rem, 2.5vw, 1.2rem);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .hero-content,
+  .hero-content .btn {
+    animation: none;
+  }
+}

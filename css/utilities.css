@@ -1,0 +1,141 @@
+/*
+================================================================================
+UTILITIES.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Utility Classes
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   UTILITY CLASSES - Common helper classes
+   ============================================================================ */
+
+/*
+ * Text alignment utilities
+ * Provides consistent text alignment options
+ */
+.text-center {
+  text-align: center;
+}
+
+/*
+ * Muted text utility
+ * For secondary information, captions, and de-emphasized content
+ * WCAG AA compliant color contrast ratio maintained
+ */
+.muted {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+/*
+ * Prevent text selection utility
+ * Useful for UI elements that shouldn't be selectable
+ */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*
+ * Display utilities
+ * Common visibility and display helpers
+ */
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+
+/* Spacing Utilities - Margin */
+
+/* Spacing Utilities - Padding */
+
+/* Layout Utilities */
+.section {
+  padding: var(--space-16) 0;
+}
+
+/* Background Utilities */
+
+/* Card Utilities */
+.card {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width) solid var(--border-color);
+  transition: all var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card--elevated {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================================
+   INLINE STYLE REPLACEMENTS - Converted from inline styles
+   ============================================================================ */
+
+/*
+ * Display: none utility
+ * Used for elements that should be hidden by default (modals, sections, etc.)
+ * Note: JavaScript may toggle this to show elements
+ */
+.u-display-none {
+  display: none;
+}
+
+/*
+ * Background image utilities
+ * For price cards with background images
+ * Exact inline style values preserved
+ * Using !important to ensure specificity over other background rules
+ */
+.u-bg-gallery-1 {
+  background-image: url('../assets/img/gallery-1.jpg') !important;
+}
+
+.u-bg-gallery-4 {
+  background-image: url('../assets/img/gallery-4.jpg') !important;
+}
+
+/*
+ * Full height with minimum
+ * Used for calendar/embedded elements that need full container height
+ */
+.u-full-height-min-700 {
+  height: 100%;
+  min-height: 700px;
+}
+
+/*
+ * Top margin spacing
+ * Checkbox group spacing
+ */
+.u-margin-top-1-5 {
+  margin-top: 1.5rem;
+}

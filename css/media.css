@@ -1,0 +1,40 @@
+/*
+================================================================================
+MEDIA.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Media Elements
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   MEDIA ELEMENTS - Images, videos, and embedded content
+   ============================================================================ */
+
+/*
+ * Responsive media defaults
+ * Ensures images and media scale properly and don't break layouts
+ */
+img,
+picture,
+svg {
+  display: block;             /* Removes baseline spacing issues */
+  max-width: 100%;            /* Responsive scaling */
+  height: auto;               /* Maintains aspect ratio */
+}
+
+/*
+ * Image optimization and loading
+ * Improves performance and user experience
+ */
+img {
+  font-style: italic;         /* Styles alt text if image fails to load */
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 1rem;         /* Space around wrapped images */
+}

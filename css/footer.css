@@ -1,0 +1,236 @@
+/*
+================================================================================
+FOOTER.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Footer System
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   FOOTER SYSTEM - Site footer with responsive grid layout
+   ============================================================================ */
+
+/*
+ * Enhanced site footer
+ * Black background with improved contrast and spacing
+ */
+.site-footer {
+  background: #000000;
+  color: white;
+  margin-top: auto;
+  border-top: var(--border-width) solid var(--color-gray-700);
+}
+
+/*
+ * Enhanced footer inner container
+ * Modern grid layout with improved spacing
+ */
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-16) var(--container-pad) var(--space-8);
+}
+
+/*
+ * Footer grid container
+ * Contains all footer sections
+ */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+}
+
+/*
+ * Footer sections
+ * Individual content areas within the footer
+ */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/*
+ * Footer Links and Hours wrapper
+ * Creates 2-column layout for Quick Links and Business Hours even on mobile
+ */
+.footer-links-hours {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;  /* Compact gap on mobile */
+}
+
+.footer-section h3 {
+  color: white;
+  font-size: 1.125rem;                  /* 18px */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.footer-subtitle {
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-accent-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.125rem;                  /* 18px */
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.footer-text {
+  color: white;
+}
+
+/*
+ * Footer links
+ * White text with reduced opacity and hover effects
+ */
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);     /* 80% opacity for subtle appearance */
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  padding: 0.25rem 0;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  color: var(--color-white);            /* Full opacity on hover */
+  text-decoration: underline;
+  transform: translateX(4px);           /* Subtle slide effect */
+}
+
+/* Footer contact specific styling */
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.footer-contact .footer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transform: none; /* Override the general footer-link transform */
+  min-height: 44px;
+  width: 100%;
+}
+
+.footer-contact .footer-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  text-decoration: none; /* Override the general footer-link underline */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/*
+ * Footer navigation lists
+ * Clean list styling for footer navigation
+ */
+.footer-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-nav li {
+  margin: 0;
+}
+
+/*
+ * Footer list (generic)
+ * Used for Services, Quick Links, and Business Hours
+ */
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-list li {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+}
+
+/*
+ * Business Hours specific styling
+ * Compact layout with day and time separation
+ */
+.footer-hours {
+  gap: 0.35rem !important;  /* Tighter spacing for hours */
+}
+
+.footer-hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.8125rem;  /* Smaller font: 13px */
+  line-height: 1.4;
+}
+
+.footer-hours .day {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-hours .hours {
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+/*
+ * Social media icons
+ * Accessible icon links with proper labeling
+ */
+
+/*
+ * Footer bottom section
+ * Copyright and legal information with visual separation
+ */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: white;
+  font-size: var(--fz-sm);
+  max-width: none;                      /* Override paragraph max-width */
+}
+
+.footer-bottom .footer-link {
+  color: white;
+  font-size: var(--fz-sm);
+}

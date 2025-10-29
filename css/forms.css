@@ -1,0 +1,78 @@
+/*
+================================================================================
+FORMS.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Form Elements
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   FORM ELEMENTS - Input, textarea, and select styling
+   ============================================================================ */
+
+/*
+ * Form control inheritance and consistency
+ * Ensures form elements inherit typography and behave predictably
+ */
+input,
+button,
+textarea,
+select {
+  font: inherit;              /* Inherit typography from parent */
+  color: inherit;             /* Inherit color from parent */
+}
+
+/*
+ * Remove button styling inconsistencies
+ * Provides clean foundation for custom button styles
+ */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/*
+ * Textarea improvements
+ * Prevents layout issues and improves usability
+ */
+textarea {
+  resize: vertical;           /* Only allow vertical resizing */
+  min-height: 4rem;           /* Minimum usable height */
+}
+
+/* Form Enhancement Utilities */
+.form-group {
+    margin-bottom: var(--space-6);
+}
+
+.form-label {
+    display: block;
+    font-weight: var(--fw-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+    font-size: var(--fs-sm);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--fs-base);
+    transition: all var(--transition-base);
+    background-color: var(--bg-primary);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary-500);
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+}

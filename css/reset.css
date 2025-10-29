@@ -1,0 +1,62 @@
+/*
+================================================================================
+RESET.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: CSS Reset & Normalization
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   CSS RESET & NORMALIZATION - Modern, mobile-first approach
+   ============================================================================ */
+
+/*
+ * Universal box-sizing reset
+ * Ensures all elements use border-box sizing for predictable layouts
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Remove default margins and padding
+ * Provides consistent baseline across all browsers
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * HTML and body foundation
+ * Sets up the document with consistent baseline styles
+ */
+html {
+  font-size: var(--fz-base); /* 16px base, enables rem units */
+  scroll-behavior: smooth;    /* Smooth scrolling for anchor links */
+}
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-normal);
+  line-height: var(--lh-relaxed);           /* Enhanced line height for better readability */
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1; /* Enable advanced font features */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  letter-spacing: -0.011em;               /* Subtle letter spacing for better text flow */
+}

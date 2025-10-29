@@ -59,20 +59,28 @@ self.addEventListener('fetch', (event) => {
 
                 return fetch(fetchRequest).then((response) => {
                     // Check if valid response
-                    if (!response || response.status !== 200 || response.type !== 'basic') {
+                    if (!response || response.status !== 200) {
                         return response;
                     }
 
-                    // Clone the response because it's a one-time use stream
-                    const responseToCache = response.clone();
+                    // Only cache same-origin responses (not CORS or external resources)
+                    // Allow both 'basic' and 'cors' types for HTTPS localhost
+                    if (response.type === 'basic' || response.type === 'cors') {
+                        // Clone the response because it's a one-time use stream
+                        const responseToCache = response.clone();
 
-                    caches.open(CACHE_NAME)
-                        .then((cache) => {
-                            // Only cache GET requests
-                            if (event.request.method === 'GET') {
-                                cache.put(event.request, responseToCache);
-                            }
-                        });
+                        caches.open(CACHE_NAME)
+                            .then((cache) => {
+                                // Only cache GET requests
+                                if (event.request.method === 'GET') {
+                                    cache.put(event.request, responseToCache);
+                                }
+                            })
+                            .catch((err) => {
+                                // Silently fail cache storage errors
+                                console.warn('Cache storage failed:', err);
+                            });
+                    }
 
                     return response;
                 }).catch(() => {

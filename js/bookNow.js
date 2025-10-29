@@ -1256,6 +1256,11 @@ class BookingModal {
   async openModal() {
     if (this.isOpen) return;
 
+    // Track booking started in GA4
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'booking_started');
+    }
+
     // Store the currently focused element
     this.previousFocus = document.activeElement;
 
@@ -1769,28 +1774,10 @@ class PaymentProcessor {
       }
       console.log('✅ Card container found:', cardContainer);
 
-      console.log('🎨 Creating Square card with styles...');
-      // Create card payment form
-      this.card = await this.payments.card({
-        style: {
-          '.input-container': {
-            borderColor: '#d1d5db',
-            borderRadius: '8px'
-          },
-          '.input-container.is-focus': {
-            borderColor: '#01b0bb'
-          },
-          '.input-container.is-error': {
-            borderColor: '#ef4444'
-          },
-          '.message-text': {
-            color: '#ef4444'
-          },
-          '.message-icon': {
-            color: '#ef4444'
-          }
-        }
-      });
+      console.log('🎨 Creating Square card (using default styles)...');
+      // Create card payment form with NO custom styles
+      // Custom styles may be causing rendering issues
+      this.card = await this.payments.card();
 
       await this.card.attach(cardContainer);
 
@@ -2950,6 +2937,14 @@ class BookingFlowManager {
    */
   showConfirmationScreen(formData) {
     console.log('🎉 Showing confirmation screen (Step 4)');
+
+    // Track booking completion in GA4
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'booking_complete', {
+        'value': 299,
+        'currency': 'USD'
+      });
+    }
 
     // Get calendar dates
     const calendarDates = this.calendarManager.getSelectedDates();

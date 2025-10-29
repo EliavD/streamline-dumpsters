@@ -1,0 +1,44 @@
+/**
+ * Modal Utility Classes
+ * Replaces inline styles with reusable CSS classes
+ */
+
+/* Hidden state classes */
+.modal-hidden {
+  display: none !important;
+}
+
+.modal-visible {
+  display: block !important;
+}
+
+/* Modal specific utility classes */
+.modal-checkbox {
+  margin-top: 1.5rem;
+}
+
+.modal-payment {
+  display: none;
+}
+
+.modal-payment.active {
+  display: block;
+}
+
+/* Junk removal modal specific styling */
+#junkRemovalModal {
+  display: none;
+}
+
+#junkRemovalModal[aria-hidden="false"] {
+  display: flex;
+}
+
+/* Booking modal initial state */
+#bookingModal[hidden] {
+  display: none;
+}
+
+#bookingModal:not([hidden]) {
+  display: flex;
+}

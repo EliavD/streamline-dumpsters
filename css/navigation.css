@@ -1,0 +1,316 @@
+/*
+================================================================================
+NAVIGATION.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: Header & Navigation
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   HEADER & NAVIGATION SYSTEM - Responsive header with mobile hamburger menu
+   ============================================================================ */
+
+/*
+ * Enhanced site header
+ * Modern sticky navigation with backdrop blur
+ */
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: var(--border-width) solid var(--border-color);
+  z-index: 1000;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+/* Enhanced header on scroll */
+
+/*
+ * Enhanced header inner container
+ * Professional layout with improved spacing
+ */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+  min-height: 72px;                /* Increased height for better presence */
+}
+
+/*
+ * Site logo styling
+ * Responsive sizing across breakpoints
+ * Maintains proper proportions and readability
+ */
+.site-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.logo-img {
+  height: 70px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  padding: 8px;
+}
+
+.site-logo:hover {
+  opacity: 0.8;
+}
+
+/*
+ * Main navigation container
+ * Hidden by default on mobile, visible on desktop
+ * Transforms into overlay panel on mobile when open
+ */
+.main-nav {
+  display: none;                   /* Hidden by default on mobile */
+}
+
+/*
+ * Navigation list styling
+ * Flexbox layout for horizontal alignment on desktop
+ * Stacked layout on mobile when revealed
+ */
+.nav-list {
+  display: flex;
+  flex-direction: column;          /* Stacked on mobile */
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Center the Book Now button in mobile navigation */
+.nav-list li:last-child {
+  display: flex;
+  justify-content: center;
+  padding: 1rem var(--container-pad);
+}
+
+/* Full-width Book Now button styling for mobile */
+.nav-list .btn {
+  width: 100%;
+  background-color: var(--color-primary-500);
+  border-color: var(--color-primary-500);
+  color: white;
+  box-shadow: 0 2px 4px rgba(1, 176, 187, 0.2);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-list .btn:hover {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(1, 176, 187, 0.3);
+}
+
+/*
+ * Enhanced navigation link styling
+ * Modern hover states and improved typography
+ */
+.nav-link {
+  display: block;
+  padding: 1rem var(--container-pad);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-base);
+  transition: all var(--transition-fast);
+  position: relative;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: white;
+  margin-bottom: 1px;
+}
+
+.nav-link:hover {
+  color: var(--color-primary-500);
+  background-color: var(--bg-secondary);
+}
+
+/* Active/current page indicator */
+.nav-link.active,
+.nav-link[aria-current="page"] {
+  color: var(--color-primary-500);
+  background-color: var(--bg-secondary);
+  font-weight: var(--fw-semibold);
+}
+
+.nav-link.active::before,
+.nav-link[aria-current="page"]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--color-primary-500);
+}
+
+/*
+ * Call-to-action button in navigation
+ * Full-width on mobile, inline on desktop
+ * Primary button styling with enhanced visual prominence
+ */
+.nav-cta {
+  display: block;
+  margin: 1rem var(--container-pad);
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius);
+  text-align: center;
+  border: 2px solid var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.nav-cta:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/*
+ * Mobile navigation toggle button (custom dumpster icon with hamburger lines)
+ * Dumpster background with overlaid hamburger lines that transform to X
+ * Includes proper ARIA attributes for accessibility
+ */
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 44px;                     /* Minimum touch target size */
+  height: 44px;
+  background: url('../assets/img/dumpsterbin.png') no-repeat center center;
+  background-size: 32px 32px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  z-index: 1001;                   /* Above navigation overlay */
+}
+
+/*
+ * Hamburger menu bars overlaid on dumpster icon
+ * Created with pseudo-elements for clean semantic markup
+ * Animated transforms for hamburger-to-X transition
+ */
+.nav-toggle::before,
+.nav-toggle::after,
+.nav-toggle .nav-toggle__bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 1px;
+  transition: all var(--transition-fast);
+  margin: 0 auto;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.nav-toggle::before,
+.nav-toggle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-toggle::before {
+  top: 15px;                       /* Top bar position - adjusted for dumpster */
+}
+
+.nav-toggle::after {
+  bottom: 15px;                    /* Bottom bar position - adjusted for dumpster */
+}
+
+.nav-toggle .nav-toggle__bar {
+  position: relative;
+  top: 1px;                        /* Slight adjustment for center alignment */
+}
+
+/*
+ * Mobile navigation open state
+ * Reveals navigation overlay and transforms hamburger to X
+ */
+.site-header.is-open .main-nav {
+  display: block !important;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  border-bottom: 1px solid var(--color-section-bg);
+  box-shadow: var(--shadow-md);
+}
+
+/*
+ * Hamburger-to-X animation when menu is open
+ * Lines transform to X shape over dumpster icon
+ */
+.site-header.is-open .nav-toggle::before {
+  transform: translateX(-50%) rotate(45deg);
+  top: 50%;
+  margin-top: -1px;
+  width: 20px;
+}
+
+.site-header.is-open .nav-toggle::after {
+  transform: translateX(-50%) rotate(-45deg);
+  bottom: 50%;
+  margin-bottom: -1px;
+  width: 20px;
+}
+
+.site-header.is-open .nav-toggle .nav-toggle__bar {
+  opacity: 0;                      /* Hide middle bar for clean X */
+  transform: scale(0);
+}
+
+/*
+ * Reduced motion fallback
+ * Uses opacity changes instead of transforms for users who prefer reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+  .nav-toggle::before,
+  .nav-toggle::after,
+  .nav-toggle .nav-toggle__bar {
+    transition: opacity var(--transition-fast);
+  }
+
+  .site-header.is-open .nav-toggle::before,
+  .site-header.is-open .nav-toggle::after {
+    transform: translateX(-50%);
+    opacity: 0.7;
+    width: 18px;
+  }
+
+  .site-header.is-open .nav-toggle .nav-toggle__bar {
+    opacity: 0.3;
+  }
+}

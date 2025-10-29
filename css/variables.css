@@ -1,0 +1,146 @@
+/*
+================================================================================
+VARIABLES.CSS - Streamline Dumpsters Ltd.
+================================================================================
+
+PURPOSE: CSS Custom Properties (Design Tokens)
+
+DEPENDENCIES: variables.css (should be loaded first)
+
+NOTE: This file was split from base.css for better organization
+      NO STYLES WERE CHANGED - This is purely organizational
+================================================================================
+*/
+
+/* ============================================================================
+   DESIGN TOKENS - CSS Custom Properties
+   ============================================================================ */
+
+:root {
+  /* Modern Typography Scale - Fluid responsive sizing */
+  --font-family-primary: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Fluid Font Sizes - Scales naturally between breakpoints */
+  --fs-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --fs-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --fs-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem);
+  --fs-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --fs-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
+  --fs-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3.125rem);
+
+  /* Font Weights */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* Line Heights */
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.625;
+
+  /* Enhanced Color System - Professional palette with #01b0bb primary */
+  /* Primary Brand Colors (Teal/Cyan base) */
+  --color-primary-50: #f0fdfe;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eedd8;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #00828a; /* Your main brand color - WCAG AA compliant (4.61:1) */
+  --color-primary-600: #067893; /* WCAG AA compliant on light backgrounds (4.88:1) */
+  --color-primary-700: #0e7490;
+
+  /* Complementary Colors (Orange/Coral accents) */
+  --color-accent-200: #fed7aa;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316; /* Warm accent for CTAs */
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+
+  /* Cool-tinted Grays (complement teal) */
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-900: #0f172a;
+
+  /* Semantic Colors */ /* Emerald green */ /* Amber */ /* Red */ /* Sky blue */
+
+  /* Legacy color mappings - maintains existing functionality */
+  --color-primary: var(--color-primary-500);        /* #01B0BB */
+  --color-primary-dark: var(--color-primary-700);   /* Darker hover states */
+  --color-text: var(--color-gray-900);              /* Rich dark gray for text */
+  --color-white: #ffffff;
+  --color-section-bg: var(--color-gray-50);         /* Modern subtle background */
+  --hero-overlay: rgba(15, 23, 42, 0.7);            /* Dark gray overlay */
+  --focus-ring: rgba(1, 176, 187, 0.3);             /* Enhanced focus visibility */
+
+  /* Text Color Aliases */
+  --text-primary: var(--color-gray-900);
+  --text-secondary: var(--color-gray-600);
+  --text-muted: var(--color-gray-500);
+  --text-inverse: white;
+
+  /* Background Aliases */
+  --bg-primary: white;
+  --bg-secondary: var(--color-gray-50);
+
+  /* Border Color Aliases */
+
+  /* Modern Spacing Scale */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */     /* 80px */     /* 96px */     /* 128px */
+
+  /* Legacy spacing mappings */
+  --container-pad: var(--space-4);           /* 1rem */
+  --container-pad-lg: var(--space-8);        /* 2rem */
+  --max-width: 1200px;
+
+  /* Enhanced Shadow System */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* Border Radius Scale */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Legacy radius mappings */
+  --radius: var(--radius-lg);
+
+  /* Enhanced Border System */
+  --border-width: 1px;
+  --border-width-2: 2px;
+  --border-color: var(--color-gray-200);
+
+  /* Legacy typography mappings */
+  --fz-base: var(--fs-base);
+  --fz-sm: var(--fs-sm);
+
+  /* Enhanced transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Responsive breakpoints */
+}

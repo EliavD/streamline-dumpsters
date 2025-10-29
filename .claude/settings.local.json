@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill /F /PID 6524)",
+      "Bash(python -m http.server:*)",
+      "Bash(taskkill //F //PID 6524)",
+      "Bash(taskkill //F //PID 21080)",
+      "Bash(for file in bookNow.html dublin.html hilliard.html upper-arlington.html worthington.html powell.html plain-city.html index.html)",
+      "Bash(do sed -i 's/confirmation\\.css?v=12/confirmation.css?v=13/g' \"$file\")",
+      "Bash(done)",
+      "Bash(for file in dublin.html hilliard.html upper-arlington.html worthington.html powell.html plain-city.html index.html)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(node:*)",
+      "Bash(do sed -i 's/bookNow\\.js?v=sandbox-payment-test/bookNow.js?v=gas-cors-fix/g' \"$file\")",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix: Remove no-cors mode to properly send booking data to Google Apps Script\n\nFixed the issue where Google Apps Script was receiving undefined postData\nby removing the no-cors mode and using proper fetch configuration.\n\nChanges (js/bookNow.js):\n- Removed mode: ''no-cors'' which was preventing body data from being sent\n- Changed Content-Type to ''text/plain;charset=utf-8'' for GAS compatibility\n- Added redirect: ''follow'' to handle GAS redirects properly\n- Added proper response parsing with error handling\n- Added detailed console logging to debug submissions\n- Can now read actual response from Google Apps Script\n\nWhy this fixes the issue:\n- no-cors mode strips the request body, causing e.postData to be undefined\n- Google Apps Script needs the body data to process bookings\n- Now the full JSON payload will be sent and accessible via e.postData\n- The script can now read success/error responses from GAS\n\nVersion Updates:\n- Updated bookNow.js?v=gas-cors-fix across all pages\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(do sed -i 's/bookNow\\.js?v=gas-cors-fix/bookNow.js?v=availability-fallback/g' \"$file\")",
+      "Bash(git commit:*)",
+      "Bash(do sed -i 's/bookNow\\.js?v=availability-fallback/bookNow.js?v=card-nonce-field/g' \"$file\")",
+      "Bash(do sed -i 's/core\\.min\\.js?v=5-production/core.min.js?v=6-sandbox-fix/g' \"$file\")",
+      "Bash(for file in dublin.html hilliard.html upper-arlington.html worthington.html powell.html plain-city.html)",
+      "Bash(do sed -i 's/config\\.js?v=5-production/config.js?v=6-sandbox-fix/g' \"$file\")",
+      "Read(//c/Users/Admin/OneDrive/Desktop/**)",
+      "Bash(for file in bookNow.html dublin.html hilliard.html index.html plain-city.html powell.html upper-arlington.html worthington.html)",
+      "Bash(do sed -i 's/three-step-modal\\.css?v=11/three-step-modal.css?v=12-square-sdk-fix/g' \"$file\")",
+      "Bash(do sed -i 's/bookNow\\.js?v=card-nonce-field/bookNow.js?v=sdk-debug/g' \"$file\")",
+      "Bash(do sed -i 's/three-step-modal\\.css?v=12-square-sdk-fix/three-step-modal.css?v=13-force-visible/g' \"$file\")",
+      "Bash(do sed -i 's/three-step-modal\\.css?v=13-force-visible/three-step-modal.css?v=14-original-restored/g' \"$file\")",
+      "Bash(do sed -i 's/bookNow\\.js?v=sdk-debug/bookNow.js?v=no-custom-styles/g' \"$file\")",
+      "Bash(tasklist:*)",
+      "Bash(python https-server.py:*)",
+      "Bash(taskkill /F /PID 980)",
+      "Bash(taskkill:*)",
+      "Bash(do:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

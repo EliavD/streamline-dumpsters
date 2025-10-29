@@ -1,0 +1,20 @@
+
+CONSOLE.LOG REPLACEMENT REPORT
+Generated: 2025-10-18T21:09:54.911Z
+
+Summary:
+- Files processed: 14
+- Files skipped: 0
+- Total replacements: 241
+- Errors: 0
+
+Replacements by type:
+- console.log → Logger.log: 155
+- console.warn → Logger.warn: 24
+- console.error → Logger.error: 60
+- console.group → Logger.group: 1
+- console.groupEnd → Logger.groupEnd: 1
+
+No errors
+
+Backup location: ./js_backup_1760821794864
