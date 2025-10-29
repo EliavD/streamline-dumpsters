@@ -2736,6 +2736,8 @@ class BookingFlowManager {
       time: formData.timeSlot,
       payment_id: paymentResult.paymentId,
       payment_token: paymentResult.token,
+      card_nonce: paymentResult.token, // Add for Google Apps Script compatibility
+      nonce: paymentResult.token, // Alternative field name
       amount: window.CONFIG?.booking?.BOOKING_PRICE || 299,
       payment_amount: paymentResult.amount,
       payment_currency: paymentResult.currency
