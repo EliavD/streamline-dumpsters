@@ -1756,15 +1756,20 @@ class PaymentProcessor {
    */
   async createCardPaymentForm() {
     if (!this.isInitialized) {
+      console.log('⚠️ Payment processor not initialized, initializing now...');
       await this.initialize();
     }
 
     try {
+      console.log('🔍 Looking for card container...');
       const cardContainer = document.getElementById('card-container');
       if (!cardContainer) {
+        console.error('❌ Card container element not found in DOM');
         throw new Error('Card container not found');
       }
+      console.log('✅ Card container found:', cardContainer);
 
+      console.log('🎨 Creating Square card with styles...');
       // Create card payment form
       this.card = await this.payments.card({
         style: {

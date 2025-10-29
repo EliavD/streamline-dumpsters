@@ -125,14 +125,14 @@ function detectEnvironment() {
   const protocol = window.location.protocol;
 
   // SPECIAL CASE: HTTPS localhost = production mode for Square testing
-  // This allows testing production Square SDK on local HTTPS server
-  if (protocol === 'https:' && (hostname === 'localhost' || hostname === '127.0.0.1')) {
-    console.warn('🔒 HTTPS localhost detected - Using PRODUCTION mode for Square testing');
-    console.warn('⚠️  WARNING: Real charges will be processed!');
-    return 'production';
-  }
+  // DISABLED for sandbox testing - uncomment when ready for production testing
+  // if (protocol === 'https:' && (hostname === 'localhost' || hostname === '127.0.0.1')) {
+  //   console.warn('🔒 HTTPS localhost detected - Using PRODUCTION mode for Square testing');
+  //   console.warn('⚠️  WARNING: Real charges will be processed!');
+  //   return 'production';
+  // }
 
-  // Development indicators
+  // Development indicators (includes both HTTP and HTTPS localhost for sandbox testing)
   const isDevelopment = hostname === 'localhost' ||
                        hostname === '127.0.0.1' ||
                        hostname.startsWith('192.168.') ||
