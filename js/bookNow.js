@@ -200,24 +200,41 @@ class BookingAPI {
    */
   async createBooking(bookingData) {
     try {
-      // Use no-cors mode to bypass CORS restrictions with Google Apps Script
+      console.log('📤 Submitting booking to Google Apps Script:', bookingData);
+
+      // Google Apps Script requires redirect: 'follow' to work properly
       const response = await fetch(this.baseURL, {
         method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
+        redirect: 'follow',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'text/plain;charset=utf-8', // Use text/plain for GAS compatibility
         },
         body: JSON.stringify(bookingData)
       });
 
-      // Note: no-cors mode doesn't allow reading response
-      // So we assume success if no error was thrown
-      console.log('✅ Booking submitted to Google Apps Script');
+      console.log('📥 Response status:', response.status);
 
-      return { status: 'booked' };
+      // Try to parse the response
+      const result = await response.text();
+      console.log('📥 Response text:', result);
+
+      let parsedResult;
+      try {
+        parsedResult = JSON.parse(result);
+      } catch (e) {
+        // If not JSON, treat as success if status is ok
+        if (response.ok) {
+          console.log('✅ Booking submitted successfully (non-JSON response)');
+          return { status: 'booked' };
+        }
+        throw new Error('Invalid response from server');
+      }
+
+      console.log('✅ Booking submitted successfully:', parsedResult);
+      return parsedResult;
 
     } catch (error) {
-      console.error('Error creating booking:', error);
+      console.error('❌ Error creating booking:', error);
       throw new Error('Unable to complete booking. Please try again.');
     }
   }
