@@ -221,8 +221,8 @@ CONFIG.pricing = {
 
 // Booking Configuration for Modal System
 CONFIG.booking = {
-  // Google Apps Script Backend URL
-  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbz3izZhWmPkn1K2vkQK8l4KShAjyDXIn-Ouf3xbACU9Rouu0IklTfK4Dj-WeKf2YoClxQ/exec',
+  // Google Apps Script Backend URL (SANDBOX MODE with sandbox Square credentials)
+  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycby71qGfhAnK3h7HYXq_vM4n9rEZ7tswjWVXUIGrCdLY7iZi4U9ZGunX2lLRi19-A-j2dw/exec',
 
   // Booking Constraints
   BOOKING_PRICE: 299,
