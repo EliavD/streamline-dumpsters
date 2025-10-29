@@ -1794,6 +1794,21 @@ class PaymentProcessor {
 
       await this.card.attach(cardContainer);
 
+      // Debug: Check if Square SDK actually created child elements
+      console.log('🔍 Card container after attach:');
+      console.log('  - innerHTML length:', cardContainer.innerHTML.length);
+      console.log('  - Child elements count:', cardContainer.children.length);
+      console.log('  - Children:', Array.from(cardContainer.children).map(el => el.tagName + '.' + el.className));
+
+      // Check if card container has any iframes (Square SDK uses iframes)
+      const iframes = cardContainer.querySelectorAll('iframe');
+      console.log('  - iframes found:', iframes.length);
+      if (iframes.length === 0) {
+        console.error('❌ WARNING: No iframes found! Square SDK may not have attached properly');
+      } else {
+        console.log('✅ Square SDK iframes detected:', iframes.length);
+      }
+
       // Add event listeners
       this.card.addEventListener('cardBrandChanged', (event) => {
         console.log('Card brand detected:', event.detail.cardBrand);

@@ -504,6 +504,16 @@ DESIGN TOKENS:
   /* justify-content: center; */
 }
 
+/* Ensure Square SDK elements are visible */
+.three-step__square-container .sq-card-wrapper,
+.three-step__square-container iframe {
+  width: 100% !important;
+  min-height: 120px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
 .three-step__square-placeholder {
   color: var(--color-gray-500);
   font-size: 0.875rem;
