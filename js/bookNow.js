@@ -1842,10 +1842,13 @@ class PaymentProcessor {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    // Simulate random payment failure (5% chance)
-    if (Math.random() < 0.05) {
-      throw new Error('Payment was declined by your bank. Please try a different card.');
-    }
+    // In sandbox mode, always succeed for testing
+    // In production, this should call your backend API to process with Square
+    console.log('💳 Simulating payment processing in sandbox mode:', {
+      amount,
+      currency,
+      token: token.substring(0, 20) + '...'
+    });
 
     // Simulate success (in production, this would call your server)
     return {
