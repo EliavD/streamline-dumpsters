@@ -37,7 +37,7 @@
     <meta property="og:site_name" content="Streamline Dumpsters Ltd.">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.sl-dumpsters.com/bookNow.html">
+    <link rel="canonical" href="https://sl-dumpsters.com/bookNow">
 
     <!-- Additional SEO Meta Tags -->
     <meta name="robots" content="index, follow">
@@ -122,11 +122,13 @@
     <!-- Production CSS Bundle - Non-blocking Load Pattern -->
     <link rel="preload" as="style" href="css/main-purged.min.css" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/main-purged.min.css"></noscript>
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <!-- Page-Specific CSS -->
     <link rel="stylesheet" href="css/bookNow.css?v=20241003d">
     <link rel="stylesheet" href="css/junkRemoval.css?v=20241003d">
-    <link rel="stylesheet" href="css/three-step-modal.css?v=14-original-restored">
+    <link rel="stylesheet" href="css/three-step-modal.css?v=24-clean-no-forced-height">
     <link rel="stylesheet" href="css/confirmation.css?v=13">
     <!-- Dynamically load Square SDK based on environment -->
     <script type="text/javascript">
@@ -134,9 +136,13 @@
         const isLocalhost = window.location.hostname === 'localhost' ||
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname.startsWith('192.168.');
-        const squareSDK = isLocalhost
-          ? 'https://sandbox.web.squarecdn.com/v1/square.js'  // Sandbox for development
-          : 'https://web.squarecdn.com/v1/square.js';         // Production
+        const isHTTPS = window.location.protocol === 'https:';
+
+        // Use PRODUCTION SDK if HTTPS (even on localhost) or production domain
+        // Use SANDBOX SDK only for HTTP localhost
+        const squareSDK = (isHTTPS || !isLocalhost)
+          ? 'https://web.squarecdn.com/v1/square.js'           // Production
+          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox for HTTP localhost only
         document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
         console.log('🔧 Loading Square SDK:', squareSDK);
       })();
@@ -150,8 +156,8 @@
         <div class="header-inner">
             <a href="index.html" class="site-logo">
                 <picture>
-                    <source srcset="assets/img/StreamlineDUumpsterslogo.webp" type="image/webp">
-                    <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
+                    <source srcset="assets/img/StreamlineDumpstersLogo.webp" type="image/webp">
+                    <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
                 </picture>
             </a>
 
@@ -161,6 +167,7 @@
                     <li><a href="faq.html" class="nav-link">FAQ</a></li>
                     <li><a href="contact.html" class="nav-link">Contact</a></li>
                     <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
                     <li><a href="bookNow.html" class="btn btn--primary btn--sm nav-link--active">Book Now</a></li>
                 </ul>
             </nav>
@@ -176,9 +183,8 @@
     <section class="hero hero--booking">
         <div class="hero-overlay hero-overlay--booking">
             <div class="hero-content">
-                <h1>Book Your Dumpster Rental</h1>
-                <h2>Choose Your Service Below</h2>
-                <p>Select dumpster rental for DIY projects or junk removal for full-service hauling. All pricing is upfront and includes delivery, pickup, and disposal.</p>
+                <h1>Book Your Service</h1>
+                <p>Choose dumpster rental or junk removal below. All pricing includes delivery, pickup, and disposal.</p>
             </div>
         </div>
     </section>
@@ -193,58 +199,41 @@
 
                 <div class="timeline-steps">
                     <div class="timeline-step">
-                        <div class="step-arrow">
-                            <svg width="60" height="60"><use href="assets/img/icons/timeline-icons.svg#step-arrow"></use></svg>
-                        </div>
                         <div class="step-content">
+                            <div class="step-number">1</div>
                             <div class="step-icon">
                                 <svg width="80" height="80"><use href="assets/img/icons/timeline-icons.svg#icon-book-service"></use></svg>
                             </div>
                             <h3 class="step-title">Book Your Service</h3>
                             <p class="step-description">Call us, book online, or use our booking form. Choose your service date and we'll confirm your appointment.</p>
                         </div>
-                        <div class="step-connector-arrow">
-                            <svg width="100%" height="20"><use href="assets/img/icons/timeline-icons.svg#connector-arrow"></use></svg>
-                        </div>
                     </div>
 
                     <div class="timeline-step">
-                        <div class="step-arrow">
-                            <svg width="60" height="60"><use href="assets/img/icons/timeline-icons.svg#step-arrow"></use></svg>
-                        </div>
                         <div class="step-content">
+                            <div class="step-number">2</div>
                             <div class="step-icon">
                                 <svg width="80" height="80"><use href="assets/img/icons/timeline-icons.svg#icon-delivery"></use></svg>
                             </div>
                             <h3 class="step-title">We Deliver or Arrive</h3>
                             <p class="step-description">For dumpsters, we deliver to your location. For junk removal, our team arrives ready to work.</p>
                         </div>
-                        <div class="step-connector-arrow">
-                            <svg width="100%" height="20"><use href="assets/img/icons/timeline-icons.svg#connector-arrow"></use></svg>
-                        </div>
                     </div>
 
                     <div class="timeline-step">
-                        <div class="step-arrow">
-                            <svg width="60" height="60"><use href="assets/img/icons/timeline-icons.svg#step-arrow"></use></svg>
-                        </div>
                         <div class="step-content">
+                            <div class="step-number">3</div>
                             <div class="step-icon">
                                 <svg width="80" height="80"><use href="assets/img/icons/timeline-icons.svg#icon-fill-load"></use></svg>
                             </div>
                             <h3 class="step-title">Fill or We Load</h3>
                             <p class="step-description">With dumpster rental, fill it at your own pace. With junk removal, we do all the heavy lifting for you.</p>
                         </div>
-                        <div class="step-connector-arrow">
-                            <svg width="100%" height="20"><use href="assets/img/icons/timeline-icons.svg#connector-arrow"></use></svg>
-                        </div>
                     </div>
 
                     <div class="timeline-step">
-                        <div class="step-arrow">
-                            <svg width="60" height="60"><use href="assets/img/icons/timeline-icons.svg#step-arrow"></use></svg>
-                        </div>
                         <div class="step-content">
+                            <div class="step-number">4</div>
                             <div class="step-icon">
                                 <svg width="80" height="80"><use href="assets/img/icons/timeline-icons.svg#icon-pickup"></use></svg>
                             </div>
@@ -258,6 +247,9 @@
 
         <!-- Buy Boxes - Exact structure from index.html -->
         <section class="buy-boxes">
+            <div class="container text-center">
+                <h2>Book a Dumpster Near You!</h2>
+            </div>
             <div class="container buy-box-grid">
                 <article class="buy-box">
                     <div class="availability-badge">AVAILABLE TODAY</div>
@@ -517,7 +509,7 @@
                     <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
                     <p class="footer-text">Dublin, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
                     <div class="footer-contact">
-                        <a href="tel:(614) 636-2343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
+                        <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
                         <a href="mailto:Eli@Sl-Dumpsters.com" class="footer-link" aria-label="Email Streamline Dumpsters">Eli@Sl-Dumpsters.com</a>
                     </div>
                 </div>
@@ -795,7 +787,7 @@
             <div class="three-step__terms-wrapper">
               <input type="checkbox" id="agreeTos" name="agreeTos" class="three-step__terms-checkbox" required aria-describedby="agreeTosError">
               <label for="agreeTos" class="three-step__terms-label">
-                I agree to the <a href="#terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="#privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+                I agree to the <a href="terms.html#terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="terms.html#privacy" target="_blank" rel="noopener">Privacy Policy</a>.
               </label>
             </div>
             <div class="three-step__error-message" id="agreeTosError" role="alert"></div>
@@ -810,6 +802,79 @@
               Complete Booking
             </button>
           </footer>
+        </div>
+
+        <!-- STEP 4: BOOKING CONFIRMATION -->
+        <div id="step-4" class="three-step__step three-step__step--confirmation" data-step="4">
+          <!-- Header with Close Button -->
+          <header class="three-step-modal__header three-step-modal__header--confirmation">
+            <div class="three-step-modal__header-spacer"></div>
+            <button type="button" class="three-step-modal__close-btn three-step-modal__close-btn--confirmation" aria-label="Close booking confirmation">&times;</button>
+          </header>
+
+          <!-- Confirmation Content -->
+          <div class="three-step-modal__body three-step-modal__body--confirmation">
+            <!-- Success Icon: Dumpster with Checkmark -->
+            <div class="confirmation__icon-wrapper">
+              <!-- 14yd Dumpster SVG Silhouette (light teal outline) -->
+              <svg class="confirmation__icon-dumpster" viewBox="0 0 120 70" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                <!-- Main dumpster body with angled sides -->
+                <path d="M 10 50 L 8 20 L 112 20 L 110 50 Z" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Bottom base -->
+                <path d="M 10 50 L 15 58 L 105 58 L 110 50" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Top rim/lid -->
+                <path d="M 6 20 L 4 16 L 116 16 L 114 20" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Support bar -->
+                <path d="M 30 22 L 90 22" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Left wheel -->
+                <circle cx="25" cy="61" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Right wheel -->
+                <circle cx="95" cy="61" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Lifting hook left -->
+                <path d="M 18 58 L 18 62 L 22 62" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Lifting hook right -->
+                <path d="M 102 58 L 102 62 L 98 62" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <!-- Checkmark SVG (solid teal) -->
+              <svg class="confirmation__icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="confirmation__heading">All set — let's roll!</h1>
+
+            <!-- Description -->
+            <p class="confirmation__description">
+              Thanks for choosing Streamline Dumpsters for your junk removal needs. You'll get a confirmation email soon — we'll handle the dump stuff.
+            </p>
+
+            <!-- Booking Details Card -->
+            <div class="confirmation__details-card">
+              <div class="confirmation__detail-row">
+                <span class="confirmation__detail-label">Delivery Date:</span>
+                <span class="confirmation__detail-value" id="confirmationDeliveryDate">-</span>
+              </div>
+              <div class="confirmation__detail-row">
+                <span class="confirmation__detail-label">Pickup Date:</span>
+                <span class="confirmation__detail-value" id="confirmationPickupDate">-</span>
+              </div>
+              <div class="confirmation__detail-row">
+                <span class="confirmation__detail-label">Location:</span>
+                <span class="confirmation__detail-value" id="confirmationLocation">-</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="confirmation__actions">
+              <button type="button" class="confirmation__btn confirmation__btn--primary" id="bookAnotherDumpster">
+                Book Another Dumpster
+              </button>
+              <button type="button" class="confirmation__btn confirmation__btn--secondary" id="backToHome">
+                Back to Home
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Hidden elements for compatibility with existing bookNow.js -->
@@ -834,9 +899,9 @@
     <!-- Production-safe logging system -->
     <script src="js/logger.js?v=4"></script>
     <script src="js/config.js?v=5-production"></script>
-    <script src="js/three-step-modal.js?v=4"></script>
-    <script src="js/bookNow.js?v=no-custom-styles"></script>
-    <script src="js/junkRemoval.js?v=hide-header-fix"></script>
+    <script src="js/three-step-modal.js?v=7-delayed-init"></script>
+    <script src="js/bookNow.js?v=11-error-logging"></script>
+    <script src="js/junkRemoval.js?v=form-group-fix"></script>
     <!-- GA4 Event Tracking for phone clicks -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {

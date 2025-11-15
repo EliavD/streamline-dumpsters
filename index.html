@@ -25,9 +25,13 @@
         const isLocalhost = window.location.hostname === 'localhost' ||
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname.startsWith('192.168.');
-        const squareSDK = isLocalhost
-          ? 'https://sandbox.web.squarecdn.com/v1/square.js'  // Sandbox for development
-          : 'https://web.squarecdn.com/v1/square.js';         // Production
+        const isHTTPS = window.location.protocol === 'https:';
+
+        // Use PRODUCTION SDK if HTTPS (even on localhost) or production domain
+        // Use SANDBOX SDK only for HTTP localhost
+        const squareSDK = (isHTTPS || !isLocalhost)
+          ? 'https://web.squarecdn.com/v1/square.js'           // Production
+          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox for HTTP localhost only
         document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
         console.log('🔧 Loading Square SDK:', squareSDK);
       })();
@@ -49,7 +53,12 @@
     <meta property="og:site_name" content="Streamline Dumpsters Ltd.">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.sl-dumpsters.com/">
+    <link rel="canonical" href="https://sl-dumpsters.com/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/StreamlineDumpstersLogo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/StreamlineDumpstersLogo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/StreamlineDumpstersLogo.png">
 
     <!-- Additional SEO Meta Tags -->
     <meta name="robots" content="index, follow">
@@ -73,7 +82,6 @@
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "",
         "addressLocality": "Dublin",
         "addressRegion": "OH",
         "postalCode": "43017",
@@ -83,6 +91,10 @@
         "@type": "GeoCoordinates",
         "latitude": 40.0992,
         "longitude": -83.1141
+      },
+      "serviceArea": {
+        "@type": "GeoShape",
+        "circle": "40.0992,-83.1141 30mi"
       },
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
@@ -320,12 +332,11 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
 .site-header{background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.1);position:sticky;top:0;z-index:1000;width:100%}
 .header-inner{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
 .site-logo{display:flex;align-items:center}
-.logo-img{height:50px;width:auto}
+.logo-img{height:80px;width:auto}
 .main-nav{display:flex}
 .nav-list{list-style:none;margin:0;padding:0;display:flex;gap:2rem}
 .nav-link{color:#333;text-decoration:none;font-weight:500;transition:color .3s}
 .nav-link:hover{color:#01B0BB}
-.nav-toggle{display:none}
 .btn{display:inline-block;padding:.75rem 1.5rem;font-size:1rem;font-weight:600;text-align:center;text-decoration:none;border:none;border-radius:4px;cursor:pointer;transition:all .3s}
 .btn--primary{background:#01B0BB;color:#fff}
 .btn--primary:hover{background:#019099;transform:translateY(-2px)}
@@ -346,12 +357,17 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
 
     <!-- Production CSS Bundle - Complete & Minified -->
     <link rel="stylesheet" href="css/main-purged.min.css?v=3">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/index.css?v=hero-50-50-split-fix">
     <link rel="stylesheet" href="css/modal-utilities.css">
     <link rel="stylesheet" href="css/bookNow.css?v=20241003d">
-    <link rel="stylesheet" href="css/three-step-modal.css?v=14-original-restored">
+    <link rel="stylesheet" href="css/three-step-modal.css?v=24-clean-no-forced-height">
     <link rel="stylesheet" href="css/confirmation.css?v=13">
     <link rel="stylesheet" href="css/junkRemoval.css?v=20241003d">
     <link rel="stylesheet" href="css/buy-box-fix.css?v=1">
+    <link rel="stylesheet" href="css/service-area-map.css?v=1">
+    <link rel="stylesheet" href="css/trust-badge.css?v=1">
 </head>
 <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="u-display-none">
@@ -366,8 +382,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
         <div class="header-inner">
             <a href="index.html" class="site-logo">
                 <picture>
-                    <source srcset="assets/img/StreamlineDUumpsterslogo.webp" type="image/webp">
-                    <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
+                    <source srcset="assets/img/StreamlineDumpstersLogo.webp" type="image/webp">
+                    <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd." class="logo-img">
                 </picture>
             </a>
 
@@ -377,6 +393,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
                     <li><a href="faq.html" class="nav-link">FAQ</a></li>
                     <li><a href="contact.html" class="nav-link">Contact</a></li>
                     <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
                     <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
                 </ul>
             </nav>
@@ -391,8 +408,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     <section class="hero">
         <div class="hero-overlay">
             <div class="hero-content">
-                <h1>Streamline Your Cleanup</h1>
-                <p>Fast, Affordable, Driveway-Safe Dumpster Rentals</p>
+                <h1>Your Local Dumpster Experts</h1>
+                <p>Fast, affordable, driveway-safe service — only $299 with same-day delivery.</p>
             </div>
         </div>
         <a href="tel:+16146362343" class="btn btn--primary hero-cta">(614) 636-2343</a>
@@ -419,6 +436,9 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     <main id="main-content" class="container">
 
         <section class="buy-boxes">
+            <div class="container text-center">
+                <h2>Book a Dumpster Near You!</h2>
+            </div>
             <div class="container buy-box-grid">
                 <article class="buy-box">
                     <div class="availability-badge">AVAILABLE TODAY</div>
@@ -516,6 +536,22 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
                         Get a Bid
                     </button>
                 </article>
+            </div>
+        </section>
+
+        <!-- Trust Badge Section -->
+        <section class="trust-badge-section">
+            <div class="container">
+                <div class="trust-badge-content">
+                    <div class="trust-badge-text">
+                        <h3>Fully Insured & Licensed</h3>
+                        <p>Your property is protected with comprehensive commercial liability insurance</p>
+                    </div>
+                    <div class="trust-badge-logos">
+                        <img src="assets/img/ProgressiveCommercial.webp" alt="Progressive Commercial Insurance" width="200" height="auto">
+                        <img src="assets/img/DOT.webp" alt="DOT Certified" width="120" height="auto">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -646,6 +682,68 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
             </div>
           </div>
         </section>
+
+        <!-- Service Area Map Section -->
+        <section class="service-area-map-section">
+          <div class="container">
+            <h2 class="service-area-heading">Our Service Area</h2>
+
+            <div class="service-area-grid">
+              <!-- Left Sidebar - Locations List -->
+              <div class="service-area-sidebar">
+                <ul class="service-area-list">
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="dublin.html" class="location-link">Dublin, OH 43016, 43017</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="hilliard.html" class="location-link">Hilliard, OH 43026, 43221</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="powell.html" class="location-link">Powell, OH 43065</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="upper-arlington.html" class="location-link">Upper Arlington, OH 43220, 43221</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="worthington.html" class="location-link">Worthington, OH 43085, 43235</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="plain-city.html" class="location-link">Plain City, OH 43064</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="service-area.html" class="location-link">Columbus, OH (all zip codes)</a>
+                  </li>
+                </ul>
+                <div class="service-area-cta">
+                  <p class="service-area-description">Same-day dumpster rental available throughout Central Ohio</p>
+                  <a href="service-area.html" class="btn btn--primary">View All Areas</a>
+                </div>
+              </div>
+
+              <!-- Right Side - Map Iframe -->
+              <div class="service-area-map">
+                <iframe
+                  src="https://www.google.com/maps/d/u/0/embed?mid=1Wi9k_5KIo7C3LqN8IW3LqeO_PCPK9yQ&ehbc=2E312F"
+                  width="100%"
+                  height="600"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Streamline Dumpsters Service Area Map"
+                  aria-label="Interactive map showing our service areas in Central Ohio">
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -700,28 +798,29 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
         </div>
     </footer>
 
-    <!-- Modals loaded dynamically via core.min.js -->
+    <!-- Modals loaded dynamically via modal-loader.js -->
 
     <!-- Production-safe logging system -->
     <script src="js/logger.js?v=4"></script>
 
-    <!-- Core functionality (modal-loader + config) -->
-    <script src="js/core.min.js?v=6-sandbox-fix"></script>
+    <!-- Core functionality - Load UPDATED individual files instead of core.min.js -->
+    <script src="js/config.js?v=test-1-dollar"></script>
+    <script src="js/modal-loader.js?v=updated"></script>
 
     <!-- Mobile navigation toggle -->
     <script src="js/mobile-nav.js"></script>
 
     <!-- Three-step modal navigation -->
-    <script src="js/three-step-modal.js?v=5"></script>
+    <script src="js/three-step-modal.js?v=7-delayed-init"></script>
 
     <!-- Page features loaded individually (excluding old junkRemoval) -->
     <script src="js/index-main.js"></script>
     <script src="js/carousel.js"></script>
     <script src="js/reviews.js"></script>
-    <script src="js/bookNow.js?v=no-custom-styles"></script>
+    <script src="js/bookNow.js?v=11-error-logging"></script>
 
     <!-- Updated junkRemoval.js with three-step modal styling -->
-    <script src="js/junkRemoval.js?v=hide-header-fix"></script>
+    <script src="js/junkRemoval.js?v=form-group-fix"></script>
 
     <!-- GA4 Event Tracking for phone clicks -->
     <script>

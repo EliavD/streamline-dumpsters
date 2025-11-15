@@ -25,9 +25,13 @@
         const isLocalhost = window.location.hostname === 'localhost' ||
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname.startsWith('192.168.');
-        const squareSDK = isLocalhost
-          ? 'https://sandbox.web.squarecdn.com/v1/square.js'  // Sandbox for development
-          : 'https://web.squarecdn.com/v1/square.js';         // Production
+        const isHTTPS = window.location.protocol === 'https:';
+
+        // Use PRODUCTION SDK if HTTPS (even on localhost) or production domain
+        // Use SANDBOX SDK only for HTTP localhost
+        const squareSDK = (isHTTPS || !isLocalhost)
+          ? 'https://web.squarecdn.com/v1/square.js'           // Production
+          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox for HTTP localhost only
         document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
         console.log('🔧 Loading Square SDK:', squareSDK);
       })();
@@ -37,7 +41,7 @@
     <title>Hilliard OH Dumpster Rental | $299 Same-Day Delivery</title>
     <meta name="description" content="Hilliard dumpster rental starting at $299. 14-yard dumpsters, same-day delivery available. Serving 43026, 43119. Call Streamline at (614) 636-2343!">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.sl-dumpsters.com/hilliard.html">
+    <link rel="canonical" href="https://sl-dumpsters.com/hilliard">
 
     <!-- PWA and Mobile Optimization -->
     <meta name="theme-color" content="#01B0BB">
@@ -71,14 +75,15 @@
     <!-- CSS Files -->
     <!-- Production CSS Bundle - Minified & Optimized -->
     <link rel="stylesheet" href="css/main-purged.min.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <!-- Page-Specific CSS -->
-    <link rel="stylesheet" href="css/location-page.css?v=styled-reference">
     <link rel="stylesheet" href="css/location-page.css?v=styled-reference">
     <link rel="stylesheet" href="css/faq.css">
     <link rel="stylesheet" href="css/modal-utilities.css">
     <link rel="stylesheet" href="css/bookNow.css?v=20241003d">
-    <link rel="stylesheet" href="css/three-step-modal.css?v=14-original-restored">
+    <link rel="stylesheet" href="css/three-step-modal.css?v=24-clean-no-forced-height">
     <link rel="stylesheet" href="css/confirmation.css?v=13">
     <link rel="stylesheet" href="css/junkRemoval.css?v=20241003d">
 
@@ -160,7 +165,7 @@
     <header class="site-header">
         <div class="header-inner">
             <a href="index.html" class="site-logo">
-                <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img" width="400" height="400">
+                <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd." class="logo-img" width="400" height="400">
             </a>
 
             <nav class="main-nav" aria-label="Main navigation">
@@ -169,6 +174,7 @@
                     <li><a href="faq.html" class="nav-link">FAQ</a></li>
                     <li><a href="contact.html" class="nav-link">Contact</a></li>
                     <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
                     <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
                 </ul>
             </nav>
@@ -194,6 +200,9 @@
 
         <!-- Buy Boxes Section -->
         <section class="buy-boxes">
+            <div class="container text-center">
+                <h2>Book a Dumpster Near You!</h2>
+            </div>
             <div class="container buy-box-grid">
                     <article class="buy-box">
                         <div class="availability-badge">AVAILABLE TODAY</div>
@@ -567,7 +576,7 @@
                     <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
                     <p class="footer-text">Hilliard, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
                     <div class="footer-contact">
-                        <a href="tel:(614) 636-2343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
+                        <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
                         <a href="mailto:Eli@Sl-Dumpsters.com" class="footer-link" aria-label="Email Streamline Dumpsters">Eli@Sl-Dumpsters.com</a>
                     </div>
                 </div>
@@ -615,13 +624,12 @@
     <!-- Phase 4: Enhanced JavaScript Integration -->
     <!-- Production-safe logging system -->
     <script src="js/logger.js?v=4"></script>
-    <script src="js/mobile-nav.js"></script>
     <script src="js/modal-loader.js?v=4"></script>
     <script src="js/mobile-nav.js"></script>
-    <script src="js/config.js?v=6-sandbox-fix"></script>
-    <script src="js/three-step-modal.js?v=5"></script>
-    <script src="js/bookNow.js?v=no-custom-styles"></script>
-    <script src="js/junkRemoval.js?v=hide-header-fix"></script>
+    <script src="js/config.js?v=8-production-gas"></script>
+    <script src="js/three-step-modal.js?v=7-delayed-init"></script>
+    <script src="js/bookNow.js?v=11-error-logging"></script>
+    <script src="js/junkRemoval.js?v=form-group-fix"></script>
     <script src="js/location-faq.js"></script>
     <!-- GA4 Event Tracking for phone clicks -->
     <script>

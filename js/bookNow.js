@@ -1,4 +1,8 @@
-console.log("🔥🔥🔥 bookNow-fixed.js LOADING - TOP OF FILE 🔥🔥🔥");
+// Production mode - console logging disabled
+const DEV_MODE = false;
+const devLog = () => {};
+const devError = () => {};
+const devWarn = () => {};
 /*
 ================================================================================
 BOOKNOW.JS - Streamline Dumpsters Ltd. Booking Modal System - Phase 3
@@ -63,7 +67,7 @@ class BookingAPI {
    * Test API connectivity and CORS configuration
    */
   async testAPIConnectivity() {
-    console.log('🔧 Testing API connectivity...');
+    devLog('🔧 Testing API connectivity...');
 
     try {
       // Test basic connectivity
@@ -72,23 +76,23 @@ class BookingAPI {
         mode: 'cors' // Explicitly request CORS
       });
 
-      console.log('Response status:', response.status);
-      console.log('Response headers:', [...response.headers.entries()]);
+      devLog('Response status:', response.status);
+      devLog('Response headers:', [...response.headers.entries()]);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
       const data = await response.json();
-      console.log('✅ API connectivity test passed:', data);
+      devLog('✅ API connectivity test passed:', data);
       return true;
 
     } catch (error) {
-      console.error('❌ API connectivity test failed:', error);
+      devError('❌ API connectivity test failed:', error);
 
       if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-        console.error('🌐 CORS Error: The server is blocking cross-origin requests');
-        console.error('💡 This is common in local development');
+        devError('🌐 CORS Error: The server is blocking cross-origin requests');
+        devError('💡 This is common in local development');
       }
 
       return false;
@@ -136,35 +140,35 @@ class BookingAPI {
    * Get fully booked dates from backend
    */
   async getFullyBookedDates() {
-    console.log('🔍 Attempting to fetch fully booked dates from:', this.baseURL);
+    devLog('🔍 Attempting to fetch fully booked dates from:', this.baseURL);
 
     try {
       const url = `${this.baseURL}?action=getFullyBooked`;
-      console.log('📡 Full request URL:', url);
+      devLog('📡 Full request URL:', url);
 
       const response = await this.makeRequest(url);
-      console.log('✅ Successfully fetched fully booked dates:', response);
+      devLog('✅ Successfully fetched fully booked dates:', response);
 
       if (response.status === 'ok') {
         const dates = response.fullyBookedDates || [];
-        console.log(`📅 Found ${dates.length} fully booked dates:`, dates);
+        devLog(`📅 Found ${dates.length} fully booked dates:`, dates);
         return dates;
       } else {
-        console.error('❌ API returned error status:', response);
+        devError('❌ API returned error status:', response);
         throw new Error(response.message || 'Failed to fetch fully booked dates');
       }
     } catch (error) {
-      console.error('🚨 Detailed error information:');
-      console.error('Error name:', error.name);
-      console.error('Error message:', error.message);
-      console.error('Error stack:', error.stack);
+      devError('🚨 Detailed error information:');
+      devError('Error name:', error.name);
+      devError('Error message:', error.message);
+      devError('Error stack:', error.stack);
 
       // Check if it's a CORS error
       if (error.message.includes('CORS') || error.message.includes('fetch') || error.name === 'TypeError') {
-        console.error('🌐 This appears to be a CORS (Cross-Origin) error');
-        console.error('💡 Solution: Add CORS headers to your Google Apps Script');
-        console.error('📍 Current origin:', window.location.origin);
-        console.error('📍 Target URL:', this.baseURL);
+        devError('🌐 This appears to be a CORS (Cross-Origin) error');
+        devError('💡 Solution: Add CORS headers to your Google Apps Script');
+        devError('📍 Current origin:', window.location.origin);
+        devError('📍 Target URL:', this.baseURL);
       }
 
       throw new Error('Unable to check date availability. Please try again.');
@@ -178,9 +182,9 @@ class BookingAPI {
     const url = `${this.baseURL}?action=checkAvailability&start=${startDate}&end=${endDate}`;
 
     try {
-      console.log('🔍 Checking availability:', {startDate, endDate, url});
+      devLog('🔍 Checking availability:', {startDate, endDate, url});
       const response = await this.makeRequest(url);
-      console.log('✅ Availability check response:', response);
+      devLog('✅ Availability check response:', response);
 
       if (response.status === 'ok') {
         return {
@@ -192,9 +196,9 @@ class BookingAPI {
         throw new Error(response.message || 'Failed to check availability');
       }
     } catch (error) {
-      console.error('❌ Error checking availability:', error);
+      devError('❌ Error checking availability:', error);
       // For now, assume availability is okay to allow booking to proceed
-      console.warn('⚠️ Skipping availability check - assuming dates are available');
+      devWarn('⚠️ Skipping availability check - assuming dates are available');
       return {
         available: true,
         overlapping: 0,
@@ -208,9 +212,13 @@ class BookingAPI {
    */
   async createBooking(bookingData) {
     try {
-      console.log('📤 Submitting booking to Google Apps Script:', bookingData);
+      console.log('🔍 DEBUG: ===== SUBMITTING TO GOOGLE APPS SCRIPT =====');
+      console.log('🔍 Apps Script URL:', this.baseURL);
+      console.log('🔍 Booking data:', bookingData);
+      devLog('📤 Submitting booking to Google Apps Script:', bookingData);
 
       // Google Apps Script requires redirect: 'follow' to work properly
+      console.log('🔍 DEBUG: Sending POST request...');
       const response = await fetch(this.baseURL, {
         method: 'POST',
         redirect: 'follow',
@@ -220,29 +228,44 @@ class BookingAPI {
         body: JSON.stringify(bookingData)
       });
 
+      console.log('🔍 DEBUG: Response received');
       console.log('📥 Response status:', response.status);
+      console.log('📥 Response ok:', response.ok);
+      devLog('📥 Response status:', response.status);
 
       // Try to parse the response
       const result = await response.text();
-      console.log('📥 Response text:', result);
+      console.log('🔍 DEBUG: Raw response text:', result);
+      devLog('📥 Response text:', result);
 
       let parsedResult;
       try {
+        console.log('🔍 DEBUG: Parsing JSON response...');
         parsedResult = JSON.parse(result);
+        console.log('🔍 DEBUG: Parsed result:', parsedResult);
+        console.log('🔍 Result status:', parsedResult.status);
+        console.log('🔍 Payment ID from Apps Script:', parsedResult.payment_id);
+        console.log('🔍 Booking ID from Apps Script:', parsedResult.booking_id);
+
+        if (parsedResult.error) {
+          console.error('❌ Apps Script ERROR:', parsedResult.error);
+        }
       } catch (e) {
+        console.error('❌ Failed to parse JSON response:', e);
         // If not JSON, treat as success if status is ok
         if (response.ok) {
-          console.log('✅ Booking submitted successfully (non-JSON response)');
+          devLog('✅ Booking submitted successfully (non-JSON response)');
           return { status: 'booked' };
         }
         throw new Error('Invalid response from server');
       }
 
-      console.log('✅ Booking submitted successfully:', parsedResult);
+      console.log('✅ Booking submitted successfully to Apps Script');
+      devLog('✅ Booking submitted successfully:', parsedResult);
       return parsedResult;
 
     } catch (error) {
-      console.error('❌ Error creating booking:', error);
+      devError('❌ Error creating booking:', error);
       throw new Error('Unable to complete booking. Please try again.');
     }
   }
@@ -466,7 +489,7 @@ class AvailabilityChecker {
 
       // Show success message
       this.showAvailabilityStatus('available', `✅ Booking system connected. ${fullyBookedDates.length} dates are fully booked.`);
-      console.log('✓ Availability data loaded:', fullyBookedDates.length, 'fully booked dates');
+      devLog('✓ Availability data loaded:', fullyBookedDates.length, 'fully booked dates');
 
     } catch (error) {
       this.hideLoadingState();
@@ -485,7 +508,7 @@ class AvailabilityChecker {
       }
 
       this.showError(`${userMessage} ${technicalMessage}`);
-      console.error('Availability initialization error:', error);
+      devError('Availability initialization error:', error);
     }
   }
 
@@ -548,7 +571,7 @@ class AvailabilityChecker {
 
         this.hideLoadingState();
         this.showAvailabilityStatus('error', error.message);
-        console.error('Availability check error:', error);
+        devError('Availability check error:', error);
       }
     }, delay);
   }
@@ -799,12 +822,12 @@ class BackendTester {
    */
   async testConnection() {
     try {
-      console.log('Testing API connection...');
+      devLog('Testing API connection...');
       const result = await this.api.getFullyBookedDates();
-      console.log('✅ API connection successful:', result);
+      devLog('✅ API connection successful:', result);
       return true;
     } catch (error) {
-      console.error('❌ API connection failed:', error);
+      devError('❌ API connection failed:', error);
       return false;
     }
   }
@@ -814,12 +837,12 @@ class BackendTester {
    */
   async testAvailabilityCheck(startDate, endDate) {
     try {
-      console.log(`Testing availability check for ${startDate} to ${endDate}...`);
+      devLog(`Testing availability check for ${startDate} to ${endDate}...`);
       const result = await this.api.checkAvailability(startDate, endDate);
-      console.log('✅ Availability check successful:', result);
+      devLog('✅ Availability check successful:', result);
       return result;
     } catch (error) {
-      console.error('❌ Availability check failed:', error);
+      devError('❌ Availability check failed:', error);
       return null;
     }
   }
@@ -833,7 +856,7 @@ class BackendTester {
       availability: await this.testAvailabilityCheck('2025-01-15', '2025-01-18')
     };
 
-    console.log('Backend test results:', results);
+    devLog('Backend test results:', results);
     return results;
   }
 }
@@ -843,14 +866,14 @@ class BackendTester {
  */
 class BookingModal {
   constructor() {
-    console.log('🏗️ BookingModal constructor called');
+    devLog('🏗️ BookingModal constructor called');
 
     // Check if we're on a page with the booking modal
     this.modal = document.getElementById('bookingModal');
-    console.log('  - Modal element found:', !!this.modal);
+    devLog('  - Modal element found:', !!this.modal);
 
     if (!this.modal) {
-      console.log('⚠️ BookingModal: Modal not found on this page - exiting constructor');
+      devLog('⚠️ BookingModal: Modal not found on this page - exiting constructor');
       return;
     }
 
@@ -860,8 +883,8 @@ class BookingModal {
     this.closeButton = document.getElementById('closeBookingModal');
     this.cancelButton = document.getElementById('cancelBooking');
 
-    console.log('  - Open button found:', !!this.openButton);
-    console.log('  - Form found:', !!this.form);
+    devLog('  - Open button found:', !!this.openButton);
+    devLog('  - Form found:', !!this.form);
 
     // Form elements
     this.formElements = {
@@ -906,7 +929,7 @@ class BookingModal {
     this.initializeEventListeners();
     this.initializeValidation();
 
-    console.log('✓ BookingModal Phase 5 initialized with complete payment processing system');
+    devLog('✓ BookingModal Phase 5 initialized with complete payment processing system');
   }
 
   /**
@@ -914,20 +937,20 @@ class BookingModal {
    */
   initializeModal() {
     if (!this.modal || !this.openButton) {
-      console.warn('BookingModal: Required elements not found');
-      console.log('  - this.modal:', !!this.modal);
-      console.log('  - this.openButton:', !!this.openButton);
+      devWarn('BookingModal: Required elements not found');
+      devLog('  - this.modal:', !!this.modal);
+      devLog('  - this.openButton:', !!this.openButton);
       return;
     }
 
-    console.log('🎯 Attaching click handler to openBookingModal button');
+    devLog('🎯 Attaching click handler to openBookingModal button');
 
     // Open modal event listener
     this.openButton.addEventListener('click', (e) => {
-      console.log('🖱️ Book Now button clicked!');
+      devLog('🖱️ Book Now button clicked!');
       e.preventDefault();
       e.stopPropagation();
-      console.log('📖 Calling openModal()...');
+      devLog('📖 Calling openModal()...');
       this.openModal();
     });
 
@@ -936,11 +959,11 @@ class BookingModal {
     allCloseButtons.forEach(closeBtn => {
       closeBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('🚪 Close button clicked');
+        devLog('🚪 Close button clicked');
         this.closeModal();
       });
     });
-    console.log(`  - Attached close handlers to ${allCloseButtons.length} close buttons`);
+    devLog(`  - Attached close handlers to ${allCloseButtons.length} close buttons`);
 
     // Legacy close button (if exists)
     if (this.closeButton) {
@@ -985,7 +1008,7 @@ class BookingModal {
    */
   async initializeForm() {
     if (!this.form) {
-      console.warn('BookingModal: Form not found');
+      devWarn('BookingModal: Form not found');
       return;
     }
 
@@ -998,7 +1021,7 @@ class BookingModal {
     // Initialize form field references for future use
     this.updateFocusableElements();
 
-    console.log('✓ BookingModal form initialized');
+    devLog('✓ BookingModal form initialized');
   }
 
   /**
@@ -1067,7 +1090,7 @@ class BookingModal {
     // Enable validation feedback
     this.stateManager.enableValidation();
 
-    console.log('✓ Form validation system initialized');
+    devLog('✓ Form validation system initialized');
   }
 
   /**
@@ -1087,20 +1110,20 @@ class BookingModal {
       const validation = this.validator.validateForm(formData);
 
       // DEBUG: Log validation results
-      console.log('=== VALIDATION DEBUG ===');
-      console.log('Form Data:', formData);
-      console.log('Validation Result:', validation);
-      console.log('Field Results:', validation.fieldResults);
+      devLog('=== VALIDATION DEBUG ===');
+      devLog('Form Data:', formData);
+      devLog('Validation Result:', validation);
+      devLog('Field Results:', validation.fieldResults);
 
       // Show which fields failed
       for (const [fieldName, result] of Object.entries(validation.fieldResults)) {
         if (!result.isValid) {
-          console.log(`❌ ${fieldName} FAILED:`, result.errors);
+          devLog(`❌ ${fieldName} FAILED:`, result.errors);
         } else {
-          console.log(`✓ ${fieldName} passed`);
+          devLog(`✓ ${fieldName} passed`);
         }
       }
-      console.log('=======================');
+      devLog('=======================');
 
       if (!validation.isValid) {
         this.showValidationErrors(validation.fieldResults);
@@ -1113,12 +1136,12 @@ class BookingModal {
       this.validator.showSuccess('Validating information...');
 
       // Check final availability
-      console.log('Checking availability for dates:', calendarDates);
+      devLog('Checking availability for dates:', calendarDates);
       const availability = await this.api.checkAvailability(
         calendarDates.startDate,
         calendarDates.endDate
       );
-      console.log('Availability response:', availability);
+      devLog('Availability response:', availability);
 
       if (!availability.available) {
         this.validator.showFormError('Selected dates are no longer available. Please choose different dates.');
@@ -1126,8 +1149,8 @@ class BookingModal {
       }
 
       // Initialize payment form
-      console.log('Initializing payment processor...');
-      console.log('Square Config:', {
+      devLog('Initializing payment processor...');
+      devLog('Square Config:', {
         appId: this.paymentProcessor.appId,
         locationId: this.paymentProcessor.locationId
       });
@@ -1135,10 +1158,10 @@ class BookingModal {
 
       try {
         await this.paymentProcessor.createCardPaymentForm();
-        console.log('✅ Payment processor initialized successfully');
+        devLog('✅ Payment processor initialized successfully');
       } catch (squareError) {
-        console.error('❌ Square payment initialization failed:', squareError);
-        console.error('Square error details:', {
+        devError('❌ Square payment initialization failed:', squareError);
+        devError('Square error details:', {
           message: squareError.message,
           stack: squareError.stack
         });
@@ -1153,9 +1176,9 @@ class BookingModal {
       this.validator.showSuccess('Information validated. You can now proceed with your booking.');
 
     } catch (error) {
-      console.error('Continue to payment error:', error);
-      console.error('Error stack:', error.stack);
-      console.error('Error details:', {
+      devError('Continue to payment error:', error);
+      devError('Error stack:', error.stack);
+      devError('Error details:', {
         message: error.message,
         name: error.name,
         code: error.code
@@ -1207,7 +1230,7 @@ class BookingModal {
   populateTimeSlots() {
     const timeSlotSelect = this.formElements.timeSlot;
     if (!timeSlotSelect || !window.CONFIG?.booking?.TIME_SLOTS) {
-      console.warn('BookingModal: Time slot select or configuration not found');
+      devWarn('BookingModal: Time slot select or configuration not found');
       return;
     }
 
@@ -1224,7 +1247,7 @@ class BookingModal {
       timeSlotSelect.appendChild(option);
     });
 
-    console.log('✓ Time slots populated:', window.CONFIG.booking.TIME_SLOTS.length);
+    devLog('✓ Time slots populated:', window.CONFIG.booking.TIME_SLOTS.length);
   }
 
   /**
@@ -1301,7 +1324,7 @@ class BookingModal {
     // Check current date selection if any
     this.checkAvailabilityIfReady(true);
 
-    console.log('✓ BookingModal opened with backend integration');
+    devLog('✓ BookingModal opened with backend integration');
   }
 
   /**
@@ -1337,7 +1360,7 @@ class BookingModal {
     this.availabilityChecker.clearAvailabilityStatus();
     this.clearFormStatus();
 
-    console.log('✓ BookingModal closed with payment cleanup');
+    devLog('✓ BookingModal closed with payment cleanup');
   }
 
   /**
@@ -1429,7 +1452,7 @@ class BookingModal {
     // Clear availability status
     this.availabilityChecker.clearAvailabilityStatus();
 
-    console.log('✓ Form reset to initial state with validation system');
+    devLog('✓ Form reset to initial state with validation system');
   }
 
   /**
@@ -1442,57 +1465,57 @@ class BookingModal {
 
 // Initialize the booking modal after modals are loaded
 function initializeBookingModal() {
-  console.log('🔄 initializeBookingModal() called');
-  console.log('  - Modal exists:', !!document.getElementById('bookingModal'));
-  console.log('  - Button exists:', !!document.getElementById('openBookingModal'));
-  console.log('  - CONFIG exists:', typeof window.CONFIG !== 'undefined');
-  console.log('  - Already initialized:', !!window.bookingModal);
+  devLog('🔄 initializeBookingModal() called');
+  devLog('  - Modal exists:', !!document.getElementById('bookingModal'));
+  devLog('  - Button exists:', !!document.getElementById('openBookingModal'));
+  devLog('  - CONFIG exists:', typeof window.CONFIG !== 'undefined');
+  devLog('  - Already initialized:', !!window.bookingModal);
   // Prevent double initialization (check if it's actually a BookingModal instance, not the DOM element!)
   if (window.bookingModal && window.bookingModal instanceof BookingModal) {
-    console.log('⏭️  BookingModal already initialized, skipping');
+    devLog('⏭️  BookingModal already initialized, skipping');
     return;
   }
 
   // Clear if it's just the DOM element
   if (window.bookingModal && !(window.bookingModal instanceof BookingModal)) {
-    console.log('⚠️  window.bookingModal was the DOM element, clearing it');
+    devLog('⚠️  window.bookingModal was the DOM element, clearing it');
     window.bookingModal = null;
   }
 
   // Only initialize if we have the required configuration
   if (typeof window.CONFIG === 'undefined') {
-    console.warn('⚠️  BookingModal: Configuration not loaded, waiting 500ms...');
+    devWarn('⚠️  BookingModal: Configuration not loaded, waiting 500ms...');
 
     // Wait a bit for config to load, then try again
     setTimeout(() => {
       if (typeof window.CONFIG !== 'undefined') {
-        console.log('✅ CONFIG now available, creating BookingModal');
+        devLog('✅ CONFIG now available, creating BookingModal');
         window.bookingModal = new BookingModal();
       } else {
-        console.error('❌ BookingModal: Configuration still not available after waiting');
+        devError('❌ BookingModal: Configuration still not available after waiting');
       }
     }, 500);
   } else {
-    console.log('✅ All prerequisites met, creating BookingModal');
+    devLog('✅ All prerequisites met, creating BookingModal');
     window.bookingModal = new BookingModal();
   }
 }
 
 // Wait for modals to be loaded by modal-loader.js
 document.addEventListener('modalsLoaded', () => {
-  console.log('📦 modalsLoaded event received in bookNow.js');
+  devLog('📦 modalsLoaded event received in bookNow.js');
   initializeBookingModal();
 });
 
 // Fallback: If modalsLoaded event already fired or modal-loader not present
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('📄 DOMContentLoaded event in bookNow.js');
+  devLog('📄 DOMContentLoaded event in bookNow.js');
   // Check if modal already exists (direct HTML, not loaded dynamically)
   if (document.getElementById('bookingModal')) {
-    console.log('✓ Modal found in DOM on DOMContentLoaded, initializing...');
+    devLog('✓ Modal found in DOM on DOMContentLoaded, initializing...');
     initializeBookingModal();
   } else {
-    console.log('⏳ Modal not found in DOM on DOMContentLoaded, waiting for modalsLoaded event');
+    devLog('⏳ Modal not found in DOM on DOMContentLoaded, waiting for modalsLoaded event');
   }
 });
 
@@ -1502,7 +1525,7 @@ window.testBackend = function() {
     const tester = new BackendTester(window.bookingModal);
     return tester.runAllTests();
   } else {
-    console.error('BookingModal not initialized');
+    devError('BookingModal not initialized');
   }
 };
 
@@ -1511,7 +1534,7 @@ window.testValidation = function() {
   if (window.bookingModal) {
     const validator = window.bookingModal.validator;
 
-    console.log('Testing form validation system...');
+    devLog('Testing form validation system...');
 
     // Test invalid data
     const invalidData = {
@@ -1525,7 +1548,7 @@ window.testValidation = function() {
     };
 
     const invalidResult = validator.validateForm(invalidData);
-    console.log('Invalid data validation:', invalidResult);
+    devLog('Invalid data validation:', invalidResult);
 
     // Test valid data
     const validData = {
@@ -1539,14 +1562,14 @@ window.testValidation = function() {
     };
 
     const validResult = validator.validateForm(validData);
-    console.log('Valid data validation:', validResult);
+    devLog('Valid data validation:', validResult);
 
     return {
       invalidTest: invalidResult,
       validTest: validResult
     };
   } else {
-    console.error('BookingModal not initialized');
+    devError('BookingModal not initialized');
   }
 };
 
@@ -1557,15 +1580,15 @@ window.testPhoneFormatter = function() {
 
     const testNumbers = ['5551234567', '555 123 4567', '(555) 123-4567', '555.123.4567'];
 
-    console.log('Testing phone formatter...');
+    devLog('Testing phone formatter...');
     testNumbers.forEach(number => {
       const formatted = formatter.formatPhone(number);
-      console.log(`${number} -> ${formatted}`);
+      devLog(`${number} -> ${formatted}`);
     });
 
     return true;
   } else {
-    console.error('PhoneFormatter not available');
+    devError('PhoneFormatter not available');
   }
 };
 
@@ -1574,30 +1597,30 @@ window.testPaymentProcessing = function() {
   if (window.bookingModal && window.bookingModal.paymentProcessor) {
     const processor = window.bookingModal.paymentProcessor;
 
-    console.log('Testing payment processor...');
+    devLog('Testing payment processor...');
 
     // Test initialization
     processor.initialize().then(() => {
-      console.log('✅ Payment processor initialized successfully');
+      devLog('✅ Payment processor initialized successfully');
 
       // Test payment form creation (requires card container in DOM)
       return processor.createCardPaymentForm();
     }).then(() => {
-      console.log('✅ Payment form created successfully');
+      devLog('✅ Payment form created successfully');
     }).catch((error) => {
-      console.error('❌ Payment processor test failed:', error);
+      devError('❌ Payment processor test failed:', error);
     });
 
     return true;
   } else {
-    console.error('Payment processor not available');
+    devError('Payment processor not available');
   }
 };
 
 // Test complete booking flow (simulation)
 window.testCompleteBookingFlow = function() {
   if (window.bookingModal) {
-    console.log('Testing complete booking flow...');
+    devLog('Testing complete booking flow...');
 
     // Simulate form data
     const testData = {
@@ -1622,12 +1645,12 @@ window.testCompleteBookingFlow = function() {
       }
     });
 
-    console.log('✅ Test data filled into form');
-    console.log('💡 You can now test the booking flow by clicking "Continue to Payment"');
+    devLog('✅ Test data filled into form');
+    devLog('💡 You can now test the booking flow by clicking "Continue to Payment"');
 
     return testData;
   } else {
-    console.error('BookingModal not available');
+    devError('BookingModal not available');
   }
 };
 
@@ -1636,14 +1659,14 @@ window.testErrorRecovery = function() {
   if (window.bookingModal && window.bookingModal.bookingFlowManager) {
     const errorManager = window.bookingModal.bookingFlowManager.errorRecoveryManager;
 
-    console.log('Testing error recovery system...');
+    devLog('Testing error recovery system...');
 
     // Test retryable vs non-retryable errors
     const retryableError = new Error('Network error occurred');
     const nonRetryableError = new Error('Invalid payment method');
 
-    console.log('Retryable error test:', errorManager.shouldRetry(retryableError));
-    console.log('Non-retryable error test:', errorManager.shouldRetry(nonRetryableError));
+    devLog('Retryable error test:', errorManager.shouldRetry(retryableError));
+    devLog('Non-retryable error test:', errorManager.shouldRetry(nonRetryableError));
 
     // Test retry operation with success
     let attemptCount = 0;
@@ -1656,15 +1679,15 @@ window.testErrorRecovery = function() {
     };
 
     errorManager.retryOperation(testOperation).then((result) => {
-      console.log('✅ Retry operation succeeded:', result);
+      devLog('✅ Retry operation succeeded:', result);
       errorManager.reset();
     }).catch((error) => {
-      console.error('❌ Retry operation failed:', error);
+      devError('❌ Retry operation failed:', error);
     });
 
     return true;
   } else {
-    console.error('Error recovery system not available');
+    devError('Error recovery system not available');
   }
 };
 
@@ -1673,32 +1696,32 @@ window.testSecurityManager = function() {
   if (window.bookingModal && window.bookingModal.bookingFlowManager) {
     const securityManager = window.bookingModal.bookingFlowManager.securityManager;
 
-    console.log('Testing security manager...');
+    devLog('Testing security manager...');
 
     try {
       // Test normal submissions
       for (let i = 1; i <= 3; i++) {
         securityManager.canSubmit();
         securityManager.recordAttempt();
-        console.log(`✅ Submission ${i} allowed`);
+        devLog(`✅ Submission ${i} allowed`);
       }
 
       // Test rate limiting
-      console.log('Testing rate limiting...');
+      devLog('Testing rate limiting...');
       securityManager.canSubmit();
-      console.log('✅ Rate limiting working correctly');
+      devLog('✅ Rate limiting working correctly');
 
     } catch (error) {
-      console.log('🛡️ Security block triggered:', error.message);
+      devLog('🛡️ Security block triggered:', error.message);
     }
 
     // Reset for normal operation
     securityManager.reset();
-    console.log('✅ Security manager reset');
+    devLog('✅ Security manager reset');
 
     return true;
   } else {
-    console.error('Security manager not available');
+    devError('Security manager not available');
   }
 };
 
@@ -1736,7 +1759,7 @@ class PaymentProcessor {
       // Get environment from CONFIG (sandbox or production)
       const environment = window.CONFIG?.square?.environment || 'production';
 
-      console.log('🔧 Initializing Square Payments:', {
+      devLog('🔧 Initializing Square Payments:', {
         appId: this.appId,
         locationId: this.locationId,
         environment: environment,
@@ -1748,10 +1771,10 @@ class PaymentProcessor {
       this.payments = await window.Square.payments(this.appId, this.locationId, environment);
       this.isInitialized = true;
 
-      console.log('✓ Square Payments initialized successfully in', environment, 'mode');
+      devLog('✓ Square Payments initialized successfully in', environment, 'mode');
       return true;
     } catch (error) {
-      console.error('Square Payments initialization failed:', error);
+      devError('Square Payments initialization failed:', error);
       throw new Error('Payment system unavailable. Please try again later.');
     }
   }
@@ -1761,20 +1784,20 @@ class PaymentProcessor {
    */
   async createCardPaymentForm() {
     if (!this.isInitialized) {
-      console.log('⚠️ Payment processor not initialized, initializing now...');
+      devLog('⚠️ Payment processor not initialized, initializing now...');
       await this.initialize();
     }
 
     try {
-      console.log('🔍 Looking for card container...');
+      devLog('🔍 Looking for card container...');
       const cardContainer = document.getElementById('card-container');
       if (!cardContainer) {
-        console.error('❌ Card container element not found in DOM');
+        devError('❌ Card container element not found in DOM');
         throw new Error('Card container not found');
       }
-      console.log('✅ Card container found:', cardContainer);
+      devLog('✅ Card container found:', cardContainer);
 
-      console.log('🎨 Creating Square card (using default styles)...');
+      devLog('🎨 Creating Square card (using default styles)...');
       // Create card payment form with NO custom styles
       // Custom styles may be causing rendering issues
       this.card = await this.payments.card();
@@ -1782,27 +1805,27 @@ class PaymentProcessor {
       await this.card.attach(cardContainer);
 
       // Debug: Check if Square SDK actually created child elements
-      console.log('🔍 Card container after attach:');
-      console.log('  - innerHTML length:', cardContainer.innerHTML.length);
-      console.log('  - Child elements count:', cardContainer.children.length);
-      console.log('  - Children:', Array.from(cardContainer.children).map(el => el.tagName + '.' + el.className));
+      devLog('🔍 Card container after attach:');
+      devLog('  - innerHTML length:', cardContainer.innerHTML.length);
+      devLog('  - Child elements count:', cardContainer.children.length);
+      devLog('  - Children:', Array.from(cardContainer.children).map(el => el.tagName + '.' + el.className));
 
       // Check if card container has any iframes (Square SDK uses iframes)
       const iframes = cardContainer.querySelectorAll('iframe');
-      console.log('  - iframes found:', iframes.length);
+      devLog('  - iframes found:', iframes.length);
       if (iframes.length === 0) {
-        console.error('❌ WARNING: No iframes found! Square SDK may not have attached properly');
+        devError('❌ WARNING: No iframes found! Square SDK may not have attached properly');
       } else {
-        console.log('✅ Square SDK iframes detected:', iframes.length);
+        devLog('✅ Square SDK iframes detected:', iframes.length);
       }
 
       // Add event listeners
       this.card.addEventListener('cardBrandChanged', (event) => {
-        console.log('Card brand detected:', event.detail.cardBrand);
+        devLog('Card brand detected:', event.detail.cardBrand);
       });
 
       this.card.addEventListener('errorClassAdded', (event) => {
-        console.log('Card validation error:', event.detail);
+        devLog('Card validation error:', event.detail);
         this.showCardError('Please check your card information');
       });
 
@@ -1810,41 +1833,46 @@ class PaymentProcessor {
         this.clearCardError();
       });
 
-      console.log('✓ Card payment form created successfully');
+      devLog('✓ Card payment form created successfully');
       return true;
     } catch (error) {
-      console.error('Card form creation failed:', error);
+      devError('Card form creation failed:', error);
       throw new Error('Unable to load payment form. Please refresh and try again.');
     }
   }
 
   /**
-   * Process payment
+   * Process payment - Tokenize card and prepare for server-side processing
    */
   async processPayment(amount, currency = 'USD') {
     if (!this.card) {
       throw new Error('Payment form not initialized');
     }
 
+    console.log('🔍 DEBUG: About to process payment');
+    console.log('🔍 Amount:', amount, 'cents');
+    console.log('🔍 Config environment:', window.CONFIG?.environment);
+    console.log('🔍 Square environment:', window.CONFIG?.square?.environment);
+
     try {
       // Tokenize card details
+      console.log('🔍 DEBUG: Tokenizing card...');
       const tokenResult = await this.card.tokenize();
 
+      console.log('🔍 DEBUG: Token result:', tokenResult.status);
       if (tokenResult.status === 'OK') {
-        // In a real implementation, you would send this token to your server
-        // For this demo, we'll simulate payment processing
-        const paymentResult = await this.simulatePaymentProcessing(
-          tokenResult.token,
-          amount,
-          currency
-        );
+        console.log('🔍 Token (first 20 chars):', tokenResult.token.substring(0, 20));
+        console.log('✅ Token created successfully - will be sent to Google Apps Script for processing');
 
+        // Return token for Google Apps Script to process the REAL payment
+        // NO simulation, NO fake payment ID
         return {
           success: true,
-          paymentId: paymentResult.paymentId,
           token: tokenResult.token,
           amount: amount,
-          currency: currency
+          currency: currency,
+          // Note: payment_id will be provided by Google Apps Script after real charge
+          paymentId: null  // Explicitly null - will be set by Apps Script
         };
       } else {
         let errorMessage = 'Payment processing failed.';
@@ -1859,38 +1887,18 @@ class PaymentProcessor {
           }
         }
 
+        console.error('❌ Tokenization failed:', errorMessage);
         throw new Error(errorMessage);
       }
     } catch (error) {
-      console.error('Payment processing error:', error);
+      devError('Payment processing error:', error);
       throw error;
     }
   }
 
-  /**
-   * Simulate payment processing (replace with actual server call)
-   */
-  async simulatePaymentProcessing(token, amount, currency) {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // In sandbox mode, always succeed for testing
-    // In production, this should call your backend API to process with Square
-    console.log('💳 Simulating payment processing in sandbox mode:', {
-      amount,
-      currency,
-      token: token.substring(0, 20) + '...'
-    });
-
-    // Simulate success (in production, this would call your server)
-    return {
-      paymentId: 'pay_' + Math.random().toString(36).substring(7),
-      amount: amount,
-      currency: currency,
-      status: 'COMPLETED',
-      timestamp: new Date().toISOString()
-    };
-  }
+  // REMOVED: simulatePaymentProcessing() function
+  // Payment processing is now handled by Google Apps Script
+  // The token is sent directly to Apps Script which processes the REAL payment with Square API
 
   /**
    * Get user-friendly error message for card errors
@@ -1982,7 +1990,7 @@ class ErrorRecoveryManager {
       return await operation();
     } catch (error) {
       if (this.shouldRetry(error)) {
-        console.log(`Retry attempt ${this.retryAttempts}/${this.maxRetries} for operation`);
+        devLog(`Retry attempt ${this.retryAttempts}/${this.maxRetries} for operation`);
 
         // Exponential backoff
         await this.delay(this.retryDelay * Math.pow(2, this.retryAttempts - 1));
@@ -2522,7 +2530,7 @@ class FormStateManager {
       }
     } else {
       if (submitButton) {
-        submitButton.textContent = 'Complete Booking - $299';
+        submitButton.textContent = 'Complete Booking - $1';
         submitButton.disabled = false;
         submitButton.classList.remove('loading');
       }
@@ -2653,14 +2661,14 @@ class BookingFlowManager {
       const validation = this.validator.validateForm(formData);
 
       if (!validation.isValid) {
-        console.error('❌ Form validation failed:');
-        console.error('📋 Form data:', formData);
-        console.error('🔍 Validation results:', validation.fieldResults);
+        devError('❌ Form validation failed:');
+        devError('📋 Form data:', formData);
+        devError('🔍 Validation results:', validation.fieldResults);
 
         // Log specific failed fields
         Object.entries(validation.fieldResults).forEach(([field, result]) => {
           if (!result.isValid) {
-            console.error(`  ❌ ${field}: ${result.errors.join(', ')}`);
+            devError(`  ❌ ${field}: ${result.errors.join(', ')}`);
           }
         });
 
@@ -2714,7 +2722,7 @@ class BookingFlowManager {
       }
 
     } catch (error) {
-      console.error('Booking flow error:', error);
+      devError('Booking flow error:', error);
       await this.handleBookingError(error);
     } finally {
       this.stateManager.setSubmissionState(false);
@@ -2729,7 +2737,7 @@ class BookingFlowManager {
     // Get calendar dates from the calendar manager
     const calendarDates = this.modal.calendarManager.getSelectedDates();
 
-    return {
+    const bookingData = {
       name: this.sanitizeInput(formData.fullName),
       email: this.sanitizeInput(formData.email),
       phone: formData.phone?.replace(/\D/g, ''), // Clean phone number
@@ -2741,28 +2749,47 @@ class BookingFlowManager {
       pickup_date: calendarDates.endDate,
       rental_duration: calendarDates.duration,
       time: formData.timeSlot,
-      payment_id: paymentResult.paymentId,
       payment_token: paymentResult.token,
       card_nonce: paymentResult.token, // Add for Google Apps Script compatibility
       nonce: paymentResult.token, // Alternative field name
-      amount: window.CONFIG?.booking?.BOOKING_PRICE || 299,
-      payment_amount: paymentResult.amount,
+      amount_cents: paymentResult.amount, // FIXED: Changed from payment_amount to amount_cents
       payment_currency: paymentResult.currency
     };
+
+    console.log('🔍 DEBUG: Prepared booking data for Apps Script:');
+    console.log('🔍 Payment token (first 20):', bookingData.payment_token?.substring(0, 20));
+    console.log('🔍 Amount (cents):', bookingData.amount_cents);
+    console.log('🔍 Email:', bookingData.email);
+    console.log('🔍 Full booking data:', JSON.stringify(bookingData, null, 2));
+
+    return bookingData;
   }
 
   /**
    * Handle successful booking with payment confirmation
    */
   async handleBookingSuccess(bookingResult, paymentResult, formData) {
+    console.log('🔍 DEBUG: ===== BOOKING SUCCESS =====');
+    console.log('🔍 Booking result:', bookingResult);
+    console.log('🔍 Payment result (tokenization):', paymentResult);
+
+    // Use the REAL payment ID from Google Apps Script (not the fake one)
+    const realPaymentId = bookingResult.payment_id || 'Unknown';
+    const realAmountPaid = bookingResult.amount_paid || (paymentResult.amount / 100);
+
+    console.log('🔍 Real payment ID from Square:', realPaymentId);
+    console.log('🔍 Real amount charged:', realAmountPaid);
+
     // Store booking reference for potential future use
     this.currentBookingData = {
       bookingMessage: bookingResult.message || 'Booking confirmed successfully',
-      paymentId: paymentResult.paymentId,
-      amount: paymentResult.amount / 100, // Convert back from cents
+      paymentId: realPaymentId,  // Use real payment ID from Apps Script
+      amount: realAmountPaid,
       timestamp: new Date().toISOString(),
       formData: formData // Store form data for confirmation screen
     };
+
+    console.log('✅ Stored booking data:', this.currentBookingData);
 
     // Show Step 4 confirmation screen instead of auto-closing
     this.showConfirmationScreen(formData);
@@ -2777,7 +2804,7 @@ class BookingFlowManager {
     if (needsRefund && paymentResult) {
       errorMessage += ' Your payment will be refunded within 3-5 business days.';
       // In production, trigger refund process here
-      console.warn('Refund needed for payment:', paymentResult.paymentId);
+      devWarn('Refund needed for payment:', paymentResult.paymentId);
       this.logRefundRequest(paymentResult);
     }
 
@@ -2879,7 +2906,7 @@ class BookingFlowManager {
    */
   logRefundRequest(paymentResult) {
     // In production, this would integrate with your refund processing system
-    console.log('REFUND REQUEST:', {
+    devLog('REFUND REQUEST:', {
       paymentId: paymentResult.paymentId,
       amount: paymentResult.amount,
       timestamp: new Date().toISOString(),
@@ -2936,14 +2963,18 @@ class BookingFlowManager {
    * Replaces the auto-close behavior after successful payment
    */
   showConfirmationScreen(formData) {
-    console.log('🎉 Showing confirmation screen (Step 4)');
+    console.log('🔍 DEBUG: ===== SHOWING CONFIRMATION SCREEN =====');
+    console.log('🔍 Current booking data:', this.currentBookingData);
+    devLog('🎉 Showing confirmation screen (Step 4)');
 
-    // Track booking completion in GA4
+    // Track booking completion in GA4 with actual amount
+    const actualAmount = this.currentBookingData?.amount || 1;
     if (typeof gtag !== 'undefined') {
       gtag('event', 'booking_complete', {
-        'value': 299,
+        'value': actualAmount,
         'currency': 'USD'
       });
+      console.log('🔍 GA4 event tracked with value:', actualAmount);
     }
 
     // Get calendar dates
@@ -2955,6 +2986,13 @@ class BookingFlowManager {
 
     // Format location
     const location = `${formData.dropoffAddress || formData.dropoff_address}, ${formData.dropoffCity || formData.dropoff_city}`;
+
+    console.log('🔍 Confirmation details:');
+    console.log('  - Delivery:', deliveryDate);
+    console.log('  - Pickup:', pickupDate);
+    console.log('  - Location:', location);
+    console.log('  - Payment ID:', this.currentBookingData?.paymentId);
+    console.log('  - Amount:', actualAmount);
 
     // Populate confirmation fields
     document.getElementById('confirmationDeliveryDate').textContent = deliveryDate;
@@ -2982,9 +3020,9 @@ class BookingFlowManager {
     const targetStep = document.getElementById(`step-${stepNumber}`);
     if (targetStep) {
       targetStep.classList.add('active');
-      console.log(`✅ Navigated to Step ${stepNumber}`);
+      devLog(`✅ Navigated to Step ${stepNumber}`);
     } else {
-      console.error(`❌ Step ${stepNumber} not found`);
+      devError(`❌ Step ${stepNumber} not found`);
     }
   }
 
@@ -3005,7 +3043,7 @@ class BookingFlowManager {
     const bookAnotherBtn = document.getElementById('bookAnotherDumpster');
     if (bookAnotherBtn) {
       bookAnotherBtn.onclick = () => {
-        console.log('🔄 Book Another Dumpster clicked');
+        devLog('🔄 Book Another Dumpster clicked');
         // Reset form and go back to Step 1
         this.stateManager.resetForm();
         this.modal.resetForm();
@@ -3019,7 +3057,7 @@ class BookingFlowManager {
     const backToHomeBtn = document.getElementById('backToHome');
     if (backToHomeBtn) {
       backToHomeBtn.onclick = () => {
-        console.log('🏠 Back to Home clicked');
+        devLog('🏠 Back to Home clicked');
         // Close the modal and reset
         this.modal.closeModal();
         this.stateManager.resetForm();
@@ -3032,7 +3070,7 @@ class BookingFlowManager {
     const confirmationCloseBtn = document.querySelector('.three-step-modal__close-btn--confirmation');
     if (confirmationCloseBtn) {
       confirmationCloseBtn.onclick = () => {
-        console.log('❌ Confirmation close clicked');
+        devLog('❌ Confirmation close clicked');
         this.modal.closeModal();
         this.stateManager.resetForm();
         // Reset Square payment flag
@@ -3081,10 +3119,10 @@ class CalendarManager {
       this.isInitialized = true;
 
       if (window.CONFIG?.debug?.enableLogging) {
-        console.log('📅 CalendarManager initialized');
+        devLog('📅 CalendarManager initialized');
       }
     } catch (error) {
-      console.error('Calendar initialization failed:', error);
+      devError('Calendar initialization failed:', error);
       this.showError('Failed to initialize calendar');
     }
   }
@@ -3341,7 +3379,7 @@ class CalendarManager {
       this.updateAvailability({ fullyBookedDates });
 
     } catch (error) {
-      console.warn('Failed to load calendar availability:', error);
+      devWarn('Failed to load calendar availability:', error);
       // On error, continue without availability data
       this.updateAvailability({ fullyBookedDates: [] });
     }
@@ -3509,10 +3547,10 @@ window.bookingDebug = {
    * Test API connectivity and CORS
    */
   testAPI: async () => {
-    console.log('🔧 Manual API Test');
+    devLog('🔧 Manual API Test');
     const modal = window.bookingModal;
     if (!modal?.api) {
-      console.error('❌ Booking modal not found - make sure modal is initialized');
+      devError('❌ Booking modal not found - make sure modal is initialized');
       return;
     }
 
@@ -3523,26 +3561,26 @@ window.bookingDebug = {
    * Check CORS configuration
    */
   checkCORS: () => {
-    console.log('🌐 CORS Check');
-    console.log('Current origin:', window.location.origin);
-    console.log('Current protocol:', window.location.protocol);
-    console.log('Current hostname:', window.location.hostname);
-    console.log('API URL:', window.CONFIG?.booking?.GAS_WEB_APP_URL);
-    console.log('Is Development:', window.CONFIG?.isDevelopment);
-    console.log('Environment:', window.CONFIG?.environment);
+    devLog('🌐 CORS Check');
+    devLog('Current origin:', window.location.origin);
+    devLog('Current protocol:', window.location.protocol);
+    devLog('Current hostname:', window.location.hostname);
+    devLog('API URL:', window.CONFIG?.booking?.GAS_WEB_APP_URL);
+    devLog('Is Development:', window.CONFIG?.isDevelopment);
+    devLog('Environment:', window.CONFIG?.environment);
 
     // Test if we can make a basic fetch request
     if (window.CONFIG?.booking?.GAS_WEB_APP_URL) {
-      console.log('🔍 Testing basic fetch to API...');
+      devLog('🔍 Testing basic fetch to API...');
       fetch(window.CONFIG.booking.GAS_WEB_APP_URL)
         .then(response => {
-          console.log('✅ Fetch successful - status:', response.status);
-          console.log('Response headers:', [...response.headers.entries()]);
+          devLog('✅ Fetch successful - status:', response.status);
+          devLog('Response headers:', [...response.headers.entries()]);
         })
         .catch(error => {
-          console.error('❌ Fetch failed:', error);
+          devError('❌ Fetch failed:', error);
           if (error.name === 'TypeError') {
-            console.error('🌐 This is likely a CORS error');
+            devError('🌐 This is likely a CORS error');
           }
         });
     }
@@ -3552,19 +3590,19 @@ window.bookingDebug = {
    * Test fully booked dates fetch
    */
   testFullyBookedDates: async () => {
-    console.log('📅 Testing fully booked dates fetch');
+    devLog('📅 Testing fully booked dates fetch');
     const modal = window.bookingModal;
     if (!modal?.api) {
-      console.error('❌ Booking modal not found');
+      devError('❌ Booking modal not found');
       return;
     }
 
     try {
       const dates = await modal.api.getFullyBookedDates();
-      console.log('✅ Fully booked dates:', dates);
+      devLog('✅ Fully booked dates:', dates);
       return dates;
     } catch (error) {
-      console.error('❌ Failed to fetch dates:', error);
+      devError('❌ Failed to fetch dates:', error);
       return null;
     }
   },
@@ -3573,19 +3611,19 @@ window.bookingDebug = {
    * Test calendar availability check
    */
   testAvailabilityCheck: async (startDate = '2024-12-01', endDate = '2024-12-03') => {
-    console.log(`📊 Testing availability check for ${startDate} to ${endDate}`);
+    devLog(`📊 Testing availability check for ${startDate} to ${endDate}`);
     const modal = window.bookingModal;
     if (!modal?.api) {
-      console.error('❌ Booking modal not found');
+      devError('❌ Booking modal not found');
       return;
     }
 
     try {
       const availability = await modal.api.checkAvailability(startDate, endDate);
-      console.log('✅ Availability result:', availability);
+      devLog('✅ Availability result:', availability);
       return availability;
     } catch (error) {
-      console.error('❌ Availability check failed:', error);
+      devError('❌ Availability check failed:', error);
       return null;
     }
   },
@@ -3594,18 +3632,18 @@ window.bookingDebug = {
    * Initialize calendar manually
    */
   initCalendar: async () => {
-    console.log('📅 Manual calendar initialization');
+    devLog('📅 Manual calendar initialization');
     const modal = window.bookingModal;
     if (!modal?.calendarManager) {
-      console.error('❌ Calendar manager not found');
+      devError('❌ Calendar manager not found');
       return;
     }
 
     try {
       await modal.calendarManager.init();
-      console.log('✅ Calendar initialized successfully');
+      devLog('✅ Calendar initialized successfully');
     } catch (error) {
-      console.error('❌ Calendar initialization failed:', error);
+      devError('❌ Calendar initialization failed:', error);
     }
   },
 
@@ -3613,36 +3651,36 @@ window.bookingDebug = {
    * Clear all loading states manually
    */
   clearLoadingStates: () => {
-    console.log('🔄 Clearing all loading states');
+    devLog('🔄 Clearing all loading states');
 
     // Hide loading indicators
     document.querySelectorAll('.loading-indicator').forEach(el => {
       el.hidden = true;
       el.style.display = 'none';
-      console.log('✅ Hidden loading indicator');
+      devLog('✅ Hidden loading indicator');
     });
 
     // Clear availability status
     const availabilityStatus = document.getElementById('availabilityStatus');
     if (availabilityStatus) {
       availabilityStatus.textContent = '';
-      console.log('✅ Cleared availability status');
+      devLog('✅ Cleared availability status');
     }
 
-    console.log('✅ All loading states cleared');
+    devLog('✅ All loading states cleared');
   },
 
   /**
    * Show system information
    */
   showSystemInfo: () => {
-    console.log('ℹ️ System Information');
-    console.log('User Agent:', navigator.userAgent);
-    console.log('Current URL:', window.location.href);
-    console.log('Referrer:', document.referrer);
-    console.log('Screen Size:', `${screen.width}x${screen.height}`);
-    console.log('Viewport Size:', `${window.innerWidth}x${window.innerHeight}`);
-    console.log('Connection:', navigator.connection ? {
+    devLog('ℹ️ System Information');
+    devLog('User Agent:', navigator.userAgent);
+    devLog('Current URL:', window.location.href);
+    devLog('Referrer:', document.referrer);
+    devLog('Screen Size:', `${screen.width}x${screen.height}`);
+    devLog('Viewport Size:', `${window.innerWidth}x${window.innerHeight}`);
+    devLog('Connection:', navigator.connection ? {
       effectiveType: navigator.connection.effectiveType,
       downlink: navigator.connection.downlink,
       rtt: navigator.connection.rtt
@@ -3653,7 +3691,7 @@ window.bookingDebug = {
    * Export debug report
    */
   exportDebugReport: async () => {
-    console.log('📋 Generating debug report...');
+    devLog('📋 Generating debug report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -3693,7 +3731,7 @@ window.bookingDebug = {
       report.tests.fullyBookedDates = { error: e.message };
     }
 
-    console.log('📋 Debug Report:', report);
+    devLog('📋 Debug Report:', report);
     return report;
   }
 };
@@ -3715,17 +3753,17 @@ if (window.CONFIG?.debug?.enableLogging) {
   window.ErrorRecoveryManager = ErrorRecoveryManager;
   window.SecurityManager = SecurityManager;
   window.CalendarManager = CalendarManager;
-  console.log('🔧 BookingModal Phase 5 debugging enabled with complete payment system');
+  devLog('🔧 BookingModal Phase 5 debugging enabled with complete payment system');
 }
 
 // Always expose debug tools
-console.log('🔧 Booking debug tools available: window.bookingDebug');
-console.log('💡 Try: window.bookingDebug.checkCORS() or window.bookingDebug.testAPI()');
+devLog('🔧 Booking debug tools available: window.bookingDebug');
+devLog('💡 Try: window.bookingDebug.checkCORS() or window.bookingDebug.testAPI()');
 
 // Auto-run environment check in development
 if (window.CONFIG?.isDevelopment && window.CONFIG?.debug?.enableLogging) {
   setTimeout(() => {
-    console.log('🔄 Auto-running CORS check in development mode...');
+    devLog('🔄 Auto-running CORS check in development mode...');
     window.bookingDebug.checkCORS();
   }, 1000);
 }
@@ -3739,33 +3777,37 @@ if (window.CONFIG?.isDevelopment && window.CONFIG?.debug?.enableLogging) {
  * Called by three-step-modal.js when step 3 is shown
  */
 window.initializeSquarePayment = async function() {
-  console.log('🔧 initializeSquarePayment() called');
+  devLog('🔧 initializeSquarePayment() called');
   
   if (window.squarePaymentInitialized) {
-    console.log('✓ Square payment already initialized');
+    devLog('✓ Square payment already initialized');
     return;
   }
   
   try {
     // Get the bookingModal instance if it exists
     if (window.bookingModal && window.bookingModal.paymentProcessor) {
-      console.log('📦 Using existing PaymentProcessor from bookingModal');
+      devLog('📦 Using existing PaymentProcessor from bookingModal');
       await window.bookingModal.paymentProcessor.createCardPaymentForm();
       window.squarePaymentInitialized = true;
-      console.log('✅ Square payment form created successfully');
+      devLog('✅ Square payment form created successfully');
     } else {
       // Create standalone PaymentProcessor
-      console.log('🆕 Creating standalone PaymentProcessor');
+      devLog('🆕 Creating standalone PaymentProcessor');
       const PaymentProcessorClass = window.PaymentProcessor || PaymentProcessor;
       const processor = new PaymentProcessorClass();
       await processor.initialize();
       await processor.createCardPaymentForm();
       window.squarePaymentInitialized = true;
-      console.log('✅ Square payment form created successfully (standalone)');
+      devLog('✅ Square payment form created successfully (standalone)');
     }
   } catch (error) {
-    console.error('❌ Failed to initialize Square payment:', error);
-    
+    // ALWAYS log payment errors, even in production
+    console.error('❌ PAYMENT INITIALIZATION FAILED:', error);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    devError('❌ Failed to initialize Square payment:', error);
+
     // Show error in the card container
     const cardContainer = document.getElementById('card-container');
     if (cardContainer) {
@@ -3779,4 +3821,4 @@ window.initializeSquarePayment = async function() {
   }
 };
 
-console.log('✅ window.initializeSquarePayment() is now available');
+devLog('✅ window.initializeSquarePayment() is now available');
