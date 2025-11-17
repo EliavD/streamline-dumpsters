@@ -1,0 +1,82 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "**/*.backup",
+      "**/*.bak",
+      "**/*.md",
+      "!README.md",
+      "**/backup_*/**",
+      "**/*-dev.js",
+      "**/*-debug.js",
+      "**/*-test.js",
+      "*.py",
+      "*.pyc",
+      "server.js",
+      "https-server.py",
+      "start-dev.sh",
+      "bs-config.js",
+      "build-*.js",
+      "safe-*.js",
+      "**/build-*.js",
+      "**/safe-*.js",
+      "package.json",
+      "package-lock.json",
+      ".git/**",
+      ".gitignore",
+      ".env*",
+      "certs/**/*.key",
+      "certs/**/*.srl",
+      "blog/**"
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600, s-maxage=7200"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|ico)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=86400, s-maxage=2592000"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600, must-revalidate"
+          }
+        ]
+      },
+      {
+        "source": "sw.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          },
+          {
+            "key": "Service-Worker-Allowed",
+            "value": "/"
+          }
+        ]
+      }
+    ],
+    "redirects": [],
+    "rewrites": []
+  }
+}

@@ -108,3 +108,36 @@ certs/*.key
 certs/*.srl
 certs/root.key
 certs/server.key
+localhost-key.pem
+localhost-cert.pem
+localhost.pem
+
+# Sensitive configuration files with API keys
+js/config.local.js
+config.local.js
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+*.cache
+
+# Development-only JavaScript files
+js/*-dev.js
+js/*-debug.js
+js/*-test.js
+
+# Python scripts (not needed for deployment)
+*.py
+*.pyc
+__pycache__/
+
+# Documentation files (not needed for hosting)
+*.md
+!README.md
+
+# Local development server files
+server.js
+https-server.py
+start-dev.sh
+bs-config.js
