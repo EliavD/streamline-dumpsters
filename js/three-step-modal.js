@@ -25,19 +25,21 @@ DEPENDENCIES:
 class ThreeStepModal {
   constructor() {
     this.currentStep = 1;
-    this.totalSteps = 3;
+    this.totalSteps = 4; // Updated to include confirmation screen (Step 4)
     this.modal = document.getElementById('bookingModal');
     this.steps = {
       1: document.getElementById('step-1'),
       2: document.getElementById('step-2'),
-      3: document.getElementById('step-3')
+      3: document.getElementById('step-3'),
+      4: document.getElementById('step-4')
     };
 
     // Store validation state for each step
     this.stepValidation = {
       1: false,
       2: false,
-      3: false
+      3: false,
+      4: true // Step 4 is the confirmation, always valid
     };
 
     this.init();
@@ -182,26 +184,37 @@ class ThreeStepModal {
 
     // Hide all steps
     Object.values(this.steps).forEach(step => {
-      step.classList.remove('active');
+      if (step) {
+        step.classList.remove('active');
+      }
     });
 
     // Show target step
-    this.steps[stepNumber].classList.add('active');
-    this.currentStep = stepNumber;
+    if (this.steps[stepNumber]) {
+      this.steps[stepNumber].classList.add('active');
+      this.currentStep = stepNumber;
+    } else {
+      console.error(`❌ Step ${stepNumber} element not found`);
+      return;
+    }
 
     // Update aria-current
     Object.entries(this.steps).forEach(([num, step]) => {
-      if (parseInt(num) === stepNumber) {
-        step.setAttribute('aria-current', 'step');
-      } else {
-        step.removeAttribute('aria-current');
+      if (step) {
+        if (parseInt(num) === stepNumber) {
+          step.setAttribute('aria-current', 'step');
+        } else {
+          step.removeAttribute('aria-current');
+        }
       }
     });
 
     // Scroll to top of modal body
-    const modalBody = this.steps[stepNumber].querySelector('.three-step-modal__body');
-    if (modalBody) {
-      modalBody.scrollTop = 0;
+    if (this.steps[stepNumber]) {
+      const modalBody = this.steps[stepNumber].querySelector('.three-step-modal__body');
+      if (modalBody) {
+        modalBody.scrollTop = 0;
+      }
     }
 
     // Sync hidden date fields when navigating (for bookNow.js compatibility)
@@ -218,24 +231,19 @@ class ThreeStepModal {
    * This ensures bookNow.js can read the selected dates
    */
   syncDateFields() {
-    const startDateDisplay = document.getElementById('selectedStartDate');
-    const endDateDisplay = document.getElementById('selectedEndDate');
     const deliveryDateInput = document.getElementById('deliveryDate');
     const pickupDateInput = document.getElementById('pickupDate');
 
-    if (startDateDisplay && deliveryDateInput) {
-      const startText = startDateDisplay.textContent.trim();
-      if (startText && startText !== 'Not selected') {
-        // Convert display format to YYYY-MM-DD if needed
-        // For now, we'll assume the calendar sets it correctly
-        deliveryDateInput.value = startText;
-      }
-    }
+    // Get dates from the calendar manager (ISO format YYYY-MM-DD)
+    if (window.bookingModal && window.bookingModal.calendarManager) {
+      const selectedDates = window.bookingModal.calendarManager.getSelectedDates();
 
-    if (endDateDisplay && pickupDateInput) {
-      const endText = endDateDisplay.textContent.trim();
-      if (endText && endText !== 'Not selected') {
-        pickupDateInput.value = endText;
+      if (selectedDates.startDate && deliveryDateInput) {
+        deliveryDateInput.value = selectedDates.startDate;
+      }
+
+      if (selectedDates.endDate && pickupDateInput) {
+        pickupDateInput.value = selectedDates.endDate;
       }
     }
   }
@@ -270,6 +278,36 @@ class ThreeStepModal {
       }
     } else {
       console.log(`❌ Step ${currentStep} validation failed`);
+
+      // When validation fails, ensure current step stays visible and active
+      const currentStepElement = this.steps[currentStep];
+      if (currentStepElement) {
+        // Force the step to remain active and visible
+        currentStepElement.classList.add('active');
+        currentStepElement.style.display = 'block';
+        currentStepElement.style.visibility = 'visible';
+
+        // Ensure modal body is visible
+        const modalBody = currentStepElement.querySelector('.three-step-modal__body');
+        if (modalBody) {
+          modalBody.style.display = 'block';
+          modalBody.style.visibility = 'visible';
+        }
+
+        // Ensure all form groups are visible
+        const formGroups = currentStepElement.querySelectorAll('.three-step__form-group');
+        formGroups.forEach(group => {
+          group.style.display = 'block';
+          group.style.visibility = 'visible';
+        });
+
+        // Ensure all inputs are visible
+        const inputs = currentStepElement.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+          input.style.display = 'block';
+          input.style.visibility = 'visible';
+        });
+      }
     }
 
     return isValid;
@@ -363,6 +401,30 @@ class ThreeStepModal {
       errors.push('phone');
     }
 
+    // If there are errors, ensure step 2 stays visible
+    if (errors.length > 0) {
+      const step2 = this.steps[2];
+      if (step2) {
+        step2.classList.add('active');
+        step2.style.display = 'block';
+        step2.style.visibility = 'visible';
+
+        // Also ensure modal body is visible
+        const modalBody = step2.querySelector('.three-step-modal__body');
+        if (modalBody) {
+          modalBody.style.display = 'block';
+          modalBody.style.visibility = 'visible';
+        }
+
+        // Ensure all form sections are visible
+        const formSections = step2.querySelectorAll('.three-step__form-section');
+        formSections.forEach(section => {
+          section.style.display = 'block';
+          section.style.visibility = 'visible';
+        });
+      }
+    }
+
     return errors.length === 0;
   }
 
@@ -388,11 +450,19 @@ class ThreeStepModal {
     if (!field) return false;
 
     const value = field.value.trim();
+    const formGroup = field.closest('.three-step__form-group');
 
     // Check if empty
     if (!value) {
       this.showFieldError(errorElementId, errorMessage);
       field.classList.add('error');
+      // Ensure field and parent form group stay visible
+      field.style.display = 'block';
+      field.style.visibility = 'visible';
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
       return false;
     }
 
@@ -400,6 +470,13 @@ class ThreeStepModal {
     if (pattern && !pattern.test(value)) {
       this.showFieldError(errorElementId, errorMessage);
       field.classList.add('error');
+      // Ensure field and parent form group stay visible
+      field.style.display = 'block';
+      field.style.visibility = 'visible';
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
       return false;
     }
 
@@ -417,6 +494,9 @@ class ThreeStepModal {
     if (errorElement) {
       errorElement.textContent = message;
       errorElement.classList.add('visible');
+      // Explicitly override CSS display: none with inline styles
+      errorElement.style.display = 'block';
+      errorElement.style.visibility = 'visible';
     }
   }
 
@@ -437,11 +517,14 @@ class ThreeStepModal {
   preparePaymentStep() {
     console.log('💳 Preparing payment step...');
 
-    // Trigger Square payment initialization if not already done
-    // This hooks into existing bookNow.js Square payment logic
-    if (typeof window.initializeSquarePayment === 'function' && !window.squarePaymentInitialized) {
-      window.initializeSquarePayment();
-    }
+    // Delay Square initialization to ensure DOM is fully rendered and visible
+    // Square SDK needs the container to be visible to properly render card fields
+    setTimeout(() => {
+      if (typeof window.initializeSquarePayment === 'function' && !window.squarePaymentInitialized) {
+        console.log('🔄 Initializing Square payment after DOM render delay...');
+        window.initializeSquarePayment();
+      }
+    }, 300); // 300ms delay allows DOM to fully render and transition to complete
   }
 
   /**
