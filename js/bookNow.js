@@ -182,8 +182,10 @@ class BookingAPI {
     const url = `${this.baseURL}?action=checkAvailability&start=${startDate}&end=${endDate}`;
 
     try {
+      console.error('🌐 API Request URL:', url);
       devLog('🔍 Checking availability:', {startDate, endDate, url});
       const response = await this.makeRequest(url);
+      console.error('🌐 Raw API Response:', response);
       devLog('✅ Availability check response:', response);
 
       if (response.status === 'ok') {
@@ -196,6 +198,7 @@ class BookingAPI {
         throw new Error(response.message || 'Failed to check availability');
       }
     } catch (error) {
+      console.error('❌ AVAILABILITY CHECK ERROR:', error);
       devError('❌ Error checking availability:', error);
       // For now, assume availability is okay to allow booking to proceed
       devWarn('⚠️ Skipping availability check - assuming dates are available');
