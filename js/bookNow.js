@@ -1845,7 +1845,11 @@ class PaymentProcessor {
    * Process payment - Tokenize card and prepare for server-side processing
    */
   async processPayment(amount, currency = 'USD') {
+    console.error('🔍 PAYMENT PROCESS START - card exists:', !!this.card);
+    console.error('🔍 Card value:', this.card);
+
     if (!this.card) {
+      console.error('❌ CRITICAL: Payment form not initialized - this.card is null/undefined');
       throw new Error('Payment form not initialized');
     }
 
