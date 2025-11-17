@@ -2685,13 +2685,23 @@ class BookingFlowManager {
       this.stateManager.setSubmissionState(true);
       this.updateStatusMessage('Checking final availability...');
 
+      console.error('📅 Checking availability for dates:', {
+        deliveryDate: formData.deliveryDate,
+        pickupDate: formData.pickupDate
+      });
+
       const availability = await this.errorRecoveryManager.retryOperation(async () => {
         return await this.api.checkAvailability(formData.deliveryDate, formData.pickupDate);
       });
 
+      console.error('📊 Availability check response:', availability);
+
       if (!availability.available) {
+        console.error('❌ Availability check FAILED - dates not available');
         throw new Error('Selected dates are no longer available. Please choose different dates.');
       }
+
+      console.error('✅ Availability check PASSED - proceeding to payment');
 
       // Step 3: Process payment
       this.updateStatusMessage('Processing payment...');
