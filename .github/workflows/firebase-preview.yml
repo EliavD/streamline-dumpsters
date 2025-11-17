@@ -1,0 +1,24 @@
+name: Deploy to Firebase Hosting Preview Channel
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Firebase Hosting Preview Channel
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: sl-dumpsters
+          expires: 7d
+          channelId: pr-${{ github.event.pull_request.number }}
