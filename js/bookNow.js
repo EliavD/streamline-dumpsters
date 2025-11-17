@@ -2651,6 +2651,7 @@ class BookingFlowManager {
    * Process complete booking flow with payment
    */
   async processCompleteBooking() {
+    console.error('🟢 processCompleteBooking STARTED');
     try {
       // Security check
       this.securityManager.canSubmit();
@@ -2726,6 +2727,9 @@ class BookingFlowManager {
       }
 
     } catch (error) {
+      console.error('🚨 BOOKING FLOW ERROR CAUGHT:', error);
+      console.error('🚨 Error message:', error.message);
+      console.error('🚨 Error stack:', error.stack);
       devError('Booking flow error:', error);
       await this.handleBookingError(error);
     } finally {
@@ -2823,6 +2827,9 @@ class BookingFlowManager {
    * Handle unexpected errors with payment consideration
    */
   async handleBookingError(error) {
+    console.error('🔴 handleBookingError called with:', error);
+    console.error('🔴 Error type:', error.constructor.name);
+    console.error('🔴 Error message:', error.message);
     let userMessage = 'An unexpected error occurred. Please try again.';
 
     if (error.message.includes('availability')) {
