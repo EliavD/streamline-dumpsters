@@ -30,9 +30,11 @@
 const ENV_CONFIG = {
   development: {
     // Square Payment Integration (Sandbox)
+    // NOTE: Application IDs are PUBLIC and designed for client-side use
+    // See SECURITY.md for details on what's safe to commit
     square: {
-      appId: 'sandbox-sq0idb-la5vJJA2HLYjNQN7LaOpxQ',
-      locationId: 'L56XRKHH91SEX',
+      appId: 'sandbox-sq0idb-la5vJJA2HLYjNQN7LaOpxQ', // PUBLIC - Safe to commit
+      locationId: 'L56XRKHH91SEX', // PUBLIC - Safe to commit
       environment: 'sandbox'
     },
 
@@ -72,9 +74,11 @@ const ENV_CONFIG = {
 
   production: {
     // Square Payment Integration (Production)
+    // NOTE: Application IDs are PUBLIC and designed for client-side use
+    // NEVER commit Access Tokens (sq0atp-*) or Secret Keys (sq0csp-*)
     square: {
-      appId: 'sq0idp-8ppjtDG8I7H8kNx2WfH5LQ',
-      locationId: 'L9MVPB33HG9N0',
+      appId: 'sq0idp-8ppjtDG8I7H8kNx2WfH5LQ', // PUBLIC - Safe to commit
+      locationId: 'L9MVPB33HG9N0', // PUBLIC - Safe to commit
       environment: 'production'
     },
 
@@ -125,12 +129,12 @@ function detectEnvironment() {
   const protocol = window.location.protocol;
 
   // SPECIAL CASE: HTTPS localhost = production mode for Square testing
-  // DISABLED for sandbox testing - uncomment when ready for production testing
-  // if (protocol === 'https:' && (hostname === 'localhost' || hostname === '127.0.0.1')) {
-  //   console.warn('🔒 HTTPS localhost detected - Using PRODUCTION mode for Square testing');
-  //   console.warn('⚠️  WARNING: Real charges will be processed!');
-  //   return 'production';
-  // }
+  // ENABLED for production testing - real charges will be processed!
+  if (protocol === 'https:' && (hostname === 'localhost' || hostname === '127.0.0.1')) {
+    console.warn('🔒 HTTPS localhost detected - Using PRODUCTION mode for Square testing');
+    console.warn('⚠️  WARNING: Real charges will be processed!');
+    return 'production';
+  }
 
   // Development indicators (includes both HTTP and HTTPS localhost for sandbox testing)
   const isDevelopment = hostname === 'localhost' ||
@@ -221,11 +225,13 @@ CONFIG.pricing = {
 
 // Booking Configuration for Modal System
 CONFIG.booking = {
-  // Google Apps Script Backend URL (SANDBOX MODE with sandbox Square credentials)
-  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycby71qGfhAnK3h7HYXq_vM4n9rEZ7tswjWVXUIGrCdLY7iZi4U9ZGunX2lLRi19-A-j2dw/exec',
+  // Google Apps Script Backend URL (TEST MODE - $1 charge for testing)
+  // Updated: 2025-11-17 - New deployment with complete booking system
+  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbw8Yw5dcdP7G6ceoRcCiqC5E9ytzyesIIW7_TasZ8mHdRxxfkeflqW5vL1p1z5JLdKmrw/exec',
 
   // Booking Constraints
-  BOOKING_PRICE: 299,
+  BOOKING_PRICE: 1, // TEST MODE - $1 charge for testing ($1.08 with tax)
+  TAX_RATE: 0.08, // 8% Ohio sales tax
   MIN_RENTAL_DAYS: 1,
   MAX_ADVANCE_DAYS: 90,
 
