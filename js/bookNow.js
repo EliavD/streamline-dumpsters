@@ -2338,6 +2338,8 @@ class FormValidator {
       dropoffZip: getValue('dropoffZip'),
       dropoffNotes: getValue('dropoffNotes'),
       timeSlot: getValue('timeSlot'),
+      deliveryDate: getValue('deliveryDate'),
+      pickupDate: getValue('pickupDate'),
       agreeTos: getChecked('agreeTos')
     };
   }
