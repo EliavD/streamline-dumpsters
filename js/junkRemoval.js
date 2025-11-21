@@ -388,7 +388,11 @@ class JunkRemovalValidator {
     const field = document.querySelector(`[name="${fieldName}"]`);
     if (!field) return;
 
-    const formGroup = field.closest('.form-group');
+    const formGroup = field.closest('.three-step__form-group') || field.closest('.form-group');
+
+    // Ensure field stays visible
+    field.style.display = 'block';
+    field.style.visibility = 'visible';
 
     // Add error class to field
     field.classList.add('field-error');
@@ -397,25 +401,30 @@ class JunkRemovalValidator {
     // Add error class to form group
     if (formGroup) {
       formGroup.classList.add('has-error');
+      // Ensure form group stays visible
+      formGroup.style.display = 'block';
+      formGroup.style.visibility = 'visible';
     }
 
     // Create or update error message
-    let errorElement = formGroup?.querySelector('.field-error-message');
+    let errorElement = formGroup?.querySelector('.field-error-message') || formGroup?.querySelector('.three-step__error-message');
     if (!errorElement) {
       errorElement = document.createElement('div');
-      errorElement.className = 'field-error-message';
+      errorElement.className = 'three-step__error-message';
       errorElement.setAttribute('role', 'alert');
       formGroup?.appendChild(errorElement);
     }
 
     errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    errorElement.style.visibility = 'visible';
   }
 
   clearFieldError(fieldName) {
     const field = document.querySelector(`[name="${fieldName}"]`);
     if (!field) return;
 
-    const formGroup = field.closest('.form-group');
+    const formGroup = field.closest('.three-step__form-group') || field.closest('.form-group');
 
     // Remove error classes
     field.classList.remove('field-error');
@@ -425,7 +434,7 @@ class JunkRemovalValidator {
       formGroup.classList.remove('has-error');
 
       // Remove error message
-      const errorElement = formGroup.querySelector('.field-error-message');
+      const errorElement = formGroup.querySelector('.field-error-message') || formGroup.querySelector('.three-step__error-message');
       if (errorElement) {
         errorElement.remove();
       }
@@ -949,12 +958,13 @@ class JunkRemovalModal {
         field.classList.add('field-error');
         field.setAttribute('aria-invalid', 'true');
 
-        let errorElement = field.parentNode.querySelector('.field-error-message');
+        const formGroup = field.closest('.three-step__form-group') || field.parentNode;
+        let errorElement = formGroup.querySelector('.field-error-message') || formGroup.querySelector('.three-step__error-message');
         if (!errorElement) {
             errorElement = document.createElement('div');
-            errorElement.className = 'field-error-message';
+            errorElement.className = 'three-step__error-message';
             errorElement.setAttribute('role', 'alert');
-            field.parentNode.appendChild(errorElement);
+            formGroup.appendChild(errorElement);
         }
 
         errorElement.textContent = message;
@@ -965,7 +975,8 @@ class JunkRemovalModal {
         field.classList.remove('field-error');
         field.setAttribute('aria-invalid', 'false');
 
-        const errorElement = field.parentNode.querySelector('.field-error-message');
+        const formGroup = field.closest('.three-step__form-group') || field.parentNode;
+        const errorElement = formGroup.querySelector('.field-error-message') || formGroup.querySelector('.three-step__error-message');
         if (errorElement) {
             errorElement.remove();
         }
@@ -1003,6 +1014,37 @@ class JunkRemovalModal {
         if (!validationResult.isValid) {
             console.log('❌ Form validation failed');
 
+            // Ensure modal body and form stay visible
+            const modalBody = this.modal.querySelector('.three-step-modal__body');
+            if (modalBody) {
+                modalBody.style.display = 'block';
+                modalBody.style.visibility = 'visible';
+            }
+
+            this.form.style.display = 'block';
+            this.form.style.visibility = 'visible';
+
+            // Ensure all form sections stay visible
+            const formSections = this.form.querySelectorAll('.three-step__form-section');
+            formSections.forEach(section => {
+                section.style.display = 'block';
+                section.style.visibility = 'visible';
+            });
+
+            // Ensure all form groups stay visible
+            const formGroups = this.form.querySelectorAll('.three-step__form-group');
+            formGroups.forEach(group => {
+                group.style.display = 'block';
+                group.style.visibility = 'visible';
+            });
+
+            // Ensure all inputs stay visible
+            const inputs = this.form.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.style.display = 'block';
+                input.style.visibility = 'visible';
+            });
+
             // Show field-specific errors
             for (const [fieldName, result] of Object.entries(validationResult.fieldResults)) {
                 if (!result.isValid && result.errors.length > 0) {
@@ -1016,9 +1058,13 @@ class JunkRemovalModal {
             const firstErrorField = this.form.querySelector('.field-error');
             if (firstErrorField) {
                 firstErrorField.focus();
+                // Scroll error field into view
+                firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
 
-            return;
+            // Prevent any form hiding
+            event.stopImmediatePropagation();
+            return false;
         }
 
         // Show photo warning if no photos uploaded
@@ -1084,8 +1130,8 @@ class JunkRemovalModal {
     async submitToBackend(formData) {
         console.log('🚀 Submitting to backend...');
 
-        // Backend URL - hardcoded since .env isn't accessible in frontend
-        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbyJrogqdGeTweEI0pSRKqNB2VaoWglZOsPmMrPILEXw4BkzE4bXC42K0JRVfaBqhKYT3g/exec';
+        // Backend URL - Updated 2025-11-04 for Firebase deployment with CORS
+        const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbz8LQUNAX-FknvxYbWkVWpyZhaEBsoDwXNOjsEBFxwrTn9aWQkBXdxBzuYKW2XO1OzKZA/exec';
 
         try {
             // Prepare data for backend

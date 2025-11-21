@@ -143,6 +143,41 @@ class ThreeStepModal {
     }
 
     // Step 3 submit is handled by existing bookNow.js payment logic
+
+    // Real-time email validation
+    this.bindEmailValidation();
+  }
+
+  /**
+   * Bind real-time email validation
+   */
+  bindEmailValidation() {
+    const emailField = document.getElementById('email');
+    if (!emailField) return;
+
+    let validationTimeout;
+
+    // Validate on blur (when user leaves the field)
+    emailField.addEventListener('blur', () => {
+      this.validateEmail(emailField, 'emailError');
+    });
+
+    // Validate while typing (debounced)
+    emailField.addEventListener('input', () => {
+      clearTimeout(validationTimeout);
+
+      // Clear error immediately if field becomes empty
+      if (!emailField.value.trim()) {
+        this.clearFieldError('emailError');
+        emailField.classList.remove('error');
+        return;
+      }
+
+      // Debounce validation while typing (wait 800ms after user stops typing)
+      validationTimeout = setTimeout(() => {
+        this.validateEmail(emailField, 'emailError');
+      }, 800);
+    });
   }
 
   /**
@@ -393,7 +428,8 @@ class ThreeStepModal {
       errors.push('fullName');
     }
 
-    if (!this.validateField(email, 'Please enter a valid email address', 'emailError', /^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    // Enhanced email validation with typo detection
+    if (!this.validateEmail(email, 'emailError')) {
       errors.push('email');
     }
 
@@ -440,6 +476,117 @@ class ThreeStepModal {
     }
 
     this.clearFieldError('agreeTosError');
+    return true;
+  }
+
+  /**
+   * Enhanced email validation with common typo detection
+   */
+  validateEmail(field, errorElementId) {
+    if (!field) return false;
+
+    const value = field.value.trim();
+    const formGroup = field.closest('.three-step__form-group');
+
+    // Check if empty
+    if (!value) {
+      this.showFieldError(errorElementId, 'Please enter your email address');
+      field.classList.add('error');
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
+      return false;
+    }
+
+    // Basic email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      this.showFieldError(errorElementId, 'Please enter a valid email address');
+      field.classList.add('error');
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
+      return false;
+    }
+
+    // Extract domain for typo checking
+    const emailParts = value.toLowerCase().split('@');
+    if (emailParts.length !== 2) {
+      this.showFieldError(errorElementId, 'Please enter a valid email address');
+      field.classList.add('error');
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
+      return false;
+    }
+
+    const domain = emailParts[1];
+
+    // Common email domain typos
+    const commonDomains = {
+      'gmail.com': ['gmail.com', 'googlemail.com'],
+      'yahoo.com': ['yahoo.com', 'ymail.com'],
+      'hotmail.com': ['hotmail.com', 'outlook.com', 'live.com'],
+      'aol.com': ['aol.com'],
+      'icloud.com': ['icloud.com', 'me.com', 'mac.com']
+    };
+
+    const typoMap = {
+      'gnail.com': 'gmail.com',
+      'gmai.com': 'gmail.com',
+      'gmial.com': 'gmail.com',
+      'gmil.com': 'gmail.com',
+      'gmaiil.com': 'gmail.com',
+      'gmaill.com': 'gmail.com',
+      'gmali.com': 'gmail.com',
+      'gmail.con': 'gmail.com',
+      'gmail.cm': 'gmail.com',
+      'gmail.cmo': 'gmail.com',
+      'gmail.conm': 'gmail.com',
+      'gamil.com': 'gmail.com',
+      'gmeil.com': 'gmail.com',
+      'yahooo.com': 'yahoo.com',
+      'yaho.com': 'yahoo.com',
+      'yahoo.con': 'yahoo.com',
+      'hotmial.com': 'hotmail.com',
+      'hotmai.com': 'hotmail.com',
+      'hotmail.con': 'hotmail.com',
+      'outloo.com': 'outlook.com',
+      'outlok.com': 'outlook.com',
+      'outlook.con': 'outlook.com'
+    };
+
+    // Check for common typos
+    if (typoMap[domain]) {
+      const suggestion = typoMap[domain];
+      this.showFieldError(errorElementId, `Did you mean ${emailParts[0]}@${suggestion}?`);
+      field.classList.add('error');
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
+      return false;
+    }
+
+    // Check for valid TLD (at least 2 characters)
+    const domainParts = domain.split('.');
+    const tld = domainParts[domainParts.length - 1];
+    if (tld.length < 2 || tld.length > 6) {
+      this.showFieldError(errorElementId, 'Please check your email domain');
+      field.classList.add('error');
+      if (formGroup) {
+        formGroup.style.display = 'block';
+        formGroup.style.visibility = 'visible';
+      }
+      return false;
+    }
+
+    // Valid - clear errors
+    this.clearFieldError(errorElementId);
+    field.classList.remove('error');
     return true;
   }
 

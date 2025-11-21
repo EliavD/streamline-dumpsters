@@ -334,19 +334,42 @@ DESIGN TOKENS:
   font-size: 1rem;
   color: var(--color-gray-900);
   background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1.25rem;
   padding-right: 3rem;
+  cursor: pointer;
   transition: border-color 0.2s ease;
+  font-family: inherit;
 }
 
 .three-step__time-select:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+.three-step__time-select option {
+  padding: 0.75rem 1rem;
+  background-color: white;
+  color: var(--color-gray-900);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.three-step__time-select option:hover,
+.three-step__time-select option:focus {
+  background-color: var(--color-primary-light, #e0f7f8);
+  color: var(--color-primary);
+}
+
+.three-step__time-select option:checked {
+  background-color: var(--color-primary);
+  color: white;
 }
 
 /* =============================================================================
@@ -494,13 +517,24 @@ DESIGN TOKENS:
 }
 
 .three-step__square-container {
-  min-height: 10rem;
-  background-color: var(--color-gray-50);
+  min-height: 120px;
+  background-color: white;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid var(--color-gray-300);
   padding: 1rem;
+  /* Remove flexbox centering that breaks Square SDK iframe rendering */
+  display: block;
+  width: 100%;
+}
+
+/* Ensure Square SDK iframe and wrapper are visible */
+#card-container .sq-card-wrapper,
+#card-container .sq-card-wrapper > div,
+#card-container iframe {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  min-height: 60px !important;
 }
 
 .three-step__square-placeholder {
@@ -714,4 +748,486 @@ DESIGN TOKENS:
   .three-step__form-section-title {
     font-size: 1.75rem;
   }
+}
+
+/* Mobile responsive calendar fix for screens under 440px */
+@media (max-width: 440px) {
+  .three-step__calendar-wrapper {
+    padding: 0.5rem;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+  }
+
+  .three-step__date-summary {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* =============================================================================
+   PROFESSIONAL CHECKOUT DESIGN (Step 3)
+   Inspired by Stripe, Square, and modern payment UX best practices
+   ============================================================================= */
+
+/* Order Summary Card */
+.checkout__summary-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__section-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0 0 1rem 0;
+}
+
+.checkout__line-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.checkout__item-label {
+  font-size: 0.9375rem;
+  color: var(--color-gray-700);
+}
+
+.checkout__item-label--muted {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.checkout__item-label--total {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-gray-900);
+}
+
+.checkout__item-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.checkout__item-value--muted {
+  font-size: 0.875rem;
+  color: var(--color-gray-600);
+}
+
+.checkout__item-value--total {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.checkout__divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-gray-300), transparent);
+  margin: 0.5rem 0;
+}
+
+.checkout__summary-note {
+  font-size: 0.8125rem;
+  color: var(--color-gray-600);
+  margin: 1rem 0 0 0;
+  line-height: 1.5;
+}
+
+/* Payment Method Card */
+.checkout__payment-card {
+  background: white;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Security Badge */
+.checkout__security-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  color: #0369a1;
+}
+
+.checkout__security-badge svg {
+  flex-shrink: 0;
+  color: #0284c7;
+}
+
+/* Card Container - Professional Stripe-like styling */
+.checkout__card-container {
+  min-height: 120px;
+  background: white;
+  border: 2px solid var(--color-gray-300);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: block;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.checkout__card-container:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 176, 187, 0.1);
+}
+
+/* Ensure Square SDK iframe and wrapper are visible */
+#card-container .sq-card-wrapper,
+#card-container .sq-card-wrapper > div,
+#card-container iframe {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  min-height: 60px !important;
+}
+
+/* Accepted Cards */
+.checkout__accepted-cards {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.checkout__accepted-cards-label {
+  font-size: 0.8125rem;
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+.checkout__card-icons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.checkout__card-icons svg {
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Terms of Service */
+.checkout__terms-wrapper {
+  display: flex;
+  align-items: start;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--color-gray-50);
+  border-radius: 8px;
+}
+
+.checkout__terms-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.checkout__terms-label {
+  font-size: 0.875rem;
+  color: var(--color-gray-700);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.checkout__terms-label a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.checkout__terms-label a:hover {
+  color: var(--color-primary-700);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .checkout__summary-card,
+  .checkout__payment-card {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .checkout__section-title {
+    font-size: 1rem;
+  }
+
+  .checkout__line-item {
+    padding: 0.625rem 0;
+  }
+
+  .checkout__item-value--total {
+    font-size: 1.125rem;
+  }
+
+  .checkout__security-badge {
+    font-size: 0.8125rem;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .checkout__card-icons svg {
+    width: 28px;
+    height: 18px;
+  }
+}
+
+
+/* =============================================================================
+   PREMIUM MINIMALIST CHECKOUT (Apple/Tesla Style)
+   Clean, trustworthy, professional - no cheesy graphics
+   ============================================================================= */
+
+.premium-checkout__summary {
+  background: #fafafa;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.premium-checkout__summary-header {
+  margin-bottom: 20px;
+}
+
+.premium-checkout__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin: 0;
+  letter-spacing: -0.022em;
+}
+
+.premium-checkout__line-items {
+  margin-bottom: 16px;
+}
+
+.premium-checkout__line-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.premium-checkout__line-item:last-child {
+  border-bottom: none;
+}
+
+.premium-checkout__line-item--subtle {
+  opacity: 0.7;
+}
+
+.premium-checkout__label {
+  font-size: 15px;
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+.premium-checkout__value {
+  font-size: 15px;
+  color: #1d1d1f;
+  font-weight: 500;
+  font-feature-settings: 'tnum';
+}
+
+.premium-checkout__total-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #d2d2d7;
+}
+
+.premium-checkout__total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.premium-checkout__total-label {
+  font-size: 17px;
+  font-weight: 600;
+  color: #1d1d1f;
+  letter-spacing: -0.022em;
+}
+
+.premium-checkout__total-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1d1d1f;
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.022em;
+}
+
+.premium-checkout__includes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  font-size: 13px;
+  color: #6e6e73;
+}
+
+.premium-checkout__includes svg {
+  flex-shrink: 0;
+  color: #06c;
+}
+
+.premium-checkout__payment {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.premium-checkout__payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.premium-checkout__secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #06c;
+  font-weight: 500;
+}
+
+.premium-checkout__secure-badge svg {
+  flex-shrink: 0;
+}
+
+.premium-checkout__card-input {
+  min-height: 50px;
+  background: white;
+  border: 1px solid #d2d2d7;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+}
+
+.premium-checkout__card-input:focus-within {
+  border-color: #06c;
+  box-shadow: 0 0 0 4px rgba(0, 125, 250, 0.1);
+}
+
+#card-container .sq-card-wrapper,
+#card-container .sq-card-wrapper > div,
+#card-container iframe {
+  display: block !important;
+  visibility: visible !important;
+  width: 100% !important;
+  min-height: 50px !important;
+}
+
+.premium-checkout__payment-note {
+  font-size: 13px;
+  color: #6e6e73;
+  text-align: center;
+}
+
+.premium-checkout__terms {
+  margin-top: 20px;
+}
+
+.premium-checkout__checkbox-label {
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+  align-items: start;
+}
+
+.premium-checkout__checkbox {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #06c;
+  border-radius: 6px;
+}
+
+.premium-checkout__checkbox-text {
+  font-size: 13px;
+  color: #6e6e73;
+  line-height: 1.6;
+}
+
+.premium-checkout__checkbox-text a {
+  color: #06c;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.premium-checkout__checkbox-text a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .premium-checkout__summary,
+  .premium-checkout__payment {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .premium-checkout__title {
+    font-size: 16px;
+  }
+
+  .premium-checkout__total-value {
+    font-size: 20px;
+  }
+}
+
+/* Override total value to use brand color instead of black */
+.premium-checkout__total-value {
+  color: #01b0bb !important;
+}
+
+/* Minimal styling - let Square SDK render naturally */
+.premium-checkout__card-input {
+  min-height: 200px;
+  padding: 16px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+}
+
+/* DO NOT style Square's internal elements - they need to render naturally */
+#card-container {
+  width: 100%;
+  min-height: 150px;
+}
+
+/* Only ensure the wrapper is visible and full-width */
+#card-container .sq-card-wrapper {
+  width: 100%;
+  min-height: 120px;
+}
+
+/* Let Square SDK control iframe dimensions - DO NOT override height */
+#card-container iframe {
+  width: 100%;
+  border: none;
 }

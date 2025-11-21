@@ -39,7 +39,6 @@
       "certs/**",
       "blog/**",
       "**/*.pem",
-      "**/*.PNG",
       "localhost.pem"
     ],
     "cleanUrls": true,

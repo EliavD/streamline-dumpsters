@@ -1,0 +1,351 @@
+/*
+================================================================================
+SERVICE-AREA-MAP.CSS - Streamline Dumpsters Ltd. Service Area Map Section
+================================================================================
+
+PURPOSE:
+Styles for the embedded Google My Maps service area display on the homepage.
+Shows service locations with a sidebar list and interactive map iframe.
+
+SCOPE:
+- Service area map section layout
+- Location sidebar with clickable links
+- Map iframe container and styling
+- Responsive design for mobile devices
+
+DEPENDENCIES:
+- index.css (loaded first for base styling)
+- Google Maps iframe embed
+
+COMPONENTS STYLED:
+- .service-area-map-section: Main container section
+- .service-area-sidebar: Left sidebar with location list
+- .service-area-map: Right side iframe container
+
+RESPONSIVE DESIGN:
+- Desktop: Sidebar left, map right (70/30 split)
+- Tablet: Sidebar left, map right (40/60 split)
+- Mobile: Stacked layout (map on top, sidebar below)
+
+MAINTENANCE NOTES:
+- Keep pin emoji consistent with reference design
+- Maintain brand color (#01B0BB) for links and accents
+- Test map iframe performance on mobile devices
+================================================================================
+*/
+
+/* =============================================================================
+   SERVICE AREA MAP SECTION - Full-width container
+   ============================================================================= */
+
+.service-area-map-section {
+  padding: 4rem 0;
+  background: var(--color-white, #ffffff);
+}
+
+.service-area-heading {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text, #333);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* =============================================================================
+   GRID LAYOUT - Sidebar + Map
+   ============================================================================= */
+
+.service-area-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* =============================================================================
+   SIDEBAR - Location List
+   ============================================================================= */
+
+.service-area-sidebar {
+  background: var(--color-section-bg, #f8f9fa);
+  border-radius: 12px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e5e7eb;
+  position: sticky;
+  top: 2rem;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.service-area-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.service-area-item {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.service-area-item:hover {
+  background: rgba(1, 176, 187, 0.08);
+  transform: translateX(4px);
+}
+
+.location-pin {
+  font-size: 1.25rem;
+  color: #ff6b35;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+.location-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text, #333);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.location-link:hover {
+  color: var(--color-primary, #01B0BB);
+  text-decoration: underline;
+}
+
+/* =============================================================================
+   SIDEBAR CTA - Bottom section
+   ============================================================================= */
+
+.service-area-cta {
+  padding-top: 1rem;
+  border-top: 2px solid #e5e7eb;
+  margin-top: 0;
+}
+
+.service-area-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #666);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.service-area-cta .btn {
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* =============================================================================
+   MAP CONTAINER - Right Side
+   ============================================================================= */
+
+.service-area-map {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  border: 2px solid #e5e7eb;
+  background: #f8f9fa;
+  min-height: 600px;
+}
+
+.service-area-map iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: none;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Tablet
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .service-area-grid {
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+  }
+
+  .service-area-heading {
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .service-area-sidebar {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .location-link {
+    font-size: 1rem;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Mobile
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .service-area-map-section {
+    padding: 3rem 0;
+  }
+
+  .service-area-heading {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .service-area-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .service-area-sidebar {
+    position: static;
+    padding: 1.5rem;
+    order: 2;
+  }
+
+  .service-area-map {
+    order: 1;
+  }
+
+  .service-area-list {
+    margin-bottom: 1.5rem;
+  }
+
+  .service-area-item {
+    margin-bottom: 1rem;
+    padding: 0.65rem;
+  }
+
+  .location-pin {
+    font-size: 1.25rem;
+  }
+
+  .location-link {
+    font-size: 1rem;
+  }
+
+  .service-area-map {
+    min-height: 450px;
+  }
+
+  .service-area-map iframe {
+    height: 450px;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Small Mobile
+   ============================================================================= */
+
+@media (max-width: 480px) {
+  .service-area-map-section {
+    padding: 2.5rem 0;
+  }
+
+  .service-area-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-area-sidebar {
+    padding: 1.25rem;
+  }
+
+  .service-area-item {
+    margin-bottom: 0.875rem;
+    padding: 0.5rem;
+  }
+
+  .location-pin {
+    font-size: 1.1rem;
+  }
+
+  .location-link {
+    font-size: 0.95rem;
+  }
+
+  .service-area-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-area-cta .btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .service-area-map {
+    min-height: 400px;
+  }
+
+  .service-area-map iframe {
+    height: 400px;
+  }
+}
+
+/* =============================================================================
+   ACCESSIBILITY & MOTION PREFERENCES
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .service-area-item {
+    transition: none;
+  }
+
+  .service-area-item:hover {
+    transform: none;
+  }
+
+  .location-link {
+    transition: none;
+  }
+}
+
+/* Focus states for keyboard navigation */
+.location-link:focus {
+  outline: 2px solid var(--color-primary, #01B0BB);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.service-area-cta .btn:focus {
+  outline: 2px solid var(--color-primary, #01B0BB);
+  outline-offset: 3px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .service-area-sidebar {
+    border: 3px solid var(--color-text, #333);
+  }
+
+  .service-area-map {
+    border: 3px solid var(--color-text, #333);
+  }
+
+  .location-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+}

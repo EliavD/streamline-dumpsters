@@ -64,9 +64,14 @@ class BookingAPI {
   }
 
   /**
-   * Test API connectivity and CORS configuration
+   * Test API connectivity and CORS configuration (DEV MODE ONLY)
    */
   async testAPIConnectivity() {
+    // Skip in production mode
+    if (!DEV_MODE) {
+      return true;
+    }
+
     devLog('🔧 Testing API connectivity...');
 
     try {
@@ -100,40 +105,57 @@ class BookingAPI {
   }
 
   /**
-   * Generic fetch wrapper with error handling and timeout
+   * Generic JSONP request wrapper with error handling and timeout
+   * Uses JSONP to bypass CORS restrictions with Google Apps Script
    */
   async makeRequest(url, options = {}) {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.requestTimeout);
+    return new Promise((resolve, reject) => {
+      // Create unique callback name
+      const callbackName = 'jsonpCallback_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 
-    try {
-      const response = await fetch(url, {
-        ...options,
-        signal: controller.signal
-      });
+      // Create global callback function
+      window[callbackName] = (response) => {
+        console.log('🔍 DEBUG: JSONP Response received:', response);
 
-      clearTimeout(timeoutId);
+        // Clean up
+        delete window[callbackName];
+        if (script.parentNode) {
+          document.body.removeChild(script);
+        }
+        clearTimeout(timeoutId);
 
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+        resolve(response);
+      };
 
-      const data = await response.json();
-      return data;
+      // Add callback parameter to URL
+      const separator = url.includes('?') ? '&' : '?';
+      const jsonpUrl = `${url}${separator}callback=${callbackName}`;
 
-    } catch (error) {
-      clearTimeout(timeoutId);
+      // Create script tag for JSONP
+      const script = document.createElement('script');
+      script.src = jsonpUrl;
+      script.onerror = () => {
+        delete window[callbackName];
+        if (script.parentNode) {
+          document.body.removeChild(script);
+        }
+        clearTimeout(timeoutId);
+        reject(new Error('Unable to connect to booking system'));
+      };
 
-      if (error.name === 'AbortError') {
-        throw new Error('Request timed out. Please check your connection and try again.');
-      }
+      // Set timeout
+      const timeoutId = setTimeout(() => {
+        if (window[callbackName]) {
+          delete window[callbackName];
+          if (script.parentNode) {
+            document.body.removeChild(script);
+          }
+          reject(new Error('Request timed out. Please check your connection and try again.'));
+        }
+      }, this.requestTimeout);
 
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        throw new Error('Network error. Please check your connection and try again.');
-      }
-
-      throw error;
-    }
+      document.body.appendChild(script);
+    });
   }
 
   /**
@@ -211,7 +233,7 @@ class BookingAPI {
   }
 
   /**
-   * Create booking (after payment)
+   * Create booking (after payment) using JSONP to bypass CORS
    */
   async createBooking(bookingData) {
     try {
@@ -220,54 +242,70 @@ class BookingAPI {
       console.log('🔍 Booking data:', bookingData);
       devLog('📤 Submitting booking to Google Apps Script:', bookingData);
 
-      // Google Apps Script requires redirect: 'follow' to work properly
-      console.log('🔍 DEBUG: Sending POST request...');
-      const response = await fetch(this.baseURL, {
-        method: 'POST',
-        redirect: 'follow',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8', // Use text/plain for GAS compatibility
-        },
-        body: JSON.stringify(bookingData)
+      // Use JSONP to bypass CORS restrictions
+      console.log('🔍 DEBUG: Using JSONP to submit booking...');
+
+      return new Promise((resolve, reject) => {
+        // Create unique callback name
+        const callbackName = 'bookingCallback_' + Date.now();
+
+        // Create global callback function
+        window[callbackName] = (response) => {
+          console.log('🔍 DEBUG: JSONP Response received:', response);
+          console.log('🔍 Result status:', response.status);
+          console.log('🔍 Payment ID from Apps Script:', response.payment_id);
+          console.log('🔍 Booking ID from Apps Script:', response.booking_id);
+
+          // Clean up
+          delete window[callbackName];
+          document.body.removeChild(script);
+
+          if (response.status === 'error') {
+            console.error('❌ Apps Script ERROR:', response.message);
+            reject(new Error(response.message || 'Booking failed'));
+          } else {
+            console.log('✅ Booking submitted successfully to Apps Script');
+            devLog('✅ Booking submitted successfully:', response);
+            resolve(response);
+          }
+        };
+
+        // Build URL with JSONP callback and data
+        const params = new URLSearchParams({
+          callback: callbackName,
+          data: JSON.stringify(bookingData)
+        });
+
+        const url = `${this.baseURL}?${params}`;
+        console.log('🔍 JSONP URL:', url.substring(0, 100) + '...');
+
+        // Create script tag for JSONP
+        const script = document.createElement('script');
+        script.src = url;
+        script.onerror = () => {
+          console.error('❌ JSONP script failed to load');
+          delete window[callbackName];
+          document.body.removeChild(script);
+          reject(new Error('Unable to connect to booking system'));
+        };
+
+        // Set timeout
+        setTimeout(() => {
+          if (window[callbackName]) {
+            console.error('❌ JSONP request timed out');
+            delete window[callbackName];
+            if (script.parentNode) {
+              document.body.removeChild(script);
+            }
+            reject(new Error('Booking request timed out'));
+          }
+        }, 30000); // 30 second timeout
+
+        document.body.appendChild(script);
       });
 
-      console.log('🔍 DEBUG: Response received');
-      console.log('📥 Response status:', response.status);
-      console.log('📥 Response ok:', response.ok);
-      devLog('📥 Response status:', response.status);
-
-      // Try to parse the response
-      const result = await response.text();
-      console.log('🔍 DEBUG: Raw response text:', result);
-      devLog('📥 Response text:', result);
-
-      let parsedResult;
-      try {
-        console.log('🔍 DEBUG: Parsing JSON response...');
-        parsedResult = JSON.parse(result);
-        console.log('🔍 DEBUG: Parsed result:', parsedResult);
-        console.log('🔍 Result status:', parsedResult.status);
-        console.log('🔍 Payment ID from Apps Script:', parsedResult.payment_id);
-        console.log('🔍 Booking ID from Apps Script:', parsedResult.booking_id);
-
-        if (parsedResult.error) {
-          console.error('❌ Apps Script ERROR:', parsedResult.error);
-        }
-      } catch (e) {
-        console.error('❌ Failed to parse JSON response:', e);
-        // If not JSON, treat as success if status is ok
-        if (response.ok) {
-          devLog('✅ Booking submitted successfully (non-JSON response)');
-          return { status: 'booked' };
-        }
-        throw new Error('Invalid response from server');
-      }
-
-      console.log('✅ Booking submitted successfully to Apps Script');
-      devLog('✅ Booking submitted successfully:', parsedResult);
-      return parsedResult;
-
     } catch (error) {
+      console.error('❌ Error creating booking:', error);
       devError('❌ Error creating booking:', error);
       throw new Error('Unable to complete booking. Please try again.');
     }
@@ -2539,7 +2577,7 @@ class FormStateManager {
       }
     } else {
       if (submitButton) {
-        submitButton.textContent = 'Complete Booking - $1';
+        submitButton.textContent = 'Complete Booking';
         submitButton.disabled = false;
         submitButton.classList.remove('loading');
       }
@@ -2776,7 +2814,12 @@ class BookingFlowManager {
       card_nonce: paymentResult.token, // Add for Google Apps Script compatibility
       nonce: paymentResult.token, // Alternative field name
       amount_cents: paymentResult.amount, // FIXED: Changed from payment_amount to amount_cents
-      payment_currency: paymentResult.currency
+      payment_currency: paymentResult.currency,
+      // Pricing breakdown for email/calendar display
+      subtotal: 299,
+      tax_rate: 0.08,
+      tax_amount: 23.92,
+      amount: 322.92
     };
 
     console.log('🔍 DEBUG: Prepared booking data for Apps Script:');
@@ -3584,9 +3627,14 @@ window.bookingDebug = {
   },
 
   /**
-   * Check CORS configuration
+   * Check CORS configuration (DEV MODE ONLY)
    */
   checkCORS: () => {
+    // Skip in production mode
+    if (!DEV_MODE) {
+      return;
+    }
+
     devLog('🌐 CORS Check');
     devLog('Current origin:', window.location.origin);
     devLog('Current protocol:', window.location.protocol);

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BM9H69J4C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-4BM9H69J4C');
+    </script>
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "t895bpo03d");
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Booking Confirmed | Streamline Dumpsters</title>
+    <meta name="description" content="Your dumpster rental booking has been confirmed. Thank you for choosing Streamline Dumpsters!">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sl-dumpsters.com/confirmation.html">
+    <meta property="og:title" content="Booking Confirmed | Streamline Dumpsters">
+    <meta property="og:description" content="Your dumpster rental booking has been confirmed. Thank you for choosing Streamline Dumpsters!">
+
+    <link rel="icon" type="image/png" href="assets/img/logo.png">
+    <link rel="apple-touch-icon" href="assets/img/logo.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/confirmation.css?v=1">
+
+    <style>
+        /* Page-specific styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f9fa 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .confirmation-page {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .confirmation-container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        /* Reuse existing confirmation styles */
+        .confirmation__icon-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirmation__icon-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(1, 176, 187, 0.15), transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .confirmation__icon-check {
+            position: relative;
+            z-index: 10;
+            width: 64px;
+            height: 64px;
+            color: #01b0bb;
+        }
+
+        .confirmation__heading {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #111418;
+            margin: 0 0 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .confirmation__description {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: #3d4855;
+            margin: 0 0 2.5rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confirmation__details-card {
+            width: 100%;
+            background: #e8f9fa;
+            border: 1px solid #b3e5e9;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(1, 176, 187, 0.08);
+        }
+
+        .confirmation__detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.5rem;
+            padding: 0.75rem 0;
+        }
+
+        .confirmation__detail-row:not(:last-child) {
+            border-bottom: 1px solid rgba(1, 176, 187, 0.15);
+        }
+
+        .confirmation__detail-label {
+            font-size: 0.9375rem;
+            font-weight: 500;
+            color: #617589;
+            flex-shrink: 0;
+        }
+
+        .confirmation__detail-value {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #111418;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .confirmation__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .confirmation__btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 52px;
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            border-radius: 0.625rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .confirmation__btn--primary {
+            background: linear-gradient(135deg, #01b0bb 0%, #019aa3 100%);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(1, 176, 187, 0.3);
+        }
+
+        .confirmation__btn--primary:hover {
+            background: linear-gradient(135deg, #019aa3 0%, #018892 100%);
+            box-shadow: 0 4px 14px rgba(1, 176, 187, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .confirmation__btn--secondary {
+            background: transparent;
+            color: #01b0bb;
+            border: 2px solid rgba(1, 176, 187, 0.4);
+        }
+
+        .confirmation__btn--secondary:hover {
+            background: rgba(1, 176, 187, 0.08);
+            border-color: rgba(1, 176, 187, 0.6);
+            transform: translateY(-1px);
+        }
+
+        .confirmation__email-note {
+            font-size: 0.875rem;
+            color: #617589;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media (max-width: 640px) {
+            .confirmation-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .confirmation__heading {
+                font-size: 1.625rem;
+            }
+
+            .confirmation__icon-wrapper {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-page">
+        <div class="confirmation-container">
+            <!-- Success Icon -->
+            <div class="confirmation__icon-wrapper">
+                <svg class="confirmation__icon-check" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+
+            <!-- Heading -->
+            <h1 class="confirmation__heading">All set — let's roll!</h1>
+
+            <!-- Description -->
+            <p class="confirmation__description">
+                Your booking has been confirmed and you'll receive an email confirmation shortly. We're excited to help with your project!
+            </p>
+
+            <!-- Booking Details -->
+            <div class="confirmation__details-card">
+                <div class="confirmation__detail-row">
+                    <span class="confirmation__detail-label">Service:</span>
+                    <span class="confirmation__detail-value" id="detail-service">Dumpster Rental</span>
+                </div>
+                <div class="confirmation__detail-row">
+                    <span class="confirmation__detail-label">Date:</span>
+                    <span class="confirmation__detail-value" id="detail-date">-</span>
+                </div>
+                <div class="confirmation__detail-row">
+                    <span class="confirmation__detail-label">Location:</span>
+                    <span class="confirmation__detail-value" id="detail-location">-</span>
+                </div>
+                <div class="confirmation__detail-row">
+                    <span class="confirmation__detail-label">Total:</span>
+                    <span class="confirmation__detail-value" id="detail-total">$299.00</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="confirmation__actions">
+                <a href="index.html" class="confirmation__btn confirmation__btn--primary">
+                    Return to Homepage
+                </a>
+                <a href="contact.html" class="confirmation__btn confirmation__btn--secondary">
+                    Contact Us
+                </a>
+            </div>
+
+            <!-- Email Note -->
+            <p class="confirmation__email-note">
+                A confirmation email has been sent to your email address with all the booking details.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters to populate booking details
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Populate details from URL parameters
+        window.addEventListener('DOMContentLoaded', function() {
+            const service = getUrlParameter('service');
+            const date = getUrlParameter('date');
+            const location = getUrlParameter('location');
+            const total = getUrlParameter('total');
+
+            if (service) {
+                document.getElementById('detail-service').textContent = service;
+            }
+
+            if (date) {
+                // Format date nicely if it's in ISO format
+                try {
+                    const dateObj = new Date(date);
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById('detail-date').textContent = dateObj.toLocaleDateString('en-US', options);
+                } catch (e) {
+                    document.getElementById('detail-date').textContent = date;
+                }
+            }
+
+            if (location) {
+                document.getElementById('detail-location').textContent = location;
+            }
+
+            if (total) {
+                document.getElementById('detail-total').textContent = total.startsWith('$') ? total : '$' + total;
+            }
+
+            // Track page view
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_view', {
+                    page_title: 'Booking Confirmation',
+                    page_path: '/confirmation.html'
+                });
+
+                // Track conversion
+                gtag('event', 'conversion', {
+                    'send_to': 'G-4BM9H69J4C',
+                    'value': parseFloat(total) || 299.00,
+                    'currency': 'USD'
+                });
+            }
+        });
+    </script>
+</body>
+</html>

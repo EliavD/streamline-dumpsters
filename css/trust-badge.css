@@ -1,0 +1,211 @@
+/*
+================================================================================
+TRUST-BADGE.CSS - Streamline Dumpsters Ltd. Trust Badge Section
+================================================================================
+
+PURPOSE:
+Displays insurance and licensing trust badge with Progressive Commercial logo
+to build credibility and trust with potential customers.
+
+SCOPE:
+- Trust badge section between buy-boxes and chatbot
+- Progressive Commercial logo display
+- Responsive layout for all devices
+
+COMPONENTS STYLED:
+- .trust-badge-section: Main container section
+- .trust-badge-content: Flexbox layout for text and logo
+- .trust-badge-text: Left side text content
+- .trust-badge-logo: Right side logo image
+
+RESPONSIVE DESIGN:
+- Desktop: Side-by-side layout (text left, logo right)
+- Mobile: Stacked layout (centered)
+================================================================================
+*/
+
+/* =============================================================================
+   TRUST BADGE SECTION
+   ============================================================================= */
+
+.trust-badge-section {
+  padding: 3rem 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-top: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.trust-badge-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* =============================================================================
+   TRUST BADGE TEXT
+   ============================================================================= */
+
+.trust-badge-text {
+  flex: 1;
+}
+
+.trust-badge-text h3 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text, #333);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.trust-badge-text p {
+  font-size: 1rem;
+  color: var(--text-secondary, #666);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* =============================================================================
+   TRUST BADGE LOGO
+   ============================================================================= */
+
+.trust-badge-logo,
+.trust-badge-logos {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.trust-badge-logo img,
+.trust-badge-logos img {
+  height: auto;
+  display: block;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.trust-badge-logos img:first-child {
+  max-width: 200px;
+}
+
+.trust-badge-logos img:nth-child(2) {
+  max-width: 120px;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Tablet
+   ============================================================================= */
+
+@media (max-width: 1024px) {
+  .trust-badge-text h3 {
+    font-size: 1.5rem;
+  }
+
+  .trust-badge-text p {
+    font-size: 0.95rem;
+  }
+
+  .trust-badge-logo img {
+    max-width: 180px;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Mobile
+   ============================================================================= */
+
+@media (max-width: 768px) {
+  .trust-badge-section {
+    padding: 2rem 0;
+  }
+
+  .trust-badge-content {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    text-align: left;
+    padding: 1rem;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .trust-badge-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .trust-badge-logos {
+    flex-shrink: 0;
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  .trust-badge-text h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .trust-badge-text p {
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .trust-badge-logos img:first-child {
+    max-width: 100px;
+  }
+
+  .trust-badge-logos img:nth-child(2) {
+    max-width: 60px;
+  }
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN - Small Mobile
+   ============================================================================= */
+
+@media (max-width: 480px) {
+  .trust-badge-section {
+    padding: 1.5rem 0;
+  }
+
+  .trust-badge-content {
+    padding: 1.25rem;
+    gap: 1.25rem;
+  }
+
+  .trust-badge-text h3 {
+    font-size: 1.2rem;
+  }
+
+  .trust-badge-text p {
+    font-size: 0.85rem;
+  }
+
+  .trust-badge-logo img {
+    max-width: 140px;
+  }
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-badge-content {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .trust-badge-content {
+    border: 2px solid var(--color-text, #333);
+  }
+}

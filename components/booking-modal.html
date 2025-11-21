@@ -74,7 +74,7 @@
 
         <!-- Rental Period Notice -->
         <div class="three-step__notice">
-          <p class="three-step__notice-text">Additional days after 3 will be charged at the end of the rental</p>
+          <p class="three-step__notice-text">3 days included — $15/day after the 3rd, billed at rental end.</p>
         </div>
 
         <!-- Availability Status -->
@@ -218,40 +218,69 @@
 
       <!-- Body -->
       <div class="three-step-modal__body">
-        <!-- Payment Summary -->
-        <div class="three-step__payment-card">
-          <h3 class="three-step__payment-card-title">Payment Summary</h3>
-          <div class="three-step__payment-summary">
-            <div class="three-step__payment-line-item">
-              <p class="three-step__payment-total">Dumpster rental</p>
-              <p class="three-step__payment-amount">$299</p>
+        <!-- Order Summary -->
+        <div class="premium-checkout__summary">
+          <div class="premium-checkout__summary-header">
+            <h3 class="premium-checkout__title">Order Summary</h3>
+          </div>
+
+          <div class="premium-checkout__line-items">
+            <div class="premium-checkout__line-item">
+              <span class="premium-checkout__label">14-Yard Dumpster Rental</span>
+              <span class="premium-checkout__value">$299.00</span>
             </div>
-            <div class="three-step__payment-line-item">
-              <p class="three-step__payment-total">Sales tax (8%)</p>
-              <p class="three-step__payment-amount">$23.92</p>
-            </div>
-            <div class="three-step__payment-divider"></div>
-            <div class="three-step__payment-line-item three-step__payment-line-item--total">
-              <p class="three-step__payment-total">Total</p>
-              <p class="three-step__payment-amount">$322.92</p>
+
+            <div class="premium-checkout__line-item premium-checkout__line-item--subtle">
+              <span class="premium-checkout__label">Sales Tax (8%)</span>
+              <span class="premium-checkout__value">$23.92</span>
             </div>
           </div>
-          <p class="three-step__payment-description">Includes 3-day rental, 4,000 lbs of waste, Extra days $15, overages $0.03/lb.</p>
+
+          <div class="premium-checkout__total-section">
+            <div class="premium-checkout__total-line">
+              <span class="premium-checkout__total-label">Total</span>
+              <span class="premium-checkout__total-value">$322.92</span>
+            </div>
+          </div>
+
+          <div class="premium-checkout__includes">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>Includes 3-day rental • 4,000 lbs capacity</span>
+          </div>
         </div>
 
-        <!-- Payment Method -->
-        <div class="three-step__payment-card">
-          <h3 class="three-step__payment-card-title">Payment Method</h3>
-          <div id="card-container" class="three-step__square-container" aria-label="Credit card information">
+        <!-- Payment Section -->
+        <div class="premium-checkout__payment">
+          <div class="premium-checkout__payment-header">
+            <h3 class="premium-checkout__title">Payment Details</h3>
+            <div class="premium-checkout__secure-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>Secured by Square</span>
+            </div>
+          </div>
+
+          <!-- Card Input -->
+          <div id="card-container" class="premium-checkout__card-input" aria-label="Credit card information">
             <!-- Square payment form will be inserted here -->
           </div>
+
+          <div class="premium-checkout__payment-note">
+            All major cards accepted • PCI DSS compliant
+          </div>
         </div>
 
-        <!-- Terms of Service -->
-        <div class="three-step__terms-wrapper">
-          <input type="checkbox" id="agreeTos" name="agreeTos" class="three-step__terms-checkbox" required aria-describedby="agreeTosError">
-          <label for="agreeTos" class="three-step__terms-label">
-            I agree to the <a href="#terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="#privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+        <!-- Terms -->
+        <div class="premium-checkout__terms">
+          <label class="premium-checkout__checkbox-label">
+            <input type="checkbox" id="agreeTos" name="agreeTos" class="premium-checkout__checkbox" required aria-describedby="agreeTosError">
+            <span class="premium-checkout__checkbox-text">
+              I agree to the <a href="terms.html#terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="terms.html#privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            </span>
           </label>
         </div>
         <div class="three-step__error-message" id="agreeTosError" role="alert"></div>

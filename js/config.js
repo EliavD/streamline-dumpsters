@@ -225,12 +225,12 @@ CONFIG.pricing = {
 
 // Booking Configuration for Modal System
 CONFIG.booking = {
-  // Google Apps Script Backend URL (TEST MODE - $1 charge for testing)
-  // Updated: 2025-11-17 - New deployment with complete booking system
-  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbw8Yw5dcdP7G6ceoRcCiqC5E9ytzyesIIW7_TasZ8mHdRxxfkeflqW5vL1p1z5JLdKmrw/exec',
+  // Google Apps Script Backend URL - PRODUCTION MODE
+  // Updated: 2025-11-17 - New deployment with "Anyone" access for CORS compatibility
+  GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbwcIb08hs6kZun5ryfjXh4PNtWoDAs7IrmWdIw0W9cr-ertZj0up4ttEM8pB5ukRii5WQ/exec',
 
-  // Booking Constraints
-  BOOKING_PRICE: 1, // TEST MODE - $1 charge for testing ($1.08 with tax)
+  // Booking Constraints - PRODUCTION PRICING
+  BOOKING_PRICE: 322.92, // Total price with tax ($299 base + $23.92 tax)
   TAX_RATE: 0.08, // 8% Ohio sales tax
   MIN_RENTAL_DAYS: 1,
   MAX_ADVANCE_DAYS: 90,

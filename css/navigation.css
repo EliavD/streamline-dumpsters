@@ -46,7 +46,7 @@ NOTE: This file was split from base.css for better organization
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--container-pad);
-  min-height: 72px;                /* Increased height for better presence */
+  min-height: 110px;                /* Adjusted for 80px mobile logo */
 }
 
 /*
@@ -62,13 +62,12 @@ NOTE: This file was split from base.css for better organization
 }
 
 .logo-img {
-  height: 70px;
+  height: 80px;
   width: auto;
-  max-width: 200px;
+  max-width: 280px;
   object-fit: contain;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  padding: 8px;
+  image-rendering: auto;
+  padding: 5px;
 }
 
 .site-logo:hover {

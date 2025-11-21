@@ -79,17 +79,27 @@ main.container {
 }
 
 .step-arrow {
-  width: 60px;
-  height: 60px;
+  display: none;
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--color-primary, #01B0BB);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
   margin-bottom: 1.5rem;
-  position: relative;
-  z-index: 2;
-  filter: drop-shadow(0 4px 16px rgba(1, 176, 187, 0.3));
+  box-shadow: 0 4px 16px rgba(1, 176, 187, 0.3);
   transition: transform 0.3s ease;
 }
 
-.step-arrow:hover {
-  transform: scale(1.1) rotate(5deg);
+.timeline-step:hover .step-number {
+  transform: scale(1.1);
 }
 
 .step-content {
@@ -135,19 +145,6 @@ main.container {
 }
 
 .step-connector-arrow {
-  position: absolute;
-  top: 30px;
-  left: calc(50% + 30px);
-  width: calc(100% - 60px);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.timeline-step:hover .step-connector-arrow {
-  opacity: 1;
-}
-
-.timeline-step:last-child .step-connector-arrow {
   display: none;
 }
 
@@ -191,17 +188,6 @@ main.container {
   .step-arrow svg {
     width: 50px;
     height: 50px;
-  }
-
-  /* Rotate arrows for second row (steps 3 and 4) to point down */
-  .timeline-step:nth-child(3) .step-arrow,
-  .timeline-step:nth-child(4) .step-arrow {
-    transform: rotate(90deg);
-  }
-
-  .timeline-step:nth-child(3) .step-arrow:hover,
-  .timeline-step:nth-child(4) .step-arrow:hover {
-    transform: rotate(90deg) scale(1.1);
   }
 
   .step-content {
@@ -2019,6 +2005,42 @@ main.container {
   .calendar-instructions {
     font-size: 0.85rem;
     padding: 0 0.25rem;
+  }
+}
+
+/* Extra small screens - prevent calendar from being too narrow */
+@media (max-width: 400px) {
+  .booking-calendar {
+    padding: 0.75rem;
+    /* Prevent calendar from shrinking below minimum readable width */
+    min-width: 300px;
+    overflow-x: auto;
+  }
+
+  .calendar-grid,
+  .calendar-weekdays {
+    /* Ensure dates remain visible on right side */
+    min-width: 280px;
+  }
+
+  .calendar-day {
+    min-height: 40px;
+    font-size: 0.8rem;
+    padding: 0.25rem;
+  }
+
+  .weekday {
+    padding: 0.4rem 0.15rem;
+    font-size: 0.7rem;
+  }
+
+  .calendar-month-year {
+    font-size: 1rem;
+  }
+
+  .calendar-nav {
+    padding: 0.3rem 0.5rem;
+    font-size: 1.1rem;
   }
 }
 

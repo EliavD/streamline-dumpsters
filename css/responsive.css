@@ -40,14 +40,6 @@ NOTE: This file was split from base.css for better organization
     padding-right: var(--container-pad-lg);
   }
 
-  /* Enhanced header for tablet */
-  .header-inner {
-    padding: 0 var(--container-pad-lg);
-    min-height: 80px;
-  }
-
-  /* Column layout becomes two-column on tablet */
-
   /* Enhanced focus states for larger screens */
   *:focus-visible {
     box-shadow: 0 0 0 4px var(--focus-ring); /* Larger focus ring on bigger screens */
@@ -56,14 +48,14 @@ NOTE: This file was split from base.css for better organization
   /* Header gets larger padding and height */
   .header-inner {
     padding: 0 var(--container-pad-lg);
-    min-height: 72px;              /* Larger header on tablet+ */
+    min-height: 120px;              /* Adjusted for 140px tablet logo */
   }
 
   /* Logo scales up for better visibility */
   .logo-img {
-    height: 85px;
+    height: 140px;
     width: auto;
-    max-width: 250px;
+    max-width: 400px;
   }
 
   /* Navigation becomes horizontal inline layout */
@@ -124,7 +116,7 @@ NOTE: This file was split from base.css for better organization
 
   /* Hide mobile toggle on tablet+ */
   .nav-toggle {
-    display: none;
+    display: none !important;
   }
 
   /* Footer inner gets enhanced padding */
@@ -166,14 +158,14 @@ NOTE: This file was split from base.css for better organization
 
   /* Header reaches full desktop height */
   .header-inner {
-    min-height: 80px;              /* Larger header on desktop */
+    min-height: 140px;              /* Adjusted for 160px desktop logo */
   }
 
   /* Logo reaches full desktop size */
   .logo-img {
-    height: 95px;
+    height: 160px;
     width: auto;
-    max-width: 280px;
+    max-width: 450px;
   }
 
   /* Enhanced spacing for navigation elements */

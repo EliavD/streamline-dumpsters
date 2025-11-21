@@ -22,9 +22,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Area: Dublin, Powell, Hilliard & Columbus OH</title>
-    <meta name="description" content="Dumpster rental covering Dublin, Powell, Hilliard, Worthington, Plain City & Columbus metro. 10 ZIP codes served. Same-day delivery. Call (614) 636-2343.">
+    <meta name="description" content="Dumpster rental in Dublin, Powell, Hilliard, Worthington, Plain City & Columbus. 10 ZIPs served. Same-day delivery. Call (614) 636-2343.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.sl-dumpsters.com/service-area.html">
+    <link rel="canonical" href="https://sl-dumpsters.com/service-area">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -33,11 +33,13 @@
     <meta property="og:description" content="Serving Central Ohio with reliable dumpster rental services. Dublin, Plain City, Hilliard, Worthington, Powell & more. Same-day delivery available. Call (614) 636-2343.">
     <meta property="og:image" content="https://sl-dumpsters.com/assets/img/plaincity.jpeg">
     <meta property="og:locale" content="en_US">
-    <meta property="og:site_name" content="Streamline Dumpsters Ltd.">
+    <meta property="og:site_name" content="Streamline Dumpsters Ltd">
 
     <!-- Production CSS Bundle - Non-blocking Load Pattern -->
     <link rel="preload" as="style" href="css/main-purged.min.css" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/main-purged.min.css"></noscript>
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
     <!-- Page-Specific CSS -->
     <link rel="stylesheet" href="css/service-area.css">
@@ -47,7 +49,7 @@
     {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
-      "name": "Streamline Dumpsters Ltd.",
+      "name": "Streamline Dumpsters Ltd",
       "image": "https://www.sl-dumpsters.com/assets/img/14ydDumpster.png",
       "@id": "https://www.sl-dumpsters.com/",
       "url": "https://www.sl-dumpsters.com/",
@@ -55,16 +57,19 @@
       "priceRange": "$$",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "",
         "addressLocality": "Dublin",
         "addressRegion": "OH",
-        "postalCode": "",
+        "postalCode": "43017",
         "addressCountry": "US"
       },
       "geo": {
         "@type": "GeoCoordinates",
         "latitude": 40.0992,
         "longitude": -83.1141
+      },
+      "serviceArea": {
+        "@type": "GeoShape",
+        "circle": "40.0992,-83.1141 30mi"
       },
       "openingHoursSpecification": [
         {
@@ -92,13 +97,41 @@
         "https://www.yelp.com/biz/streamline-dumpsters-dublin"
       ],
       "areaServed": [
-        "Dublin, OH",
-        "Hilliard, OH",
-        "Powell, OH",
-        "Upper Arlington, OH",
-        "Worthington, OH",
-        "Plain City, OH",
-        "Columbus, OH"
+        {
+          "@type": "City",
+          "name": "Dublin",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Hilliard",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Powell",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Upper Arlington",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Worthington",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Plain City",
+          "addressRegion": "OH"
+        },
+        {
+          "@type": "City",
+          "name": "Columbus",
+          "addressRegion": "OH"
+        }
       ],
       "description": "Professional dumpster rental and junk removal service in Dublin, Ohio. Same-day delivery available. Locally owned and operated.",
       "offers": [
@@ -120,7 +153,7 @@
     <header class="site-header">
         <div class="header-inner">
             <a href="index.html" class="site-logo">
-                <img src="assets/img/StreamlineDUumpsterslogo.png" alt="Streamline Dumpsters Ltd." class="logo-img" width="400" height="400">
+                <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd" class="logo-img" width="400" height="400">
             </a>
 
             <nav class="main-nav" aria-label="Main navigation">
@@ -128,6 +161,7 @@
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="faq.html" class="nav-link">FAQ</a></li>
                     <li><a href="service-area.html" class="nav-link">Service Area</a></li>
+                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
                     <li><a href="contact.html" class="nav-link">Contact</a></li>
                     <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
                 </ul>
@@ -157,14 +191,6 @@
                     <h1 class="page-title">Our Dumpster Rental Service Area</h1>
                     <p class="hero-subtitle">Serving Central Ohio with reliable, affordable dumpster rental services</p>
                     <p class="service-description">We proudly deliver 14-yard dumpsters throughout the greater Columbus area and surrounding communities. Our service area covers major cities and towns within a 25-mile radius of Dublin, Ohio.</p>
-                    <div class="hero-urgency">
-                        <span class="urgency-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                            </svg>
-                            Same-Day Delivery Available
-                        </span>
-                    </div>
                     <div class="hero-cta-group">
                         <a href="tel:+16146362343" class="btn btn--outline btn--hero">Call (614) 636-2343</a>
                     </div>
@@ -172,55 +198,78 @@
             </div>
         </section>
 
-        <!-- Service Coverage Overview -->
-        <section class="coverage-overview">
+        <!-- Interactive Location Showcase -->
+        <section class="locations-showcase">
             <div class="container">
-                <h2 class="section-heading">Our Coverage Area</h2>
-                <p class="section-intro">Our service area includes major cities and communities throughout central Ohio. We provide fast, reliable dumpster delivery and pickup services to:</p>
+                <h2>Areas We Serve</h2>
+                <p>Click on any location to learn more about our services in that area</p>
 
-                <div class="locations-preview">
-                    <div class="service-areas-grid">
-                        <div class="area-card">
-                            <div class="area-icon">
-                                <svg width="48" height="48" aria-hidden="true" focusable="false"><use href="assets/img/service-area-icons.svg#icon-communities"></use></svg>
-                            </div>
-                            <h3>Central Ohio Communities</h3>
-                            <div class="area-list">
-                                <span class="area-item">Dublin</span>
-                                <span class="area-item">Plain City</span>
-                                <span class="area-item">Hilliard</span>
-                                <span class="area-item">Westerville</span>
-                                <span class="area-item">Worthington</span>
-                                <span class="area-item">Powell</span>
-                                <span class="area-item">Marysville</span>
-                            </div>
-                        </div>
-
-                        <div class="area-card">
-                            <div class="area-icon">
-                                <svg width="48" height="48" aria-hidden="true" focusable="false"><use href="assets/img/service-area-icons.svg#icon-city"></use></svg>
-                            </div>
-                            <h3>Greater Columbus Area</h3>
-                            <div class="area-list">
-                                <span class="area-item">Upper Arlington</span>
-                                <span class="area-item">Grandview Heights</span>
-                                <span class="area-item">Bexley</span>
-                                <span class="area-item">Gahanna</span>
-                                <span class="area-item">Reynoldsburg</span>
-                                <span class="area-item">Pickerington</span>
-                                <span class="area-item">Grove City</span>
-                                <span class="area-item">Columbus</span>
-                            </div>
-                        </div>
+                <!-- Location Grid -->
+                <div class="locations-grid">
+                    <!-- Primary Service Areas -->
+                    <div class="location-card primary-area has-bg-image bg-dublin">
+                        <a href="dublin.html" class="location-link">
+                            <h3>Dublin</h3>
+                            <p>We know Dublin neighborhoods and permitting requirements for efficient delivery throughout Historic Dublin and Bridge Park.</p>
+                        </a>
                     </div>
-                </div>
 
-                <div class="service-note">
-                    <p><strong>Don't see your city listed?</strong> We're always expanding our service area. Contact us to check if we can deliver to your location.</p>
-                    <a href="tel:+16146362343" class="btn btn--primary">
-                        <svg width="20" height="20" aria-hidden="true"><use href="assets/img/service-area-icons.svg#icon-phone"></use></svg>
-                        Call Us: (614) 636-2343
-                    </a>
+                    <div class="location-card primary-area has-bg-image bg-hilliard">
+                        <a href="hilliard.html" class="location-link">
+                            <h3>Hilliard</h3>
+                            <p>We know Hilliard neighborhoods and permitting requirements for efficient delivery throughout Norwich and Heritage Hill areas.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card primary-area has-bg-image bg-plain-city">
+                        <a href="plain-city.html" class="location-link">
+                            <h3>Plain City</h3>
+                            <p>We specialize in rural deliveries to long driveways and farm properties throughout the Plain City area.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card primary-area has-bg-image bg-worthington">
+                        <a href="worthington.html" class="location-link">
+                            <h3>Worthington</h3>
+                            <p>We're experienced with historic district requirements and working around colonial architecture properties.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card primary-area has-bg-image bg-upper-arlington">
+                        <a href="upper-arlington.html" class="location-link">
+                            <h3>Upper Arlington</h3>
+                            <p>We're familiar with Upper Arlington's established neighborhoods and provide careful delivery throughout this premier community.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card primary-area has-bg-image bg-powell">
+                        <a href="powell.html" class="location-link">
+                            <h3>Powell</h3>
+                            <p>We understand Powell's rapid growth and provide reliable service for new construction projects.</p>
+                        </a>
+                    </div>
+
+                    <!-- Secondary Areas - Coming Soon -->
+                    <div class="location-card secondary-area has-bg-image bg-westerville">
+                        <a href="#" class="location-link">
+                            <h3>Westerville</h3>
+                            <p>We're experienced with Uptown Westerville's historic district requirements and historic property considerations.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card secondary-area has-bg-image bg-columbus">
+                        <a href="#" class="location-link">
+                            <h3>Columbus</h3>
+                            <p>We serve select Columbus neighborhoods with expertise in urban delivery challenges and tight spaces.</p>
+                        </a>
+                    </div>
+
+                    <div class="location-card secondary-area has-bg-image bg-grove-city">
+                        <a href="#" class="location-link">
+                            <h3>Grove City</h3>
+                            <p>We understand Grove City's growing residential areas and provide reliable service throughout southwest Columbus.</p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -313,89 +362,6 @@
             </div>
         </section>
 
-        <!-- Interactive Location Showcase -->
-        <section class="locations-showcase">
-            <div class="container">
-                <h2>Areas We Serve</h2>
-                <p>Click on any location to learn more about our services in that area</p>
-
-                <!-- Location Grid -->
-                <div class="locations-grid">
-                    <!-- Primary Service Areas -->
-                    <div class="location-card primary-area has-bg-image bg-dublin">
-                        <a href="dublin.html" class="location-link">
-                            <h3>Dublin</h3>
-                            <p>We know Dublin neighborhoods and permitting requirements for efficient delivery throughout Historic Dublin and Bridge Park.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card primary-area has-bg-image bg-hilliard">
-                        <a href="hilliard.html" class="location-link">
-                            <h3>Hilliard</h3>
-                            <p>We know Hilliard neighborhoods and permitting requirements for efficient delivery throughout Norwich and Heritage Hill areas.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card primary-area has-bg-image bg-plain-city">
-                        <a href="plain-city.html" class="location-link">
-                            <h3>Plain City</h3>
-                            <p>We specialize in rural deliveries to long driveways and farm properties throughout the Plain City area.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card primary-area has-bg-image bg-worthington">
-                        <a href="worthington.html" class="location-link">
-                            <h3>Worthington</h3>
-                            <p>We're experienced with historic district requirements and working around colonial architecture properties.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card primary-area has-bg-image bg-upper-arlington">
-                        <a href="upper-arlington.html" class="location-link">
-                            <h3>Upper Arlington</h3>
-                            <p>We're familiar with Upper Arlington's established neighborhoods and provide careful delivery throughout this premier community.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card primary-area has-bg-image bg-powell">
-                        <a href="powell.html" class="location-link">
-                            <h3>Powell</h3>
-                            <p>We understand Powell's rapid growth and provide reliable service for new construction projects.</p>
-                        </a>
-                    </div>
-
-                    <!-- Secondary Areas -->
-                    <div class="location-card secondary-area has-bg-image bg-marysville">
-                        <a href="marysville.html" class="location-link">
-                            <h3>Marysville</h3>
-                            <p>We understand Marysville's automotive industry needs and provide service for commercial and residential projects.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card secondary-area has-bg-image bg-westerville">
-                        <a href="westerville.html" class="location-link">
-                            <h3>Westerville</h3>
-                            <p>We're experienced with Uptown Westerville's historic district requirements and historic property considerations.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card secondary-area has-bg-image bg-columbus">
-                        <a href="columbus.html" class="location-link">
-                            <h3>Columbus</h3>
-                            <p>We serve select Columbus neighborhoods with expertise in urban delivery challenges and tight spaces.</p>
-                        </a>
-                    </div>
-
-                    <div class="location-card secondary-area has-bg-image bg-grove-city">
-                        <a href="grove-city.html" class="location-link">
-                            <h3>Grove City</h3>
-                            <p>We understand Grove City's growing residential areas and provide reliable service throughout southwest Columbus.</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Service Information -->
         <section class="service-info">
             <div class="container">
@@ -440,7 +406,7 @@
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-section">
-                    <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
+                    <h3 class="footer-title">Streamline Dumpsters Ltd</h3>
                     <p class="footer-text">Dublin, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
                     <div class="footer-contact">
                         <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
@@ -484,7 +450,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd. | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
             </div>
         </div>
     </footer>

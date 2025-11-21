@@ -197,12 +197,21 @@
     <link rel="stylesheet" href="css/buy-box-fix.css?v=1">
 </head>
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="u-display-none">
+        <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></symbol>
+        <symbol id="icon-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></symbol>
+        <symbol id="icon-truck-large" viewBox="0 0 24 24"><path d="M1 3h15v13H1z"></path><path d="M16 8h4l3 3v5h-7V8z"></path><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></symbol>
+        <symbol id="icon-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></symbol>
+    </svg>
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
     <header class="site-header">
         <div class="header-inner">
             <a href="index.html" class="site-logo">
-                <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd." class="logo-img" width="400" height="400">
+                <picture>
+                    <source srcset="assets/img/StreamlineDumpstersLogo.webp" type="image/webp">
+                    <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd" class="logo-img">
+                </picture>
             </a>
 
             <nav class="main-nav" aria-label="Main navigation">
@@ -250,22 +259,14 @@
                     <div class="feature-highlights">
                         <div class="highlight-item">
                             <span class="highlight-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="1" y="3" width="15" height="13"></rect>
-                                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
-                                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                                </svg>
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-truck"></use></svg>
                             </span>
                             <span class="highlight-text">SAME DAY DELIVERY</span>
                         </div>
                         <div class="highlight-divider"></div>
                         <div class="highlight-item">
                             <span class="highlight-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-house"></use></svg>
                             </span>
                             <span class="highlight-text">RESIDENTIAL CLEANUPS</span>
                         </div>
@@ -273,13 +274,16 @@
                     </div>
 
                     <div class="service-image">
-                        <img src="assets/img/14ydDumpster.png"
-                             srcset="assets/img/14ydDumpster-300w.png 300w,
-                                     assets/img/14ydDumpster-600w.png 600w,
-                                     assets/img/14ydDumpster-900w.png 900w,
-                                     assets/img/14ydDumpster-1200w.png 1200w"
-                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                             alt="14 yard dumpster rental" class="service-img" width="2510" height="1418" loading="lazy">
+                        <picture>
+                            <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
+                            <img src="assets/img/14ydDumpster.png"
+                                 srcset="assets/img/14ydDumpster-300w.png 300w,
+                                         assets/img/14ydDumpster-600w.png 600w,
+                                         assets/img/14ydDumpster-900w.png 900w,
+                                         assets/img/14ydDumpster-1200w.png 1200w"
+                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                                 alt="14 yard dumpster rental" class="service-img" loading="lazy" width="400" height="300">
+                        </picture>
                     </div>
 
                     <div class="pricing-section">
@@ -303,24 +307,14 @@
                     <div class="feature-highlights">
                         <div class="highlight-item">
                             <span class="highlight-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M1 3h15v13H1z"></path>
-                                    <path d="M16 8h4l3 3v5h-7V8z"></path>
-                                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                                    <path d="M7 8h4"></path>
-                                    <path d="M7 11h4"></path>
-                                </svg>
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-truck-large"></use></svg>
                             </span>
                             <span class="highlight-text">WE LOAD & HAUL</span>
                         </div>
                         <div class="highlight-divider"></div>
                         <div class="highlight-item">
                             <span class="highlight-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                                </svg>
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-phone"></use></svg>
                             </span>
                             <span class="highlight-text">INSTANT QUOTES</span>
                         </div>
@@ -328,13 +322,16 @@
                     </div>
 
                     <div class="service-image">
-                        <img src="assets/img/dumpster.png"
-                             srcset="assets/img/dumpster-300w.png 300w,
-                                     assets/img/dumpster-600w.png 600w,
-                                     assets/img/dumpster-900w.png 900w,
-                                     assets/img/dumpster-1200w.png 1200w"
-                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                             alt="Junk removal service truck" class="service-img" width="2045" height="990" loading="lazy">
+                        <picture>
+                            <source srcset="assets/img/dumpster.webp" type="image/webp">
+                            <img src="assets/img/dumpster.png"
+                                 srcset="assets/img/dumpster-300w.png 300w,
+                                         assets/img/dumpster-600w.png 600w,
+                                         assets/img/dumpster-900w.png 900w,
+                                         assets/img/dumpster-1200w.png 1200w"
+                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                                 alt="Junk removal service truck" class="service-img" loading="lazy" width="400" height="300">
+                        </picture>
                     </div>
 
                     <div class="pricing-section">
@@ -612,7 +609,7 @@
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-section">
-                    <h3 class="footer-title">Streamline Dumpsters Ltd.</h3>
+                    <h3 class="footer-title">Streamline Dumpsters Ltd</h3>
                     <p class="footer-text">Dublin, Ohio's trusted dumpster rental and junk removal service. Same-day delivery, locally owned and operated.</p>
                     <div class="footer-contact">
                         <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
@@ -653,7 +650,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd. | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd | Dublin, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
             </div>
         </div>
     </footer>
@@ -665,9 +662,9 @@
     <script src="js/logger.js?v=4"></script>
     <script src="js/modal-loader.js?v=4"></script>
     <script src="js/mobile-nav.js"></script>
-    <script src="js/config.js?v=8-production-gas"></script>
+    <script src="js/config.js?v=test-1-dollar"></script>
     <script src="js/three-step-modal.js?v=8-iso-dates"></script>
-    <script src="js/bookNow.js?v=16-api-debug"></script>
+    <script src="js/bookNow.js?v=19-production-pricing"></script>
     <script src="js/junkRemoval.js?v=form-group-fix"></script>
     <script src="js/location-faq.js?v=4"></script>
     <!-- GA4 Event Tracking for phone clicks -->

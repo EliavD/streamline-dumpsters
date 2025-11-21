@@ -412,7 +412,7 @@ class LocalSEOOptimizer {
         const relatedLocations = {
             dublin: ['hilliard', 'westerville', 'worthington', 'powell'],
             hilliard: ['dublin', 'plain-city', 'worthington'],
-            'plain-city': ['dublin', 'hilliard', 'marysville'],
+            'plain-city': ['dublin', 'hilliard', 'westerville'],
             westerville: ['dublin', 'worthington', 'gahanna'],
             worthington: ['dublin', 'westerville', 'powell'],
             powell: ['dublin', 'worthington', 'westerville']

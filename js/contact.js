@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Configuration
     const config = {
-        apiEndpoint: 'https://script.google.com/macros/s/AKfycbwUMKj_F-4D0bOZmcrKH627eR_OeJUiYX1dIbXI11FiubbElP7JmmlnL6YrlZbPZ_xM/exec',
+        apiEndpoint: 'https://script.google.com/macros/s/AKfycbxYKGlGv6pKRlyySYZ7iAbD_5QU1TWGIP0y2nWJvM2gg7lroG0h2Q58A4PGpA0bQKsf/exec',
         submitTimeout: 10000, // 10 seconds
         enableClientValidation: true
     };

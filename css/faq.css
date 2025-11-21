@@ -611,7 +611,7 @@ BROWSER SUPPORT:
 }
 
 .faq-answer[aria-hidden="false"] {
-  max-height: 500px;
+  max-height: 1500px;
   opacity: 1;
   padding: 1rem 1rem 1.5rem;
 }
@@ -633,9 +633,13 @@ BROWSER SUPPORT:
   border: 2px solid rgba(1, 176, 187, 0.3);
 }
 
+.prohibited-items-card[aria-hidden="false"] {
+  max-height: 2000px;  /* Extra space for this specific card with grid content */
+}
+
 .prohibited-card-container {
   padding: 0 0 3rem 0;
-  min-height: 600px;
+  /* min-height removed - let content determine height */
 }
 
 .prohibited-header {
@@ -701,10 +705,10 @@ BROWSER SUPPORT:
 }
 
 .item-name {
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-primary);
   font-size: 0.95rem;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 .prohibited-footer {

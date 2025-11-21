@@ -27,7 +27,8 @@ const urlsToCache = [
     '/js/performanceMonitor.js',
     '/js/accessibility.js',
     '/js/mobileOptimizer.js',
-    '/assets/img/StreamlineDUumpsterslogo.png'
+    '/assets/img/StreamlineDumpstersLogo.png',
+    '/assets/img/StreamlineDumpstersLogo.webp'
 ];
 
 // Install event - cache resources
@@ -46,6 +47,11 @@ self.addEventListener('install', (event) => {
 
 // Fetch event - serve cached content when offline
 self.addEventListener('fetch', (event) => {
+    // Skip service worker caching on localhost for development
+    if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+        return event.respondWith(fetch(event.request));
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
