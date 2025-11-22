@@ -89,5 +89,32 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Note: Blog section excluded - in development -->
+  <!-- Blog Pages - Medium Priority -->
+  <url>
+    <loc>https://sl-dumpsters.com/blog</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/dumpster-rental-dublin-ohio</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/choose-right-dumpster-size-columbus</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/ohio-dumpster-permit-guide</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

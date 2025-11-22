@@ -37,13 +37,42 @@
       ".gitignore",
       ".env*",
       "certs/**",
-      "blog/**",
       "**/*.pem",
       "localhost.pem"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
+    "redirects": [
+      {
+        "source": "**",
+        "destination": "https://sl-dumpsters.com/:splat",
+        "type": 301,
+        "headers": [
+          {
+            "key": "Host",
+            "value": "www.sl-dumpsters.com"
+          }
+        ]
+      }
+    ],
     "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          }
+        ]
+      },
       {
         "source": "**/*.@(js|css)",
         "headers": [
@@ -85,7 +114,6 @@
         ]
       }
     ],
-    "redirects": [],
     "rewrites": []
   }
 }
