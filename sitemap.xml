@@ -92,8 +92,15 @@
   <!-- Blog Pages - Medium Priority -->
   <url>
     <loc>https://sl-dumpsters.com/blog</loc>
-    <lastmod>2025-11-22</lastmod>
+    <lastmod>2025-11-24</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/same-day-dumpster-delivery-columbus</loc>
+    <lastmod>2025-11-24</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
