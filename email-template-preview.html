@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Template Preview - Streamline Dumpsters (Updated Design)</title>
+  <style>
+    /* Email styles (part of actual email) */
+    @media only screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .content-padding { padding: 16px !important; }
+      .header-padding { padding: 24px 16px !important; }
+    }
+
+    /* Preview wrapper styles (not part of email) */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #01b0bb 0%, #2a7d84 100%);
+    }
+    .preview-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .preview-header {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .preview-header h1 {
+      margin: 0 0 10px 0;
+      color: #1f2937;
+      font-size: 24px;
+    }
+    .preview-header p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .preview-note {
+      background: #d1fae5;
+      border-left: 4px solid #10b981;
+      padding: 16px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .preview-note strong {
+      display: block;
+      color: #065f46;
+      margin-bottom: 8px;
+    }
+    .preview-note p {
+      margin: 0;
+      color: #047857;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .email-frame {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-container">
+    <div class="preview-header">
+      <h1>📧 Updated Email Template Preview</h1>
+      <p>New teal/cyan color scheme matching your design</p>
+    </div>
+
+    <div class="preview-note">
+      <strong>✨ Updated Design</strong>
+      <p>This preview shows the new teal color scheme (#01b0bb) with updated styling to match your reference design.</p>
+    </div>
+
+    <div class="email-frame">
+      <!-- ACTUAL EMAIL TEMPLATE STARTS HERE -->
+      <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f8fafc;" cellpadding="0" cellspacing="0">
+        <tr><td style="padding: 0;" align="center">
+
+        <!-- Content wrapper - responsive width -->
+        <table role="presentation" class="email-container" style="width: 100%; max-width: 600px; border-collapse: collapse; background-color: #ffffff;" cellpadding="0" cellspacing="0">
+
+        <!-- HEADER - Teal gradient -->
+        <tr><td class="header-padding" style="background: linear-gradient(to right, #01b0bb, #2a7d84); padding: 32px 24px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+          <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; font-family: Roboto, Arial, sans-serif;">Streamline Dumpsters</h1>
+          <p style="margin: 4px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px;">Booking Confirmation</p>
+        </td></tr>
+
+        <!-- MAIN CONTENT AREA -->
+        <tr><td class="content-padding" style="padding: 24px;">
+
+        <!-- GREETING -->
+        <div style="margin-bottom: 24px; color: #334155;">
+          <p style="margin: 0 0 12px 0; font-size: 18px; color: #334155;">Dear John Smith,</p>
+          <p style="margin: 0; font-size: 16px; line-height: 24px; color: #334155;">Thank you for your booking! Your dumpster rental has been confirmed.</p>
+        </div>
+
+        <!-- CONFIRMATION STATUS BOX - Teal theme -->
+        <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f0fdfa; border-left: 4px solid #14b8a6; border-radius: 8px; margin-bottom: 32px;" cellpadding="0" cellspacing="0">
+          <tr><td style="padding: 16px;">
+            <table role="presentation" style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="width: 40px; vertical-align: top;">
+                  <div style="width: 32px; height: 32px; background-color: #14b8a6; border-radius: 50%; color: #ffffff; font-weight: bold; text-align: center; line-height: 32px; font-size: 20px;">✓</div>
+                </td>
+                <td style="vertical-align: top;">
+                  <p style="margin: 0 0 4px 0; color: #0f766e; font-size: 16px; font-weight: 700;">BOOKING CONFIRMED</p>
+                  <p style="margin: 0; color: #0d9488; font-size: 14px;">Your payment has been processed successfully</p>
+                </td>
+              </tr>
+            </table>
+          </td></tr>
+        </table>
+
+        <!-- BOOKING DETAILS SECTION -->
+        <div style="margin-bottom: 32px;">
+          <h2 style="margin: 0 0 16px 0; color: #01b0bb; font-size: 20px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;">Booking Details</h2>
+
+          <table role="presentation" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;" cellpadding="0" cellspacing="0">
+            <!-- Delivery Date -->
+            <tr>
+              <td style="width: 40px; vertical-align: top; padding-top: 4px;">
+                <span style="color: #64748b; font-size: 20px;">📅</span>
+              </td>
+              <td style="padding-bottom: 20px;">
+                <p style="margin: 0 0 2px 0; color: #64748b; font-size: 14px;">Delivery Date:</p>
+                <p style="margin: 0; color: #334155; font-size: 16px; font-weight: 600;">2025-11-25</p>
+              </td>
+            </tr>
+
+            <!-- Pickup Date -->
+            <tr>
+              <td style="width: 40px; vertical-align: top; padding-top: 4px;">
+                <span style="color: #64748b; font-size: 20px;">📅</span>
+              </td>
+              <td style="padding-bottom: 20px;">
+                <p style="margin: 0 0 2px 0; color: #64748b; font-size: 14px;">Pickup Date:</p>
+                <p style="margin: 0; color: #334155; font-size: 16px; font-weight: 600;">2025-11-28</p>
+              </td>
+            </tr>
+
+            <!-- Delivery Address -->
+            <tr>
+              <td style="width: 40px; vertical-align: top; padding-top: 4px;">
+                <span style="color: #64748b; font-size: 20px;">📍</span>
+              </td>
+              <td style="padding-bottom: 20px;">
+                <p style="margin: 0 0 2px 0; color: #64748b; font-size: 14px;">Delivery Address:</p>
+                <p style="margin: 0; color: #334155; font-size: 16px; font-weight: 600;">
+                  123 Main Street<br>Columbus, OH 43215
+                </p>
+              </td>
+            </tr>
+
+            <!-- Dumpster Size -->
+            <tr>
+              <td style="width: 40px; vertical-align: top; padding-top: 4px;">
+                <span style="color: #64748b; font-size: 20px;">🗑️</span>
+              </td>
+              <td style="padding-bottom: 20px;">
+                <p style="margin: 0 0 2px 0; color: #64748b; font-size: 14px;">Dumpster Size:</p>
+                <p style="margin: 0; color: #334155; font-size: 16px; font-weight: 600;">14 yard</p>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Special Instructions -->
+          <div style="padding: 16px; background-color: #f1f5f9; border-left: 4px solid #01b0bb; border-radius: 8px;">
+            <p style="margin: 0 0 4px 0; color: #64748b; font-size: 12px; font-weight: 700; text-transform: uppercase;">SPECIAL INSTRUCTIONS</p>
+            <p style="margin: 0; color: #334155; font-size: 14px;">Please place the dumpster on the right side of the driveway near the garage.</p>
+          </div>
+        </div>
+
+        <!-- PAYMENT SUMMARY SECTION -->
+        <div style="margin-bottom: 32px;">
+          <h2 style="margin: 0 0 16px 0; color: #01b0bb; font-size: 20px; font-weight: 700; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;">Payment Summary</h2>
+
+          <table role="presentation" style="width: 100%; border-collapse: collapse;" cellpadding="0" cellspacing="0">
+            <!-- Subtotal -->
+            <tr>
+              <td style="padding: 12px 0; color: #334155; font-size: 14px;">Subtotal:</td>
+              <td style="padding: 12px 0; color: #334155; font-size: 14px; text-align: right;">$299.00</td>
+            </tr>
+
+            <!-- Tax -->
+            <tr>
+              <td style="padding: 12px 0; color: #334155; font-size: 14px;">Tax (8%):</td>
+              <td style="padding: 12px 0; color: #334155; font-size: 14px; text-align: right;">$23.92</td>
+            </tr>
+
+            <!-- Divider -->
+            <tr>
+              <td colspan="2" style="padding: 16px 0; border-top: 1px solid #e2e8f0;"></td>
+            </tr>
+
+            <!-- Total -->
+            <tr>
+              <td style="padding: 8px 0 0 0; color: #334155; font-size: 18px; font-weight: 700;">Total Paid:</td>
+              <td style="padding: 8px 0 0 0; color: #10b981; font-size: 20px; font-weight: 700; text-align: right;">$322.92</td>
+            </tr>
+          </table>
+
+          <!-- Payment ID -->
+          <div style="margin-top: 12px; text-align: right;">
+            <p style="margin: 0; display: inline-block; padding: 4px 8px; background-color: #f1f5f9; color: #64748b; font-size: 12px; border-radius: 4px;">Payment ID: sq_ABC123XYZ789</p>
+          </div>
+        </div>
+
+        </td></tr> <!-- End main content area -->
+
+        </table> <!-- End content wrapper -->
+        </td></tr>
+      </table> <!-- End main container -->
+      <!-- ACTUAL EMAIL TEMPLATE ENDS HERE -->
+    </div>
+
+    <div style="margin-top: 30px; padding: 20px; background: #f3f4f6; border-radius: 8px;">
+      <h3 style="margin: 0 0 12px 0; color: #1f2937; font-size: 16px;">✅ Design Updates</h3>
+      <ul style="margin: 0; padding-left: 20px; color: #4b5563; font-size: 14px; line-height: 1.8;">
+        <li><strong>Teal gradient header</strong> (#01b0bb to #2a7d84)</li>
+        <li><strong>Updated confirmation box</strong> with circular checkmark badge</li>
+        <li><strong>Icon + label layout</strong> for booking details</li>
+        <li><strong>Cleaner typography</strong> with Roboto font</li>
+        <li><strong>Light background</strong> (#f8fafc)</li>
+        <li><strong>Simplified payment summary</strong></li>
+        <li><strong>Removed footer and contact sections</strong> per design</li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 20px; padding: 20px; background: #e0f2fe; border-radius: 8px; border: 1px solid #0284c7;">
+      <h3 style="margin: 0 0 12px 0; color: #0c4a6e; font-size: 16px;">📱 Still Mobile Responsive</h3>
+      <p style="margin: 0; color: #075985; font-size: 14px; line-height: 1.6;">
+        The updated design maintains full mobile responsiveness with proper scaling and readable text on all devices.
+      </p>
+    </div>
+  </div>
+</body>
+</html>

@@ -30,7 +30,12 @@
         const squareSDK = (isHTTPS || !isLocalhost)
           ? 'https://web.squarecdn.com/v1/square.js'
           : 'https://sandbox.web.squarecdn.com/v1/square.js';
-        document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
+
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = squareSDK;
+        script.async = true;
+        document.head.appendChild(script);
       })();
     </script>
 
@@ -82,7 +87,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     <link rel="stylesheet" href="../css/responsive.css">
 
     <!-- Blog-specific CSS -->
-    <link rel="stylesheet" href="css/blog.css?v=1">
+    <link rel="stylesheet" href="/blog/css/blog.css?v=1">
 </head>
 <body>
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
