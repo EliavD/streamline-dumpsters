@@ -23,3 +23,44 @@
   outline: none;
   box-shadow: none;
 }
+
+/* Even 4-card grid — stretch cards to equal height per row */
+.buy-box-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* Coming Soon card badge override */
+.availability-badge--coming-soon {
+  background-color: #94a3b8;
+}
+
+/* Coming Soon card disabled button */
+.buy-box--coming-soon .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Coming Soon cards — remove forced min-height; grid stretch handles equal height */
+.buy-box--coming-soon {
+  min-height: auto !important;
+}
+
+/* Coming Soon heading — slightly smaller than active cards */
+.buy-box--coming-soon h2 {
+  font-size: 1.25rem !important;
+}
+
+/* Mobile: match active card heading size and shrink image */
+@media (max-width: 767px) {
+  .buy-box--coming-soon h2 {
+    font-size: 1.1rem !important;
+  }
+
+  .buy-box--coming-soon .service-img {
+    max-width: 100px !important;
+    max-height: 75px !important;
+    object-fit: contain;
+  }
+}

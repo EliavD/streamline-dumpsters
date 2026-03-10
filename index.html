@@ -75,11 +75,13 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Streamline Dumpsters Ltd",
-      "image": "https://www.sl-dumpsters.com/assets/img/14ydDumpster.png",
-      "@id": "https://www.sl-dumpsters.com/",
-      "url": "https://www.sl-dumpsters.com/",
+      "image": "https://sl-dumpsters.com/assets/img/14ydDumpster.png",
+      "@id": "https://sl-dumpsters.com/",
+      "url": "https://sl-dumpsters.com/",
       "telephone": "(614) 636-2343",
+      "email": "Eli@Sl-Dumpsters.com",
       "priceRange": "$$",
+      "paymentAccepted": "Credit Card, Debit Card",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Dublin",
@@ -96,12 +98,26 @@
         "@type": "GeoShape",
         "circle": "40.0992,-83.1141 30mi"
       },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "06:00",
-        "closes": "22:00"
-      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "07:00",
+          "closes": "22:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "22:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "10:00",
+          "closes": "16:00"
+        }
+      ],
       "sameAs": [
         "https://maps.app.goo.gl/pGpHk9GPgeypMW2z7",
         "https://www.facebook.com/profile.php?id=61573101384760",
@@ -110,7 +126,7 @@
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
-        "reviewCount": "8",
+        "reviewCount": "12",
         "bestRating": "5",
         "worstRating": "1"
       },
@@ -179,7 +195,7 @@
           }
         }
       ],
-      "description": "Professional dumpster rental and junk removal service in Dublin, Ohio. Same-day delivery available. Locally owned and operated.",
+      "description": "Professional dumpster rental and junk removal service in Dublin, Ohio. 14-yard dumpster rental for $299 flat rate — includes delivery, 3-day rental, 4,000 lb weight allowance, driveway protection, and pickup. Same-day delivery available. Fully insured and DOT certified. Locally owned and operated.",
       "offers": [
         {
           "@type": "Offer",
@@ -187,7 +203,13 @@
           "price": "299",
           "priceCurrency": "USD",
           "availability": "https://schema.org/InStock",
-          "description": "14-yard dumpster rental with 3 days included, same-day delivery available"
+          "description": "14-yard dumpster rental including delivery, 3-day rental period, 4,000 lb weight allowance, driveway protection boards, and pickup. Same-day delivery available when booked before 2 PM. Extensions $15/day."
+        },
+        {
+          "@type": "Offer",
+          "name": "Junk Removal Service",
+          "availability": "https://schema.org/InStock",
+          "description": "Full-service junk removal — crew goes inside, carries items out, loads and hauls away. Pricing by volume. Text photos to (614) 636-2343 for an instant quote."
         }
       ]
     }
@@ -205,7 +227,7 @@
         "@type": "LocalBusiness",
         "name": "Streamline Dumpsters Ltd",
         "telephone": "(614) 636-2343",
-        "url": "https://www.sl-dumpsters.com/"
+        "url": "https://sl-dumpsters.com/"
       },
       "areaServed": {
         "@type": "State",
@@ -331,6 +353,176 @@
     }
     </script>
 
+    <!-- FAQPage Schema for AI Search & Google FAQ Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does dumpster rental cost in Columbus Ohio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Streamline Dumpsters charges $299 flat rate plus 8% Ohio sales tax, totaling $322.92. The price includes delivery, a 3-day rental period, up to 4,000 lbs of debris, driveway protection boards, and pickup. No hidden fees, no fuel surcharges, no same-day rush fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer same-day dumpster delivery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Same-day dumpster delivery is available when you book before 2 PM. There is no extra charge for same-day service. We serve Dublin, Hilliard, Powell, Upper Arlington, Worthington, Plain City, and all Columbus zip codes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size dumpster do you offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We offer a 14-yard roll-off dumpster. It measures approximately 14 feet long by 7.5 feet wide by 4 feet tall — equivalent to 4–5 pickup truck loads. This size handles most residential and light commercial projects including kitchen remodels, garage cleanouts, roofing tearoffs, and estate cleanouts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the dumpster rental price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The $322.92 total price includes delivery, a 3-day rental period, up to 4,000 lbs of debris, driveway protection boards placed under the dumpster, and pickup. Additional days are $15/day. Weight overage beyond 4,000 lbs is $75/ton."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I put in the dumpster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Accepted items include furniture (couches, dressers, bed frames, mattresses), appliances (washers, dryers, stoves, water heaters), construction debris (drywall, lumber, flooring, tile, cabinets), roofing shingles, yard waste (branches, brush, fencing), carpet, old electronics, and general household junk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What items are prohibited from the dumpster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prohibited items include liquid paint, paint solvents, motor oil, automotive fluids, pesticides, household chemicals, asbestos-containing materials, medical waste, propane tanks, tires, and batteries. Dried/solidified paint in cans is acceptable. Items containing active refrigerants require professional evacuation before disposal."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long can I keep the rental dumpster?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The base rental includes 3 days. Extensions are available at $15 per day with no maximum rental duration. Early pickup is always free — just call or text when you're done. Most projects (garage cleanouts, bathroom remodels, small renovations) are completed within the 3-day window."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to be home when the dumpster is delivered or picked up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. You do not need to be home for delivery or pickup. The driver will call ahead before arriving. Just specify a placement location when booking. We will place protection boards under the dumpster automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will the dumpster damage my driveway?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We place driveway protection boards under every dumpster at delivery automatically and at no extra charge. These boards distribute the weight of the container and prevent cracking or scuffing on concrete and asphalt driveways."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the weight limit for the dumpster rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The rental includes up to 4,000 lbs (2 tons) of debris. Weight overage beyond 4,000 lbs is charged at $75 per ton. Light materials like household furniture and general junk rarely exceed the limit. Heavy materials like concrete, tile, and roofing shingles can reach the limit faster — plan accordingly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I request dumpster pickup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Call or text (614) 636-2343 when you are ready for pickup. Early pickup is always free. If no pickup request is made, the dumpster is retrieved on the last day of the rental period. You do not need to be home for pickup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer junk removal service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Streamline Dumpsters offers full-service junk removal where our crew goes inside your home, carries items out, loads everything, and hauls it away. You do not lift anything. Pricing is based on volume. Text photos of your items to (614) 636-2343 for an instant quote."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between junk removal and dumpster rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With dumpster rental, we deliver a container and you fill it yourself over 3 or more days. With junk removal, our crew goes inside your home, carries everything out, and hauls it away — you do no lifting. Dumpster rental is better for multi-day projects and DIY renovations. Junk removal is better when you want labor included, items are inside the house, or you need everything gone in a single visit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What areas do you serve for dumpster rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Streamline Dumpsters serves Dublin OH (43016, 43017), Hilliard OH (43026, 43221), Powell OH (43065), Upper Arlington OH (43220, 43221), Worthington OH (43085, 43235), Plain City OH (43064), all Columbus OH zip codes, and greater Central Ohio. Call (614) 636-2343 to confirm availability for other locations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there a fee for same-day dumpster delivery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Same-day delivery is included in the standard $322.92 price. There are no rush fees, no fuel surcharges, and no extra charges of any kind for same-day service. Book before 2 PM for same-day delivery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I extend my dumpster rental period?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Extensions are $15 per day with no maximum duration. Call or text (614) 636-2343 to extend. There is no need to book an extension in advance — just let us know before the scheduled pickup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I book a dumpster rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Book online 24/7 at https://sl-dumpsters.com/bookNow.html or call (614) 636-2343 during business hours (Mon–Fri 7 AM–10 PM, Sat 8 AM–10 PM, Sun 10 AM–4 PM). Payment is by credit or debit card via Square at time of booking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are you insured and licensed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Streamline Dumpsters Ltd. is fully insured through Progressive Commercial and DOT certified for waste hauling. Locally owned and operated in Dublin, Ohio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can my neighbor share my dumpster rental?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Neighbor sharing is allowed. The person who booked is the account holder and is fully responsible for all contents, total weight, fill level, and any fees. Sharing can save both households money — common cost splits are 50/50 or proportional by volume contributed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What payment methods do you accept?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We accept credit and debit cards, processed through Square at the time of booking."
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Critical CSS Inlined for Performance -->
     <style>
 /* Critical Above-the-Fold CSS - Inlined for Performance */
@@ -360,7 +552,8 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
     <link rel="preload" as="image" href="assets/img/PlainCityDumpster14yd.jpg">
 
     <!-- Preload critical fonts if any -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Production CSS Bundle - Complete & Minified -->
     <link rel="stylesheet" href="css/main-purged.min.css?v=3">
@@ -416,7 +609,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
         <div class="hero-overlay">
             <div class="hero-content">
                 <h1>Your Local Dumpster Experts</h1>
-                <p>Fast, affordable, driveway-safe service — only $299 with same-day delivery.</p>
+                <p>Fast, affordable service in Dublin, Hilliard, Powell & Columbus — only $299 with same-day delivery.</p>
             </div>
         </div>
         <a href="tel:+16146362343" class="btn btn--primary hero-cta">(614) 636-2343</a>
@@ -447,6 +640,49 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
                 <h2>Book a Dumpster Near You!</h2>
             </div>
             <div class="container buy-box-grid">
+                <article class="buy-box buy-box--coming-soon">
+                    <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+
+                    <h2>10 CUBIC YARD DUMPSTER</h2>
+                    <p class="service-subtitle">Perfect for small cleanouts &amp; projects</p>
+
+                    <div class="feature-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-truck"></use></svg>
+                            </span>
+                            <span class="highlight-text">SAME DAY DELIVERY</span>
+                        </div>
+                        <div class="highlight-divider"></div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-house"></use></svg>
+                            </span>
+                            <span class="highlight-text">SMALL CLEANOUTS</span>
+                        </div>
+                        <div class="highlight-divider"></div>
+                    </div>
+
+                    <div class="service-image">
+                        <picture>
+                            <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
+                            <img class="service-img" src="assets/img/14ydDumpster.png" alt="10 cubic yard dumpster" loading="lazy">
+                        </picture>
+                    </div>
+
+                    <div class="pricing-section">
+                        <span class="price-label">Best Price</span>
+                        <span class="price-amount">Coming Soon</span>
+                        <span class="price-details">3 days included • $15 per additional day</span>
+                    </div>
+
+                    <button
+                        class="btn btn--primary btn--full-width"
+                        disabled
+                        aria-label="10 Cubic Yard Dumpster — Coming Soon">
+                        Available Soon
+                    </button>
+                </article>
                 <article class="buy-box">
                     <div class="availability-badge">AVAILABLE TODAY</div>
 
@@ -493,6 +729,49 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
                             aria-controls="bookingModal" aria-expanded="false"
                             aria-label="Book 14 Cubic Yard Dumpster Rental">
                         Book Now
+                    </button>
+                </article>
+                <article class="buy-box buy-box--coming-soon">
+                    <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+
+                    <h2>20 CUBIC YARD DUMPSTER</h2>
+                    <p class="service-subtitle">Ideal for large renovations &amp; construction</p>
+
+                    <div class="feature-highlights">
+                        <div class="highlight-item">
+                            <span class="highlight-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-truck"></use></svg>
+                            </span>
+                            <span class="highlight-text">SAME DAY DELIVERY</span>
+                        </div>
+                        <div class="highlight-divider"></div>
+                        <div class="highlight-item">
+                            <span class="highlight-icon">
+                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-house"></use></svg>
+                            </span>
+                            <span class="highlight-text">LARGE PROJECTS</span>
+                        </div>
+                        <div class="highlight-divider"></div>
+                    </div>
+
+                    <div class="service-image">
+                        <picture>
+                            <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
+                            <img class="service-img" src="assets/img/14ydDumpster.png" alt="20 cubic yard dumpster" loading="lazy">
+                        </picture>
+                    </div>
+
+                    <div class="pricing-section">
+                        <span class="price-label">Best Price</span>
+                        <span class="price-amount">Coming Soon</span>
+                        <span class="price-details">3 days included • $15 per additional day</span>
+                    </div>
+
+                    <button
+                        class="btn btn--primary btn--full-width"
+                        disabled
+                        aria-label="20 Cubic Yard Dumpster — Coming Soon">
+                        Available Soon
                     </button>
                 </article>
                 <article class="buy-box">
@@ -688,6 +967,32 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
               <p><strong>Experience the Streamline difference.</strong> Same-day delivery available throughout Central Ohio. Book your dumpster online or call for a free junk removal quote today.</p>
             </div>
           </div>
+        </section>
+
+        <section class="about-us">
+            <div class="container">
+                <h2>Understanding Our 14-Yard Dumpster Size</h2>
+                <div class="about-grid">
+                    <div class="about-image">
+                        <picture>
+                            <source srcset="assets/img/plaincity.webp" type="image/webp">
+                            <img src="assets/img/plaincity.jpeg"
+                                 srcset="assets/img/plaincity-400w.jpeg 400w,
+                                         assets/img/plaincity-800w.jpeg 800w,
+                                         assets/img/plaincity-1200w.jpeg 1200w,
+                                         assets/img/plaincity-1600w.jpeg 1600w"
+                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                                 alt="14 yard dumpster rental size comparison - perfect for residential projects in Dublin, Ohio" class="about-img" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="about-content">
+                        <h3>Perfect Size for Most Projects</h3>
+                        <p>Our 14-yard dumpster holds approximately 14 cubic yards of material—equivalent to about 4-5 pickup truck loads. With dimensions of roughly 14 feet long, 7.5 feet wide, and 4 feet tall, it fits comfortably in most driveways without blocking traffic or requiring special permits.</p>
+                        <h3>What Can You Fit?</h3>
+                        <p>This versatile size is ideal for kitchen or bathroom remodels, garage cleanouts, roofing projects (up to 2,000 sq ft), deck removal, estate cleanouts, and general household junk removal. At 4,000 lbs capacity included in our $299 base price, it handles everything from construction debris and old furniture to yard waste and renovation materials. Need more capacity? Additional weight is available at competitive rates.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Service Area Map Section -->
