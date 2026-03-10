@@ -35,6 +35,10 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Streamline Dumpsters Ltd">
 
+    <!-- Preconnect for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <!-- Production CSS Bundle - Non-blocking Load Pattern -->
     <link rel="preload" as="style" href="css/main-purged.min.css" onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/main-purged.min.css"></noscript>
@@ -43,6 +47,7 @@
 
     <!-- Page-Specific CSS -->
     <link rel="stylesheet" href="css/service-area.css">
+    <link rel="stylesheet" href="css/service-area-map.css?v=1">
 
     <!-- Schema Markup for Local SEO -->
     <script type="application/ld+json">
@@ -50,9 +55,9 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Streamline Dumpsters Ltd",
-      "image": "https://www.sl-dumpsters.com/assets/img/14ydDumpster.png",
-      "@id": "https://www.sl-dumpsters.com/",
-      "url": "https://www.sl-dumpsters.com/",
+      "image": "https://sl-dumpsters.com/assets/img/14ydDumpster.png",
+      "@id": "https://sl-dumpsters.com/",
+      "url": "https://sl-dumpsters.com/",
       "telephone": "(614) 636-2343",
       "priceRange": "$$",
       "address": {
@@ -362,6 +367,32 @@
             </div>
         </section>
 
+        <section class="about-us">
+            <div class="container">
+                <h2>About Streamline Dumpsters Ltd</h2>
+                <div class="about-grid">
+                    <div class="about-image">
+                        <picture>
+                            <source srcset="assets/img/Dumpsterrentalnearme.webp" type="image/webp">
+                            <img src="assets/img/Dumpsterrentalnearme.jpg"
+                                 srcset="assets/img/Dumpsterrentalnearme-400w.jpg 400w,
+                                         assets/img/Dumpsterrentalnearme-800w.jpg 800w,
+                                         assets/img/Dumpsterrentalnearme-1200w.jpg 1200w"
+                                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+                                 alt="Professional dumpster rental service in Dublin, Ohio" class="about-img" loading="lazy">
+                        </picture>
+                    </div>
+                    <div class="about-content">
+                        <h3>Our mission</h3>
+                        <p>At Streamline Dumpsters, we're committed to serving every corner of Central Ohio with the same speed and reliability. From Dublin to Powell to Hilliard and beyond, we treat each community as our home base—because when you're locally owned and operated, your neighbors' satisfaction is everything. We believe distance shouldn't determine service quality, which is why same-day delivery is our standard across our entire service area.</p>
+                        <h3>Beyond our backyard</h3>
+                        <p>Streamline Dumpsters started in Dublin, but as demand grew from neighboring communities, we expanded our coverage to serve the wider Central Ohio area. We're still the same family-owned business—just with a bigger backyard. No matter where you're located in our service area, you're getting the same owner, the same dumpsters, and the same commitment to doing the job right. We're never too far to deliver quickly.</p>
+                        <p>If you're a bit outside our standard service area, give me a call at <strong>(614) 636-2343</strong>—I'm happy to work with you on pricing that makes sense for the extra mileage. Sometimes it's closer than you think.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Service Information -->
         <section class="service-info">
             <div class="container">
@@ -383,6 +414,68 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Service Area Map Section -->
+        <section class="service-area-map-section">
+          <div class="container">
+            <h2 class="service-area-heading">Our Service Area</h2>
+
+            <div class="service-area-grid">
+              <!-- Left Sidebar - Locations List -->
+              <div class="service-area-sidebar">
+                <ul class="service-area-list">
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="dublin.html" class="location-link">Dublin, OH 43016, 43017</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="hilliard.html" class="location-link">Hilliard, OH 43026, 43221</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="powell.html" class="location-link">Powell, OH 43065</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="upper-arlington.html" class="location-link">Upper Arlington, OH 43220, 43221</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="worthington.html" class="location-link">Worthington, OH 43085, 43235</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="plain-city.html" class="location-link">Plain City, OH 43064</a>
+                  </li>
+                  <li class="service-area-item">
+                    <span class="location-pin">📍</span>
+                    <a href="service-area.html" class="location-link">Columbus, OH (all zip codes)</a>
+                  </li>
+                </ul>
+                <div class="service-area-cta">
+                  <p class="service-area-description">Same-day dumpster rental available throughout Central Ohio</p>
+                  <a href="service-area.html" class="btn btn--primary">View All Areas</a>
+                </div>
+              </div>
+
+              <!-- Right Side - Map Iframe -->
+              <div class="service-area-map">
+                <iframe
+                  src="https://www.google.com/maps/d/u/0/embed?mid=1Wi9k_5KIo7C3LqN8IW3LqeO_PCPK9yQ&ehbc=2E312F"
+                  width="100%"
+                  height="600"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                  title="Streamline Dumpsters Service Area Map"
+                  aria-label="Interactive map showing our service areas in Central Ohio">
+                </iframe>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- Call-to-Action -->
@@ -417,7 +510,9 @@
                 <div class="footer-section">
                     <h4 class="footer-subtitle">Services</h4>
                     <ul class="footer-list">
+                        <li><a href="bookNow.html" class="footer-link">10-Yard Dumpster Rental</a></li>
                         <li><a href="bookNow.html" class="footer-link">14-Yard Dumpster Rental</a></li>
+                        <li><a href="bookNow.html" class="footer-link">20-Yard Dumpster Rental</a></li>
                         <li><a href="bookNow.html" class="footer-link">Junk Removal Service</a></li>
                         <li><a href="contact.html" class="footer-link">Same-Day Delivery</a></li>
                     </ul>
