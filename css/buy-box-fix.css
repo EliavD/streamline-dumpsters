@@ -227,3 +227,136 @@
     padding: 1.25rem 1rem;
   }
 }
+
+/* ===== Neighbor Drops Carousel ===== */
+.drops-section {
+  background: var(--color-gray-100);
+  padding: 3rem 0 2.5rem;
+}
+
+.drops-title {
+  text-align: center;
+  font-size: clamp(1.4rem, 2vw + 0.5rem, 2rem);
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.drops-subtitle {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.drops-outer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.drops-viewport {
+  overflow: hidden;
+  flex: 1;
+}
+
+.drops-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.drops-slide {
+  flex: 0 0 33.333%;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+}
+
+.drops-figure {
+  position: relative;
+  margin: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--color-gray-900);
+}
+
+.drops-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.3s;
+}
+
+.drops-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 0.75rem 0.6rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.drops-arrow {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s, opacity 0.2s;
+  line-height: 1;
+}
+
+.drops-arrow--prev { margin-right: 0.75rem; }
+.drops-arrow--next { margin-left: 0.75rem; }
+
+.drops-arrow:hover {
+  background: var(--color-primary-700);
+}
+
+.drops-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.drops-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-gray-300);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.drops-dot--active {
+  background: var(--color-primary);
+  transform: scale(1.3);
+}
+
+@media (max-width: 1023px) {
+  .drops-slide { flex: 0 0 50%; }
+}
+
+@media (max-width: 639px) {
+  .drops-slide { flex: 0 0 100%; }
+  .drops-arrow { width: 36px; height: 36px; font-size: 1.3rem; }
+  .drops-arrow--prev { margin-right: 0.4rem; }
+  .drops-arrow--next { margin-left: 0.4rem; }
+}

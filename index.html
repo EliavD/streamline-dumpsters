@@ -1124,6 +1124,118 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'He
             </div><!-- /.container -->
         </section>
 
+        <!-- Neighbor Drops Photo Carousel -->
+        <section class="drops-section">
+            <div class="container">
+                <h2 class="drops-title">Your Neighbors Are Already Using Streamline</h2>
+                <p class="drops-subtitle">Real drops. Real projects. Real neighbors across Dublin, Hilliard, Powell, and Columbus, Ohio.</p>
+            </div>
+            <div class="container">
+                <div class="drops-outer">
+                    <button class="drops-arrow drops-arrow--prev" aria-label="Previous photos">&#8249;</button>
+                    <div class="drops-viewport" role="region" aria-label="Customer dumpster drop-off photos">
+                        <div class="drops-track" id="dropsTrack"></div>
+                    </div>
+                    <button class="drops-arrow drops-arrow--next" aria-label="Next photos">&#8250;</button>
+                </div>
+                <div class="drops-dots" id="dropsDots" role="tablist" aria-label="Carousel navigation"></div>
+            </div>
+        </section>
+
+        <script>
+        (function () {
+            const dropPhotos = [
+                { src: 'assets/img/DumpsterPlacement.jpg',  webp: 'assets/img/DumpsterPlacement.webp',  caption: 'Dublin, OH — Driveway Drop',           alt: 'Dumpster rental placement in Dublin Ohio driveway' },
+                { src: 'assets/img/DumpsterRent.webp',      webp: 'assets/img/DumpsterRent.webp',        caption: 'Columbus, OH — Same-Day Rental',       alt: 'Same-day dumpster rental drop-off in Columbus Ohio' },
+                { src: 'assets/img/Flip.jpg',               webp: 'assets/img/Flip.webp',                caption: 'Hilliard, OH — House Flip Cleanout',   alt: 'Dumpster rental for house flip cleanout in Hilliard Ohio' },
+                { src: 'assets/img/LiveLoad.jpg',           webp: 'assets/img/LiveLoad.webp',            caption: 'Powell, OH — Live Load Service',       alt: 'Live load dumpster service in Powell Ohio' },
+                { src: 'assets/img/RoofingDumpster.jpg',    webp: 'assets/img/RoofingDumpster.webp',     caption: 'Dublin, OH — Roofing Tear-Off',        alt: 'Roofing dumpster rental in Dublin Ohio' },
+                { src: 'assets/img/SpringDumpster.jpg',     webp: 'assets/img/SpringDumpster.webp',      caption: 'Columbus, OH — Spring Cleanout',       alt: 'Spring cleaning dumpster rental in Columbus Ohio' },
+                { src: 'assets/img/WinterReno.jpg',         webp: 'assets/img/WinterReno.webp',          caption: 'Upper Arlington, OH — Winter Reno',    alt: 'Winter renovation dumpster rental in Upper Arlington Ohio' },
+                { src: 'assets/img/JunkRemovaljpeg.jpg',    webp: 'assets/img/JunkRemovaljpeg.webp',     caption: 'Columbus, OH — Junk Removal',          alt: 'Junk removal service in Columbus Ohio' },
+                { src: 'assets/img/Kitchenbathroom.jpg',    webp: 'assets/img/Kitchenbathroom.webp',     caption: 'Dublin, OH — Kitchen & Bath Remodel',  alt: 'Kitchen and bathroom remodel dumpster rental in Dublin Ohio' },
+            ];
+
+            const track = document.getElementById('dropsTrack');
+            const dotsEl = document.getElementById('dropsDots');
+            let current = 0, autoTimer = null, touchStartX = 0;
+
+            function getVisible() {
+                return window.innerWidth >= 1024 ? 3 : window.innerWidth >= 640 ? 2 : 1;
+            }
+
+            // Build slides
+            dropPhotos.forEach(function (p) {
+                var slide = document.createElement('div');
+                slide.className = 'drops-slide';
+                slide.innerHTML =
+                    '<figure class="drops-figure">' +
+                        '<picture>' +
+                            '<source srcset="' + p.webp + '" type="image/webp">' +
+                            '<img src="' + p.src + '" alt="' + p.alt + '" loading="lazy" class="drops-img">' +
+                        '</picture>' +
+                        '<figcaption class="drops-caption">' + p.caption + '</figcaption>' +
+                    '</figure>';
+                track.appendChild(slide);
+            });
+
+            // Build dots
+            dropPhotos.forEach(function (_, i) {
+                var btn = document.createElement('button');
+                btn.className = 'drops-dot';
+                btn.setAttribute('role', 'tab');
+                btn.setAttribute('aria-label', 'Photo ' + (i + 1));
+                btn.addEventListener('click', function () { goTo(i); startAuto(); });
+                dotsEl.appendChild(btn);
+            });
+
+            function updateDots() {
+                var dots = dotsEl.querySelectorAll('.drops-dot');
+                var max = Math.max(0, dropPhotos.length - getVisible());
+                dots.forEach(function (d, i) {
+                    d.classList.toggle('drops-dot--active', i === Math.min(current, max));
+                });
+            }
+
+            function goTo(index) {
+                var visible = getVisible();
+                var max = Math.max(0, dropPhotos.length - visible);
+                current = Math.max(0, Math.min(index, max));
+                var slideW = track.children[0] ? track.children[0].offsetWidth : 0;
+                track.style.transform = 'translateX(-' + (current * slideW) + 'px)';
+                updateDots();
+            }
+
+            function next() { goTo(current >= Math.max(0, dropPhotos.length - getVisible()) ? 0 : current + 1); }
+            function prev() { goTo(current <= 0 ? Math.max(0, dropPhotos.length - getVisible()) : current - 1); }
+
+            function startAuto() { stopAuto(); autoTimer = setInterval(next, 4500); }
+            function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+
+            document.querySelector('.drops-arrow--prev').addEventListener('click', function () { prev(); startAuto(); });
+            document.querySelector('.drops-arrow--next').addEventListener('click', function () { next(); startAuto(); });
+
+            var vp = track.parentElement;
+            vp.addEventListener('mouseenter', stopAuto);
+            vp.addEventListener('mouseleave', startAuto);
+
+            vp.addEventListener('touchstart', function (e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+            vp.addEventListener('touchend', function (e) {
+                var diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); startAuto(); }
+            }, { passive: true });
+
+            var resizeTimer;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function () { goTo(current); }, 150);
+            });
+
+            goTo(0);
+            startAuto();
+        })();
+        </script>
+
         <!-- Service Area Map Section -->
         <section class="service-area-map-section">
           <div class="container">
