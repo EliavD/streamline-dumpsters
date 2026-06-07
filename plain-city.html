@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MF95HP7L');</script>
+    <!-- End Google Tag Manager -->
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BM9H69J4C"></script>
     <script>
@@ -25,22 +33,20 @@
         const isLocalhost = window.location.hostname === 'localhost' ||
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname.startsWith('192.168.');
-        const isHTTPS = window.location.protocol === 'https:';
-
-        // Use PRODUCTION SDK if HTTPS (even on localhost) or production domain
-        // Use SANDBOX SDK only for HTTP localhost
-        const squareSDK = (isHTTPS || !isLocalhost)
+        
+        const squareSDK = (!isLocalhost)
           ? 'https://web.squarecdn.com/v1/square.js'           // Production
-          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox for HTTP localhost only
+          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox (localhost + preview channels)
         document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
         console.log('🔧 Loading Square SDK:', squareSDK);
       })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plain City OH Dumpster Rental | $299 | Streamline</title>
-    <meta name="description" content="Plain City dumpster rental from $299. 10, 14 &amp; 20-yard sizes, same-day delivery to 43064. Family-owned local service. Call (614) 636-2343!">
+    <title>Plain City OH Dumpster Rental | $289 Flat, Same Day</title>
+    <meta name="description" content="Dumpster for a Plain City (43064) build, farm cleanout, or acreage project — flat $289, same-day drop, three-day rental. Call Eli direct: (614) 636-2343.">
     <meta name="robots" content="index, follow">
+    <link rel="preload" as="image" href="assets/img/PlainCityDumpster14yd.webp" fetchpriority="high">
     <link rel="canonical" href="https://sl-dumpsters.com/plain-city">
 
     <!-- PWA and Mobile Optimization -->
@@ -64,33 +70,29 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sl-dumpsters.com/plain-city">
-    <meta property="og:title" content="Dumpster Rental in Plain City, Ohio | Streamline Dumpsters">
-    <meta property="og:description" content="Dumpster rental services in Plain City, Ohio. Serving residential and commercial customers with reliable waste management solutions. Rural property specialists.">
-    <meta property="og:image" content="https://sl-dumpsters.com/assets/img/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:title" content="Plain City OH Dumpster Rental | $289 Flat, Same Day">
+    <meta property="og:description" content="Dumpster for a Plain City (43064) build, farm cleanout, or acreage project — flat $289, same-day drop, three-day rental. Call Eli direct: (614) 636-2343.">
+    <meta property="og:image" content="https://sl-dumpsters.com/assets/img/PlainCityDumpster14yd.jpg">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Streamline Dumpsters Ltd">
     <meta property="fb:profile_id" content="61573101384760">
 
     <!-- Preconnect for external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- CSS Files -->
     <!-- Production CSS Bundle - Minified & Optimized -->
     <link rel="stylesheet" href="css/main-purged.min.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/navigation.css?v=minified2">
+    <link rel="stylesheet" href="css/responsive.css?v=minified2">
 
     <!-- Page-Specific CSS -->
-    <link rel="stylesheet" href="css/location-page.css?v=styled-reference">
-    <link rel="stylesheet" href="css/faq.css">
-    <link rel="stylesheet" href="css/modal-utilities.css">
-    <link rel="stylesheet" href="css/bookNow.css?v=20241003d">
-    <link rel="stylesheet" href="css/three-step-modal.css?v=24-clean-no-forced-height">
-    <link rel="stylesheet" href="css/confirmation.css?v=13">
-    <link rel="stylesheet" href="css/junkRemoval.css?v=20241003d">
+    <link rel="stylesheet" href="css/location-page.css?v=minified3">
+    <link rel="stylesheet" href="css/faq.css?v=minified2">
+    <link rel="stylesheet" href="css/modal-utilities.css?v=minified2">
+    <link rel="stylesheet" href="css/bookNow.css?v=minified">
+    <link rel="stylesheet" href="css/three-step-modal.css?v=minified2">
+    <link rel="stylesheet" href="css/confirmation.css?v=minified2">
+    <link rel="stylesheet" href="css/junkRemoval.css?v=minified2">
 
     <!-- Local Business Schema for Plain City -->
     <script type="application/ld+json">
@@ -108,6 +110,7 @@
       },
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "5860 Haddler Ct",
         "addressLocality": "Plain City",
         "addressRegion": "OH",
         "addressCountry": "US"
@@ -145,6 +148,31 @@
         "https://www.facebook.com/profile.php?id=61573101384760",
         "https://www.yelp.com/biz/streamline-dumpsters-dublin"
       ]
+    ,
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "10 Cubic Yard Dumpster Rental",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/PreOrder",
+          "description": "10-yard dumpster rental — coming soon. Perfect for small cleanouts and minor renovation projects."
+        },
+        {
+          "@type": "Offer",
+          "name": "14 Cubic Yard Dumpster Rental",
+          "price": "299",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "description": "14-yard dumpster rental with 3 days included, same-day delivery available"
+        },
+        {
+          "@type": "Offer",
+          "name": "20 Cubic Yard Dumpster Rental",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/PreOrder",
+          "description": "20-yard dumpster rental — coming soon. Ideal for large renovation projects and major cleanouts."
+        }
+      ]
     }
     </script>
 
@@ -162,13 +190,18 @@
         "@type": "ListItem",
         "position": 2,
         "name": "Plain City OH",
-        "item": "https://sl-dumpsters.com/plain-city.html"
+        "item": "https://sl-dumpsters.com/plain-city"
       }]
     }
     </script>
-    <link rel="stylesheet" href="css/buy-box-fix.css?v=1">
+    <link rel="stylesheet" href="css/buy-box-fix.css?v=minified2">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF95HP7L"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <svg xmlns="http://www.w3.org/2000/svg" class="u-display-none">
         <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></symbol>
         <symbol id="icon-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></symbol>
@@ -177,9 +210,21 @@
     </svg>
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <a href="tel:+16146362343" class="top-bar-link" aria-label="Call Streamline Dumpsters">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                (614) 636-2343
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61573101384760" class="top-bar-link" aria-label="Streamline Dumpsters on Facebook" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                Facebook
+            </a>
+        </div>
+    </div>
     <header class="site-header">
         <div class="header-inner">
-            <a href="index.html" class="site-logo">
+            <a href="/" class="site-logo">
                 <picture>
                     <source srcset="assets/img/StreamlineDumpstersLogo.webp" type="image/webp">
                     <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd" class="logo-img">
@@ -188,12 +233,12 @@
 
             <nav class="main-nav" aria-label="Main navigation">
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li><a href="service-area.html" class="nav-link">Service Area</a></li>
-                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
-                    <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/faq" class="nav-link">FAQ</a></li>
+                    <li><a href="/contact" class="nav-link">Contact</a></li>
+                    <li><a href="/service-area" class="nav-link">Service Area</a></li>
+                    <li><a href="/blog" class="nav-link">Blog</a></li>
+                    <li><a href="/bookNow" class="btn btn--primary btn--sm">Book Now</a></li>
                 </ul>
             </nav>
 
@@ -216,14 +261,40 @@
             </div>
         </section>
 
-        <!-- Buy Boxes Section -->
+        <!-- City Trust Bar -->
+        <section class="trust-bar" aria-label="Service highlights">
+            <div class="container">
+                <ul class="trust-bar__list">
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">Plain City, OH</span>
+                        <span class="trust-bar__label">Dumpster Rental</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">43064</span>
+                        <span class="trust-bar__label">ZIP Code Served</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">Rural</span>
+                        <span class="trust-bar__label">Deliveries Welcome</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">$289</span>
+                        <span class="trust-bar__label">Starting Price</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+<!-- Buy Boxes Section -->
         <section class="buy-boxes">
             <div class="container text-center">
                 <h2>Book a Dumpster Near You!</h2>
             </div>
             <div class="container buy-box-grid">
-                    <article class="buy-box buy-box--coming-soon">
-                        <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+                    <article class="buy-box">
+                        <div class="availability-badge">AVAILABLE NOW</div>
 
                         <h2>10 CUBIC YARD DUMPSTER</h2>
                         <p class="service-subtitle">Perfect for small cleanouts &amp; projects</p>
@@ -247,22 +318,20 @@
 
                         <div class="service-image">
                             <picture>
-                                <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
-                                <img class="service-img" src="assets/img/14ydDumpster.png" alt="10 cubic yard dumpster" loading="lazy">
+                                <source srcset="assets/img/10ydDumpster.webp" type="image/webp">
+                                <img class="service-img" src="assets/img/10ydDumpster.png" alt="10 cubic yard dumpster" loading="lazy">
                             </picture>
                         </div>
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">Coming Soon</span>
+                            <span class="price-amount">$289</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
-                        <button
-                            class="btn btn--primary btn--full-width"
-                            disabled
-                            aria-label="10 Cubic Yard Dumpster — Coming Soon">
-                            Available Soon
+                        <button class="btn btn--primary btn--full-width" data-size="10"
+                                aria-label="Book 10 Cubic Yard Dumpster Rental">
+                            Book Now
                         </button>
                     </article>
                     <article class="buy-box">
@@ -303,18 +372,19 @@
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">$299</span>
+                            <span class="price-amount">$319</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
                         <button class="btn btn--primary btn--full-width" id="openBookingModal"
+                                data-size="14"
                                 aria-controls="bookingModal" aria-expanded="false"
                                 aria-label="Book 14 Cubic Yard Dumpster Rental">
                             Book Now
                         </button>
                     </article>
-                    <article class="buy-box buy-box--coming-soon">
-                        <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+                    <article class="buy-box">
+                        <div class="availability-badge">AVAILABLE NOW</div>
 
                         <h2>20 CUBIC YARD DUMPSTER</h2>
                         <p class="service-subtitle">Ideal for large renovations &amp; construction</p>
@@ -338,25 +408,23 @@
 
                         <div class="service-image">
                             <picture>
-                                <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
-                                <img class="service-img" src="assets/img/14ydDumpster.png" alt="20 cubic yard dumpster" loading="lazy">
+                                <source srcset="assets/img/20ydDumpster-v2.webp" type="image/webp">
+                                <img class="service-img" src="assets/img/20ydDumpster-v2.png" alt="20 cubic yard dumpster" loading="lazy">
                             </picture>
                         </div>
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">Coming Soon</span>
+                            <span class="price-amount">$389</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
-                        <button
-                            class="btn btn--primary btn--full-width"
-                            disabled
-                            aria-label="20 Cubic Yard Dumpster — Coming Soon">
-                            Available Soon
+                        <button class="btn btn--primary btn--full-width" data-size="20"
+                                aria-label="Book 20 Cubic Yard Dumpster Rental">
+                            Book Now
                         </button>
                     </article>
-                    <article class="buy-box">
+                    <article class="buy-box buy-box--junk">
                         <div class="availability-badge">AVAILABLE TODAY</div>
 
                         <h2>JUNK REMOVAL</h2>
@@ -441,7 +509,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="review-count">12 reviews</p>
+                    <p class="review-count">20 reviews</p>
                 </div>
             </div>
         </section>
@@ -461,20 +529,20 @@
                     </div>
                     <div class="benefits-grid">
                         <div class="benefit-card">
-                            <h3>Rural Property Experts</h3>
-                            <p>We specialize in rural deliveries and can access long driveways, farm properties, and remote locations throughout the Plain City area that others can't reach.</p>
+                            <h3>Rural Property Access</h3>
+                            <p>We deliver to acreage properties and rural addresses that larger companies skip. Gravel driveways, farm lanes, and rural routes are part of our normal service area&mdash;not exceptions.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>Jerome Village Specialist</h3>
-                            <p>Expert service to the growing Jerome Village development with residential, commercial, and new construction waste management solutions.</p>
+                            <h3>Union County Knowledge</h3>
+                            <p>Plain City sits at the edge of Union and Madison counties. We know the permit and property rules for both, so your delivery goes smoothly regardless of which side of the line you&rsquo;re on.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>Fair Pricing</h3>
-                            <p>Transparent $299 pricing with no hidden fees. Includes 3 days rental and 4,000 lbs capacity for all Plain City customers.</p>
+                            <h3>New Subdivision Service</h3>
+                            <p>The growing developments off Route 42 and Plain City Pike are adding new homes fast. We work with builders and homeowners on new construction waste throughout the area.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>Agricultural Experience</h3>
-                            <p>Understanding Plain City's agricultural community, we provide appropriate disposal solutions for farm and property maintenance projects.</p>
+                            <h3>Flexible Scheduling</h3>
+                            <p>Rural projects often run on their own timeline. We keep pickup windows flexible so you&rsquo;re not rushing to finish because of a rigid same-day cutoff.</p>
                         </div>
                     </div>
                 </div>
@@ -548,20 +616,20 @@
                 <h2>Popular Projects in Plain City</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                        <h3>Farm & Barn Cleanouts</h3>
-                        <p>Specialized service for Plain City area farms, barns, and agricultural property maintenance with careful debris management.</p>
+                        <h3>Acreage &amp; Farm Property Cleanouts</h3>
+                        <p>Large rural properties with outbuildings, old barns, and decades of accumulated equipment need significant container capacity. We assess before we deliver so you get the right size.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Rural Property Maintenance</h3>
-                        <p>Supporting Plain City residents with land clearing, property cleanouts, and maintenance projects on rural properties.</p>
+                        <h3>New Construction Waste</h3>
+                        <p>Plain City&rsquo;s residential growth along major corridors is generating new construction waste from both spec homes and custom builds. We serve active sites throughout the 43064 area.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Jerome Village Projects</h3>
-                        <p>Serving the growing Jerome Village development with residential and commercial waste management for all project types.</p>
+                        <h3>Home Renovations</h3>
+                        <p>Both older farmhouses and newer subdivision homes in Plain City are seeing significant renovation activity. Kitchen remodels, bathroom updates, and additions all need reliable debris removal.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Estate Cleanouts</h3>
-                        <p>Comprehensive cleanout services for Plain City properties and estates with respectful, professional handling.</p>
+                        <h3>Agricultural &amp; Outbuilding Cleanouts</h3>
+                        <p>Clearing old farm equipment, fencing material, and agricultural debris from rural Plain City properties is a regular part of our service&mdash;including items that need proper disposal routing.</p>
                     </div>
                 </div>
             </div>
@@ -589,7 +657,7 @@
                         <h3>Simple Pricing</h3>
                         <div class="price-card price-card-with-image u-bg-gallery-4">
                             <div class="price-card-overlay">
-                                <div class="price">$299</div>
+                                <div class="price">$289</div>
                                 <div class="price-details">
                                     <p>Flat rate for Plain City delivery</p>
                                     <p>No hidden fees or surprises</p>
@@ -602,14 +670,38 @@
             </div>
         </section>
 
+        <!-- Before You Book Guide Cards -->
+        <section class="guides-section">
+            <div class="container">
+                <h2>Before You Book</h2>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <h3>What actually happens on dumpster delivery day?</h3>
+                        <p>First time renting — full process from booking to pickup, no surprises.</p>
+                        <a href="/blog/posts/first-time-renting-dumpster-what-to-expect">Read the guide →</a>
+                    </div>
+                    <div class="guide-card">
+                        <h3>Is it cheaper to haul debris yourself or rent a dumpster?</h3>
+                        <p>Real cost breakdown — truck rental, fuel, dump fees, and time included.</p>
+                        <a href="/blog/posts/diy-hauling-vs-dumpster-rental-cost-comparison">Read the guide →</a>
+                    </div>
+                    <div class="guide-card">
+                        <h3>How do landlords and property managers handle tenant cleanouts?</h3>
+                        <p>Right sizing, emergency turnarounds, and multi-unit placement for Columbus rentals.</p>
+                        <a href="/blog/posts/property-management-tenant-cleanout-columbus">Read the guide →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Location-Specific CTA -->
         <section class="location-cta">
             <div class="container">
                 <h2>Ready to Get Started in Plain City?</h2>
                 <p>Join Plain City residents and Jerome Village neighbors who trust Streamline Dumpsters for reliable waste management solutions.</p>
                 <div class="cta-buttons">
-                    <a href="bookNow.html#dumpster-form" class="btn btn--primary btn--large">Book Your Dumpster</a>
-                    <a href="bookNow.html#junk-form" class="btn btn--secondary btn--large">Get Junk Removal Quote</a>
+                    <a href="/bookNow#dumpster-form" class="btn btn--primary btn--large">Book Your Dumpster</a>
+                    <a href="/bookNow#junk-form" class="btn btn--secondary btn--large">Get Junk Removal Quote</a>
                 </div>
             </div>
         </section>
@@ -655,7 +747,29 @@
                             <p>Yes, we serve all Plain City commercial districts, Jerome Village businesses, and agricultural properties. We have experience with rural deliveries, long driveways, and farm properties throughout the Plain City area.</p>
                         </div>
                     </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="plain-city-faq-5">
+                            Can you deliver to a gravel or rural driveway in Plain City?
+                            <span class="faq-icon"></span>
+                        </button>
+                        <div class="faq-answer" id="plain-city-faq-5" aria-hidden="true">
+                            <p>Yes. Gravel driveways, farm lanes, and rural property access are part of our normal service&mdash;not edge cases. Call us with your address and we&rsquo;ll confirm access before booking. For soft or wet ground, we can discuss placement options that keep the dumpster stable and your surface protected.</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </section>
+        <!-- Nearby Service Areas -->
+        <section class="nearby-areas">
+            <div class="container">
+                <h2>Nearby Service Areas</h2>
+                <ul class="service-area-list">
+                    <li><a href="/dublin">Dublin, OH</a></li>
+                    <li><a href="/hilliard">Hilliard, OH</a></li>
+                    <li><a href="/powell">Powell, OH</a></li>
+                    <li><a href="/worthington">Worthington, OH</a></li>
+                    <li><a href="/upper-arlington">Upper Arlington, OH</a></li>
+                </ul>
             </div>
         </section>
     </main>
@@ -670,25 +784,31 @@
                         <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
                         <a href="mailto:Eli@Sl-Dumpsters.com" class="footer-link" aria-label="Email Streamline Dumpsters">Eli@Sl-Dumpsters.com</a>
                     </div>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/profile.php?id=61573101384760" class="footer-social-link" aria-label="Streamline Dumpsters on Facebook" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                            Facebook
+                        </a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-subtitle">Services</h4>
                     <ul class="footer-list">
-                        <li><a href="bookNow.html" class="footer-link">10-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">14-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">20-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">Junk Removal Service</a></li>
-                        <li><a href="contact.html" class="footer-link">Same-Day Delivery</a></li>
+                        <li><a href="/bookNow" class="footer-link">10-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">14-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">20-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">Junk Removal Service</a></li>
+                        <li><a href="/contact" class="footer-link">Same-Day Delivery</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-hours">
                     <div class="footer-section">
                         <h4 class="footer-subtitle">Quick Links</h4>
                         <ul class="footer-list">
-                            <li><a href="faq.html" class="footer-link">FAQ</a></li>
-                            <li><a href="service-area.html" class="footer-link">Service Area</a></li>
-                            <li><a href="contact.html" class="footer-link">Contact</a></li>
-                            <li><a href="bookNow.html" class="footer-link">Book Now</a></li>
+                            <li><a href="/faq" class="footer-link">FAQ</a></li>
+                            <li><a href="/service-area" class="footer-link">Service Area</a></li>
+                            <li><a href="/contact" class="footer-link">Contact</a></li>
+                            <li><a href="/bookNow" class="footer-link">Book Now</a></li>
                         </ul>
                     </div>
 
@@ -715,14 +835,14 @@
     <!-- Modals loaded dynamically via modal-loader.js -->
 
     <!-- Production-safe logging system -->
-    <script src="js/logger.js?v=4"></script>
-    <script src="js/modal-loader.js?v=4"></script>
-    <script src="js/mobile-nav.js"></script>
-    <script src="js/config.js?v=test-1-dollar"></script>
-    <script src="js/three-step-modal.js?v=8-iso-dates"></script>
-    <script src="js/bookNow.js?v=19-production-pricing"></script>
-    <script src="js/junkRemoval.js?v=form-group-fix"></script>
-    <script src="js/location-faq.js"></script>
+    <script src="js/logger.js?v=minified2"></script>
+    <script src="js/modal-loader.js?v=minified2"></script>
+    <script src="js/mobile-nav.js?v=minified2"></script>
+    <script src="js/config.js?v=minified2"></script>
+    <script src="js/three-step-modal.js?v=minified"></script>
+    <script src="js/bookNow.js?v=minified"></script>
+    <script src="js/junkRemoval.js?v=minified"></script>
+    <script src="js/location-faq.js?v=minified2"></script>
     <!-- GA4 Event Tracking for phone clicks -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {

@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MF95HP7L');</script>
+    <!-- End Google Tag Manager -->
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4BM9H69J4C"></script>
     <script>
@@ -25,21 +33,20 @@
         const isLocalhost = window.location.hostname === 'localhost' ||
                            window.location.hostname === '127.0.0.1' ||
                            window.location.hostname.startsWith('192.168.');
-        const isHTTPS = window.location.protocol === 'https:';
-
-        // Use PRODUCTION SDK if HTTPS (even on localhost) or production domain
-        // Use SANDBOX SDK only for HTTP localhost
-        const squareSDK = (isHTTPS || !isLocalhost)
+        
+        const squareSDK = (!isLocalhost)
           ? 'https://web.squarecdn.com/v1/square.js'           // Production
-          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox for HTTP localhost only
+          : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox (localhost + preview channels)
         document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
         console.log('🔧 Loading Square SDK:', squareSDK);
       })();
     </script>
+    <!-- Preload location hero image for LCP -->
+    <link rel="preload" as="image" href="/assets/img/PlainCityDumpster14yd.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hilliard OH Dumpster Rental | $299 Same-Day Delivery</title>
-    <meta name="description" content="Hilliard dumpster rental from $299. 10, 14 &amp; 20-yard dumpsters, same-day delivery. Serving 43026, 43119. Call Streamline at (614) 636-2343!">
+    <title>Hilliard OH Dumpster Rental | $289 Flat, Same Day</title>
+    <meta name="description" content="Roofing tear-off or garage cleanout in Hilliard (43026)? Flat $289, dropped same day, picked up in three. A real person answers: (614) 636-2343.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://sl-dumpsters.com/hilliard">
 
@@ -64,32 +71,28 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sl-dumpsters.com/hilliard">
-    <meta property="og:title" content="Dumpster Rental in Hilliard, Ohio | Streamline Dumpsters">
-    <meta property="og:description" content="Reliable dumpster rental in Hilliard, Ohio. Professional waste management for home cleanouts, renovations, and construction projects. Serving all Hilliard neighborhoods.">
-    <meta property="og:image" content="https://sl-dumpsters.com/assets/img/og-image.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:title" content="Hilliard OH Dumpster Rental | $289 Flat, Same Day">
+    <meta property="og:description" content="Roofing tear-off or garage cleanout in Hilliard (43026)? Flat $289, dropped same day, picked up in three. A real person answers: (614) 636-2343.">
+    <meta property="og:image" content="https://sl-dumpsters.com/assets/img/PlainCityDumpster14yd.jpg">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Streamline Dumpsters Ltd">
 
     <!-- Preconnect for external resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- CSS Files -->
     <!-- Production CSS Bundle - Minified & Optimized -->
     <link rel="stylesheet" href="css/main-purged.min.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/navigation.css?v=minified2">
+    <link rel="stylesheet" href="css/responsive.css?v=minified2">
 
     <!-- Page-Specific CSS -->
-    <link rel="stylesheet" href="css/location-page.css?v=styled-reference">
-    <link rel="stylesheet" href="css/faq.css">
-    <link rel="stylesheet" href="css/modal-utilities.css">
-    <link rel="stylesheet" href="css/bookNow.css?v=20241003d">
-    <link rel="stylesheet" href="css/three-step-modal.css?v=24-clean-no-forced-height">
-    <link rel="stylesheet" href="css/confirmation.css?v=13">
-    <link rel="stylesheet" href="css/junkRemoval.css?v=20241003d">
+    <link rel="stylesheet" href="css/location-page.css?v=minified3">
+    <link rel="stylesheet" href="css/faq.css?v=minified2">
+    <link rel="stylesheet" href="css/modal-utilities.css?v=minified2">
+    <link rel="stylesheet" href="css/bookNow.css?v=minified">
+    <link rel="stylesheet" href="css/three-step-modal.css?v=minified2">
+    <link rel="stylesheet" href="css/confirmation.css?v=minified2">
+    <link rel="stylesheet" href="css/junkRemoval.css?v=minified2">
 
     <!-- Enhanced Local Business Schema for Hilliard -->
     <script type="application/ld+json">
@@ -111,6 +114,7 @@
       },
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "5860 Haddler Ct",
         "addressLocality": "Hilliard",
         "addressRegion": "OH",
         "addressCountry": "US"
@@ -134,11 +138,36 @@
           "priceCurrency": "USD"
         }]
       },
-      "priceRange": "$299",
+      "priceRange": "$289+",
       "telephone": "(614) 636-2343",
-      "url": "https://sl-dumpsters.com/hilliard.html",
+      "url": "https://sl-dumpsters.com/hilliard",
       "sameAs": [
         "https://sl-dumpsters.com"
+      ]
+    ,
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "10 Cubic Yard Dumpster Rental",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/PreOrder",
+          "description": "10-yard dumpster rental — coming soon. Perfect for small cleanouts and minor renovation projects."
+        },
+        {
+          "@type": "Offer",
+          "name": "14 Cubic Yard Dumpster Rental",
+          "price": "299",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "description": "14-yard dumpster rental with 3 days included, same-day delivery available"
+        },
+        {
+          "@type": "Offer",
+          "name": "20 Cubic Yard Dumpster Rental",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/PreOrder",
+          "description": "20-yard dumpster rental — coming soon. Ideal for large renovation projects and major cleanouts."
+        }
       ]
     }
     </script>
@@ -157,13 +186,18 @@
         "@type": "ListItem",
         "position": 2,
         "name": "Hilliard OH",
-        "item": "https://sl-dumpsters.com/hilliard.html"
+        "item": "https://sl-dumpsters.com/hilliard"
       }]
     }
     </script>
-    <link rel="stylesheet" href="css/buy-box-fix.css?v=1">
+    <link rel="stylesheet" href="css/buy-box-fix.css?v=minified2">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MF95HP7L"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <svg xmlns="http://www.w3.org/2000/svg" class="u-display-none">
         <symbol id="icon-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></symbol>
         <symbol id="icon-house" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></symbol>
@@ -172,23 +206,35 @@
     </svg>
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
 
+    <div class="top-bar">
+        <div class="top-bar-inner">
+            <a href="tel:+16146362343" class="top-bar-link" aria-label="Call Streamline Dumpsters">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                (614) 636-2343
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61573101384760" class="top-bar-link" aria-label="Streamline Dumpsters on Facebook" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                Facebook
+            </a>
+        </div>
+    </div>
     <header class="site-header">
         <div class="header-inner">
-            <a href="index.html" class="site-logo">
+            <a href="/" class="site-logo">
                 <picture>
                     <source srcset="assets/img/StreamlineDumpstersLogo.webp" type="image/webp">
-                    <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd" class="logo-img">
+                    <img src="assets/img/StreamlineDumpstersLogo.png" alt="Streamline Dumpsters Ltd" class="logo-img" width="123" height="123">
                 </picture>
             </a>
 
             <nav class="main-nav" aria-label="Main navigation">
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="faq.html" class="nav-link">FAQ</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li><a href="service-area.html" class="nav-link">Service Area</a></li>
-                    <li><a href="blog/index.html" class="nav-link">Blog</a></li>
-                    <li><a href="bookNow.html" class="btn btn--primary btn--sm">Book Now</a></li>
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/faq" class="nav-link">FAQ</a></li>
+                    <li><a href="/contact" class="nav-link">Contact</a></li>
+                    <li><a href="/service-area" class="nav-link">Service Area</a></li>
+                    <li><a href="/blog" class="nav-link">Blog</a></li>
+                    <li><a href="/bookNow" class="btn btn--primary btn--sm">Book Now</a></li>
                 </ul>
             </nav>
 
@@ -211,14 +257,40 @@
             </div>
         </section>
 
-        <!-- Buy Boxes Section -->
+        <!-- City Trust Bar -->
+        <section class="trust-bar" aria-label="Service highlights">
+            <div class="container">
+                <ul class="trust-bar__list">
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">Hilliard, OH</span>
+                        <span class="trust-bar__label">Dumpster Rental</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">43026 &amp; 43221</span>
+                        <span class="trust-bar__label">ZIP Codes Served</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">Same Day</span>
+                        <span class="trust-bar__label">Delivery Available</span>
+                    </li>
+                    <li class="trust-bar__divider" aria-hidden="true"></li>
+                    <li class="trust-bar__item">
+                        <span class="trust-bar__number">$289</span>
+                        <span class="trust-bar__label">Starting Price</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+<!-- Buy Boxes Section -->
         <section class="buy-boxes">
             <div class="container text-center">
                 <h2>Book a Dumpster Near You!</h2>
             </div>
             <div class="container buy-box-grid">
-                    <article class="buy-box buy-box--coming-soon">
-                        <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+                    <article class="buy-box">
+                        <div class="availability-badge">AVAILABLE NOW</div>
 
                         <h2>10 CUBIC YARD DUMPSTER</h2>
                         <p class="service-subtitle">Perfect for small cleanouts &amp; projects</p>
@@ -242,22 +314,20 @@
 
                         <div class="service-image">
                             <picture>
-                                <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
-                                <img class="service-img" src="assets/img/14ydDumpster.png" alt="10 cubic yard dumpster" loading="lazy">
+                                <source srcset="assets/img/10ydDumpster.webp" type="image/webp">
+                                <img class="service-img" src="assets/img/10ydDumpster.png" alt="10 cubic yard dumpster" loading="lazy" width="450" height="254">
                             </picture>
                         </div>
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">Coming Soon</span>
+                            <span class="price-amount">$289</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
-                        <button
-                            class="btn btn--primary btn--full-width"
-                            disabled
-                            aria-label="10 Cubic Yard Dumpster — Coming Soon">
-                            Available Soon
+                        <button class="btn btn--primary btn--full-width" data-size="10"
+                                aria-label="Book 10 Cubic Yard Dumpster Rental">
+                            Book Now
                         </button>
                     </article>
                     <article class="buy-box">
@@ -298,18 +368,19 @@
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">$299</span>
+                            <span class="price-amount">$319</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
                         <button class="btn btn--primary btn--full-width" id="openBookingModal"
+                                data-size="14"
                                 aria-controls="bookingModal" aria-expanded="false"
                                 aria-label="Book 14 Cubic Yard Dumpster Rental">
                             Book Now
                         </button>
                     </article>
-                    <article class="buy-box buy-box--coming-soon">
-                        <div class="availability-badge availability-badge--coming-soon">COMING SOON</div>
+                    <article class="buy-box">
+                        <div class="availability-badge">AVAILABLE NOW</div>
 
                         <h2>20 CUBIC YARD DUMPSTER</h2>
                         <p class="service-subtitle">Ideal for large renovations &amp; construction</p>
@@ -333,25 +404,23 @@
 
                         <div class="service-image">
                             <picture>
-                                <source srcset="assets/img/14ydDumpster.webp" type="image/webp">
-                                <img class="service-img" src="assets/img/14ydDumpster.png" alt="20 cubic yard dumpster" loading="lazy">
+                                <source srcset="assets/img/20ydDumpster-v2.webp" type="image/webp">
+                                <img class="service-img" src="assets/img/20ydDumpster-v2.png" alt="20 cubic yard dumpster" loading="lazy" width="450" height="254">
                             </picture>
                         </div>
 
                         <div class="pricing-section">
                             <span class="price-label">Best Price</span>
-                            <span class="price-amount">Coming Soon</span>
+                            <span class="price-amount">$389</span>
                             <span class="price-details">3 days included • $15 per additional day</span>
                         </div>
 
-                        <button
-                            class="btn btn--primary btn--full-width"
-                            disabled
-                            aria-label="20 Cubic Yard Dumpster — Coming Soon">
-                            Available Soon
+                        <button class="btn btn--primary btn--full-width" data-size="20"
+                                aria-label="Book 20 Cubic Yard Dumpster Rental">
+                            Book Now
                         </button>
                     </article>
-                    <article class="buy-box">
+                    <article class="buy-box buy-box--junk">
                         <div class="availability-badge">AVAILABLE TODAY</div>
 
                         <h2>JUNK REMOVAL</h2>
@@ -402,6 +471,14 @@
             </div>
         </section>
 
+        <!-- City Intro Section -->
+        <section class="city-intro">
+            <div class="container">
+                <h2>Dumpster Rental Service Built for Hilliard</h2>
+                <p>Hilliard's 43026 ZIP code covers a wide range of housing — from Old Hilliard's older Main Street properties being updated and renovated, to newer subdivisions in Ballantrae and Heritage Hill where growing families are finishing basements or adding space. It's one of central Ohio's most active residential markets, and we handle a high volume of jobs there as a result. Our routing through the west side puts us in Hilliard without the I-270 interchange delays that eat into other companies' delivery windows. We cover the full east-to-west spread — from Cemetery Road near I-270 all the way out to the Alton-Darby Road corridor and into Norwich Township. If you're unsure whether your address is in our range, call (614) 636-2343 and we'll confirm in under a minute.</p>
+            </div>
+        </section>
+
         <!-- Google Reviews Section -->
         <section class="google-reviews">
             <div class="container">
@@ -436,7 +513,7 @@
                             </div>
                         </div>
                     </div>
-                    <p class="review-count">12 reviews</p>
+                    <p class="review-count">20 reviews</p>
                 </div>
             </div>
         </section>
@@ -449,6 +526,7 @@
                     <div class="benefits-image">
                         <img src="assets/img/HilliardOhio.jpg"
                              srcset="assets/img/HilliardOhio-400w.jpg 400w,
+                                     assets/img/HilliardOhio-670w.webp 670w,
                                      assets/img/HilliardOhio-800w.jpg 800w,
                                      assets/img/HilliardOhio-1200w.jpg 1200w"
                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
@@ -456,20 +534,20 @@
                     </div>
                     <div class="benefits-grid">
                         <div class="benefit-card">
-                            <h3>Local Knowledge</h3>
-                            <p>We know Hilliard neighborhoods, permitting requirements, and the best routes for efficient delivery and pickup throughout Norwich, Heritage Hill, and all areas.</p>
+                            <h3>West Side Routing Efficiency</h3>
+                            <p>Our routing through the west side means reliable on-time delivery for Hilliard without the I-270 west interchange delays that cost other companies their morning slots.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>New Development Specialist</h3>
-                            <p>Expert service for Hilliard's growing residential developments with construction debris management and reliable project support.</p>
+                            <h3>Davidson &amp; Darby Territory</h3>
+                            <p>We serve neighborhoods across both the Hilliard Davidson and Hilliard Darby school zones&mdash;from Scioto Darby Road west to the Norwich Township areas.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>Fair Pricing</h3>
-                            <p>Transparent $299 pricing with no hidden fees. Includes 3 days rental and 4,000 lbs capacity for all Hilliard customers.</p>
+                            <h3>Family Home Experience</h3>
+                            <p>Hilliard&rsquo;s family-oriented housing stock means lots of garage cleanouts, basement projects, and growing-family renovations. We keep our schedule flexible around weekend projects.</p>
                         </div>
                         <div class="benefit-card">
-                            <h3>Professional Service</h3>
-                            <p>Licensed, insured, and committed to keeping Hilliard clean and beautiful. Experience with heritage district projects.</p>
+                            <h3>Full ZIP Code Coverage</h3>
+                            <p>We cover Hilliard&rsquo;s full east&ndash;west spread from Cemetery Road near I-270 out to the Alton-Darby corridor&mdash;no &ldquo;sorry, that&rsquo;s outside our area&rdquo; calls.</p>
                         </div>
                     </div>
                 </div>
@@ -544,20 +622,20 @@
                 <h2>Popular Projects in Hilliard</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                        <h3>New Home Construction</h3>
-                        <p>Supporting Hilliard's growing residential developments with construction debris management and reliable waste removal services.</p>
+                        <h3>Garage &amp; Basement Cleanouts</h3>
+                        <p>Hilliard&rsquo;s family homes accumulate years of garage and basement storage. A 14-yard dumpster gives you the space to clear it all in one weekend without multiple trips to the dump.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Heritage District Renovations</h3>
-                        <p>Careful handling of renovation waste from Hilliard's established neighborhoods with respect for community standards.</p>
+                        <h3>Roofing Replacements</h3>
+                        <p>Hilliard&rsquo;s 1980s&ndash;2000s housing stock is hitting peak roofing replacement cycles. Our 14-yard handles shingle tear-offs for most Hilliard homes in a single load.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Moving & Downsizing</h3>
-                        <p>Helping Hilliard families with moving cleanouts and downsizing projects throughout all neighborhoods.</p>
+                        <h3>Kitchen &amp; Bath Remodels</h3>
+                        <p>Growing families upgrading Hilliard&rsquo;s mid-size homes are tackling kitchen and bath renovations. We deliver fast and give you the rental time you need to work at your own pace.</p>
                     </div>
                     <div class="project-card">
-                        <h3>Commercial Cleanouts</h3>
-                        <p>Business cleanouts and renovation support along Hilliard's commercial corridors and business districts.</p>
+                        <h3>Moving &amp; Property Cleanouts</h3>
+                        <p>Hilliard&rsquo;s active real estate market generates frequent moving-related cleanouts. We work with homeowners, real estate agents, and property managers to hit listing-ready deadlines.</p>
                     </div>
                 </div>
             </div>
@@ -585,7 +663,7 @@
                         <h3>Simple Pricing</h3>
                         <div class="price-card price-card-with-image u-bg-gallery-1">
                             <div class="price-card-overlay">
-                                <div class="price">$299</div>
+                                <div class="price">$289</div>
                                 <div class="price-details">
                                     <p>Flat rate for Hilliard delivery</p>
                                     <p>No hidden fees or surprises</p>
@@ -598,14 +676,38 @@
             </div>
         </section>
 
+        <!-- Before You Book Guide Cards -->
+        <section class="guides-section">
+            <div class="container">
+                <h2>Before You Book</h2>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <h3>Should I rent a dumpster or just hire junk removal?</h3>
+                        <p>A side-by-side comparison to help you pick the right service for your specific project.</p>
+                        <a href="/blog/posts/junk-removal-vs-dumpster-rental-columbus">Read the guide →</a>
+                    </div>
+                    <div class="guide-card">
+                        <h3>How far in advance do I need to book for a spring cleanout?</h3>
+                        <p>Peak season fills up fast — here's what Hilliard homeowners need to know before scheduling.</p>
+                        <a href="/blog/posts/spring-cleaning-garage-cleanout-dumpster-rental-columbus">Read the guide →</a>
+                    </div>
+                    <div class="guide-card">
+                        <h3>How long can I actually keep the dumpster?</h3>
+                        <p>Standard rental is 3 days — here's how to estimate whether that's enough for your project.</p>
+                        <a href="/blog/posts/how-long-keep-rental-dumpster-columbus">Read the guide →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Location-Specific CTA -->
         <section class="location-cta">
             <div class="container">
                 <h2>Ready to Get Started in Hilliard?</h2>
                 <p>Join Hilliard residents and businesses who trust Streamline Dumpsters for reliable waste management solutions.</p>
                 <div class="cta-buttons">
-                    <a href="bookNow.html#dumpster-form" class="btn btn--primary btn--large">Book Your Dumpster</a>
-                    <a href="bookNow.html#junk-form" class="btn btn--secondary btn--large">Get Junk Removal Quote</a>
+                    <a href="/bookNow#dumpster-form" class="btn btn--primary btn--large">Book Your Dumpster</a>
+                    <a href="/bookNow#junk-form" class="btn btn--secondary btn--large">Get Junk Removal Quote</a>
                 </div>
             </div>
         </section>
@@ -621,7 +723,7 @@
                             <span class="faq-icon"></span>
                         </button>
                         <div class="faq-answer" id="hilliard-faq-1" aria-hidden="true">
-                            <p>Most residential driveways in Hilliard don't require permits. For street placement or commercial projects, we'll help you determine permit requirements and guide you through the Hilliard Building Department process.</p>
+                            <p>Driveway placement in Hilliard doesn't require a permit in most cases. If you need street placement, Hilliard's Building Department at 3800 Municipal Way handles right-of-way permits — processing is usually quick for short-term dumpster drops. Norwich Township properties that fall outside Hilliard city limits follow Franklin County rules instead, which are generally more straightforward. Call us and we'll point you in the right direction based on your specific address.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -630,7 +732,7 @@
                             <span class="faq-icon"></span>
                         </button>
                         <div class="faq-answer" id="hilliard-faq-2" aria-hidden="true">
-                            <p>We typically provide same-day or next-day service throughout Hilliard, including Norwich, Heritage Hill, Old Hilliard, and all residential and commercial districts. Call (614) 636-2343 for immediate availability.</p>
+                            <p>Same-day delivery is available in Hilliard on most days. Our west-side routing puts us in the 43026 ZIP code efficiently — we avoid the I-270 west interchange backup that delays other haulers by routing through Hilliard-Rome Road and Cemetery Road corridors. Call (614) 636-2343 before noon and we can typically confirm a same-day window.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -639,7 +741,7 @@
                             <span class="faq-icon"></span>
                         </button>
                         <div class="faq-answer" id="hilliard-faq-3" aria-hidden="true">
-                            <p>We serve all of Hilliard including Old Hilliard, Crossing at Hilliard, Ballantrae, Heritage Hill, Norwich, Britton Woods, Hilliard Rome Road Corridor, Brown Elementary Area, Hilliard Station, and Scioto Darby. Full coverage throughout Hilliard city limits.</p>
+                            <p>We cover all of Hilliard — Old Hilliard, Crossing at Hilliard, Ballantrae, Heritage Hill, Norwich, Britton Woods, Hilliard Station, Scioto Darby, and everything along the Hilliard-Rome Road corridor. We also serve the newer subdivisions east of I-270 that carry a Hilliard mailing address but sit closer to Columbus city limits — those are in range too.</p>
                         </div>
                     </div>
                     <div class="faq-item">
@@ -648,10 +750,32 @@
                             <span class="faq-icon"></span>
                         </button>
                         <div class="faq-answer" id="hilliard-faq-4" aria-hidden="true">
-                            <p>Yes, we serve all Hilliard commercial districts and business areas. Commercial deliveries may require coordination with property management and proper permitting through the city.</p>
+                            <p>Yes — we deliver to commercial properties along the Hilliard-Rome Road corridor, Old Hilliard's Main Street area, and Britton Parkway business properties. For contractor jobs or multi-day commercial projects, we can work directly with your site supervisor on scheduling and swap-out timing. Street placement near Main Street may require a Hilliard city permit, which we can help you navigate.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false" aria-controls="hilliard-faq-5">
+                            Do you serve the areas off Alton-Darby Road in Hilliard?
+                            <span class="faq-icon"></span>
+                        </button>
+                        <div class="faq-answer" id="hilliard-faq-5" aria-hidden="true">
+                            <p>Yes&mdash;we serve the full 43026 ZIP code including the Alton-Darby corridor, Norwich Township, and all neighborhoods between Cemetery Road and the western edge of Hilliard. If you&rsquo;re unsure whether your address is in our service area, call (614) 636-2343 and we&rsquo;ll confirm in under a minute.</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+        <!-- Nearby Service Areas -->
+        <section class="nearby-areas">
+            <div class="container">
+                <h2>Nearby Service Areas</h2>
+                <ul class="service-area-list">
+                    <li><a href="/dublin">Dublin, OH</a></li>
+                    <li><a href="/powell">Powell, OH</a></li>
+                    <li><a href="/worthington">Worthington, OH</a></li>
+                    <li><a href="/upper-arlington">Upper Arlington, OH</a></li>
+                    <li><a href="/plain-city">Plain City, OH</a></li>
+                </ul>
             </div>
         </section>
     </main>
@@ -666,25 +790,31 @@
                         <a href="tel:+16146362343" class="footer-link" aria-label="Call Streamline Dumpsters">(614) 636-2343</a>
                         <a href="mailto:Eli@Sl-Dumpsters.com" class="footer-link" aria-label="Email Streamline Dumpsters">Eli@Sl-Dumpsters.com</a>
                     </div>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/profile.php?id=61573101384760" class="footer-social-link" aria-label="Streamline Dumpsters on Facebook" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.514c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                            Facebook
+                        </a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h4 class="footer-subtitle">Services</h4>
                     <ul class="footer-list">
-                        <li><a href="bookNow.html" class="footer-link">10-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">14-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">20-Yard Dumpster Rental</a></li>
-                        <li><a href="bookNow.html" class="footer-link">Junk Removal Service</a></li>
-                        <li><a href="contact.html" class="footer-link">Same-Day Delivery</a></li>
+                        <li><a href="/bookNow" class="footer-link">10-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">14-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">20-Yard Dumpster Rental</a></li>
+                        <li><a href="/bookNow" class="footer-link">Junk Removal Service</a></li>
+                        <li><a href="/contact" class="footer-link">Same-Day Delivery</a></li>
                     </ul>
                 </div>
                 <div class="footer-links-hours">
                     <div class="footer-section">
                         <h4 class="footer-subtitle">Quick Links</h4>
                         <ul class="footer-list">
-                            <li><a href="faq.html" class="footer-link">FAQ</a></li>
-                            <li><a href="service-area.html" class="footer-link">Service Area</a></li>
-                            <li><a href="contact.html" class="footer-link">Contact</a></li>
-                            <li><a href="bookNow.html" class="footer-link">Book Now</a></li>
+                            <li><a href="/faq" class="footer-link">FAQ</a></li>
+                            <li><a href="/service-area" class="footer-link">Service Area</a></li>
+                            <li><a href="/contact" class="footer-link">Contact</a></li>
+                            <li><a href="/bookNow" class="footer-link">Book Now</a></li>
                         </ul>
                     </div>
 
@@ -712,14 +842,14 @@
 
     <!-- Phase 4: Enhanced JavaScript Integration -->
     <!-- Production-safe logging system -->
-    <script src="js/logger.js?v=4"></script>
-    <script src="js/modal-loader.js?v=4"></script>
-    <script src="js/mobile-nav.js"></script>
-    <script src="js/config.js?v=test-1-dollar"></script>
-    <script src="js/three-step-modal.js?v=8-iso-dates"></script>
-    <script src="js/bookNow.js?v=19-production-pricing"></script>
-    <script src="js/junkRemoval.js?v=form-group-fix"></script>
-    <script src="js/location-faq.js"></script>
+    <script src="js/logger.js?v=minified2"></script>
+    <script src="js/modal-loader.js?v=minified2"></script>
+    <script src="js/mobile-nav.js?v=minified2"></script>
+    <script src="js/config.js?v=minified2"></script>
+    <script src="js/three-step-modal.js?v=minified"></script>
+    <script src="js/bookNow.js?v=minified"></script>
+    <script src="js/junkRemoval.js?v=minified"></script>
+    <script src="js/location-faq.js?v=minified2"></script>
     <!-- GA4 Event Tracking for phone clicks -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
