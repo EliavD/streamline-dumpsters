@@ -833,7 +833,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p class="footer-copyright">&copy; 2024 Streamline Dumpsters Ltd | Hilliard, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+                <p class="footer-copyright">&copy; <span id="cp-year"></span> Streamline Dumpsters Ltd | Hilliard, Ohio | Same-day delivery, driveway-safe dumpsters, locally owned</p>
+                <script>document.getElementById('cp-year').textContent=new Date().getFullYear();</script>
             </div>
         </div>
     </footer>
