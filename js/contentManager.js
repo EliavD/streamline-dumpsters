@@ -1,6 +1,9 @@
 /**
  * Content Management System
  * Simple CMS for location updates and content management
+ *
+ * NOTE: Authentication removed for security.
+ * This file maintains edit mode functionality without client-side auth.
  */
 
 class LocationContentManager {
@@ -9,89 +12,7 @@ class LocationContentManager {
         this.editableElements = new Map();
         this.originalContent = new Map();
 
-        this.setupEditMode();
-        this.setupAutoSave();
         this.setupVersioning();
-    }
-
-    setupEditMode() {
-        // Check for admin authorization
-        if (this.isAuthorized()) {
-            this.enableEditMode();
-        }
-
-        // Listen for auth changes
-        this.setupAuthListener();
-    }
-
-    isAuthorized() {
-        // Simple authorization check
-        const adminMode = localStorage.getItem('admin_mode');
-        const authToken = localStorage.getItem('auth_token');
-        const authExpiry = localStorage.getItem('auth_expiry');
-
-        if (!adminMode || !authToken || !authExpiry) {
-            return false;
-        }
-
-        // Check if token is expired
-        if (Date.now() > parseInt(authExpiry)) {
-            this.clearAuth();
-            return false;
-        }
-
-        return adminMode === 'true';
-    }
-
-    setupAuthListener() {
-        // Simple auth toggle for development
-        document.addEventListener('keydown', (e) => {
-            // Ctrl + Shift + E to toggle edit mode
-            if (e.ctrlKey && e.shiftKey && e.key === 'E') {
-                e.preventDefault();
-                this.toggleAuthMode();
-            }
-        });
-
-        // Listen for storage changes (multi-tab sync)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'admin_mode') {
-                if (e.newValue === 'true' && !this.isEditMode) {
-                    this.enableEditMode();
-                } else if (e.newValue !== 'true' && this.isEditMode) {
-                    this.disableEditMode();
-                }
-            }
-        });
-    }
-
-    toggleAuthMode() {
-        if (this.isAuthorized()) {
-            this.clearAuth();
-            this.disableEditMode();
-        } else {
-            // Simple auth for development
-            const password = prompt('Enter admin password:');
-            if (password === 'streamline2024') { // In production, use proper authentication
-                this.setAuth();
-                this.enableEditMode();
-            } else {
-                alert('Invalid password');
-            }
-        }
-    }
-
-    setAuth() {
-        const expiry = Date.now() + (24 * 60 * 60 * 1000); // 24 hours
-        localStorage.setItem('admin_mode', 'true');
-        localStorage.setItem('auth_token', 'dev-token-' + Date.now());
-        localStorage.setItem('auth_expiry', expiry.toString());
-    }
-
-    clearAuth() {
-        localStorage.removeItem('admin_mode');
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('auth_expiry');
     }
 
     enableEditMode() {
@@ -100,7 +21,6 @@ class LocationContentManager {
         this.isEditMode = true;
         document.body.classList.add('edit-mode');
 
-        this.addEditControls();
         this.addEditToolbar();
         this.markEditableElements();
 
@@ -469,15 +389,6 @@ class LocationContentManager {
         document.querySelectorAll('.edit-control').forEach(control => {
             control.remove();
         });
-    }
-
-    setupAutoSave() {
-        // Auto-save every 30 seconds
-        this.autoSaveInterval = setInterval(() => {
-            if (this.isEditMode) {
-                this.autoSaveAll();
-            }
-        }, 30000);
     }
 
     autoSaveElement(element, key) {

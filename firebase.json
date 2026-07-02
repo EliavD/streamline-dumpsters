@@ -1,4 +1,11 @@
 {
+  "functions": {
+    "source": "functions"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
     "public": ".",
     "ignore": [
@@ -18,8 +25,10 @@
       "*.sh",
       "*.bat",
       "*.gs",
-      "*.txt",
-      "!robots.txt",
+      "console-log-replacement-report.txt",
+      "DEPLOY-INSTRUCTIONS.txt",
+      "DEPLOYMENT-CHECKLIST.txt",
+      "css/LOAD-ORDER.txt",
       "server.js",
       "server.ext",
       "https-server.py",
@@ -38,23 +47,25 @@
       ".env*",
       "certs/**",
       "**/*.pem",
-      "localhost.pem"
+      "localhost.pem",
+      "google-apps-script*.js",
+      "**/*-fixed.js",
+      "*.pdf",
+      "functions/**",
+      "**/*.backup2",
+      "**/*.backup3",
+      "**/*.backup4",
+      "**/*.pre-revert",
+      "**/*-original.*",
+      "modal-test.html",
+      "email-template-preview.html",
+      "**/.*/**",
+      "**/*.backup*",
+      "firestore.rules",
+      "firestore.indexes.json"
     ],
     "cleanUrls": true,
     "trailingSlash": false,
-    "redirects": [
-      {
-        "source": "**",
-        "destination": "https://sl-dumpsters.com/:splat",
-        "type": 301,
-        "headers": [
-          {
-            "key": "Host",
-            "value": "www.sl-dumpsters.com"
-          }
-        ]
-      }
-    ],
     "headers": [
       {
         "source": "**",
@@ -70,6 +81,18 @@
           {
             "key": "Referrer-Policy",
             "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Strict-Transport-Security",
+            "value": "max-age=31536000; includeSubDomains"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "same-origin-allow-popups"
+          },
+          {
+            "key": "Content-Security-Policy-Report-Only",
+            "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.chatbase.co https://www.chatbase.co https://www.googletagmanager.com https://web.squarecdn.com https://js.squarecdn.com https://www.clarity.ms https://c.bing.com; connect-src 'self' https://www.chatbase.co https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://www.clarity.ms; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; frame-src https://squareup.com https://web.squarecdn.com https://www.chatbase.co https://www.google.com; worker-src blob:;"
           }
         ]
       },
@@ -78,7 +101,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=3600, s-maxage=7200"
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       },
@@ -87,7 +110,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=86400, s-maxage=2592000"
+            "value": "public, max-age=31536000, immutable"
           }
         ]
       },
@@ -96,7 +119,7 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=3600, must-revalidate"
+            "value": "no-cache"
           }
         ]
       },
@@ -114,6 +137,51 @@
         ]
       }
     ],
-    "rewrites": []
+    "redirects": [
+      {
+        "source": "/blog/transparent-pricing-columbus-dumpster-rental",
+        "destination": "/blog/posts/same-day-dumpster-delivery-columbus",
+        "type": 301
+      },
+      {
+        "source": "/blog/dumpster-placement-tips-property-guide",
+        "destination": "/blog/posts/ohio-dumpster-permit-guide",
+        "type": 301
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/processBooking",
+        "run": { "serviceId": "processbooking", "region": "us-central1" }
+      },
+      {
+        "source": "/api/checkAvailability",
+        "run": { "serviceId": "checkavailability", "region": "us-central1" }
+      },
+      {
+        "source": "/api/getFullyBookedDates",
+        "run": { "serviceId": "getfullybookeddates", "region": "us-central1" }
+      },
+      {
+        "source": "/api/createManualBooking",
+        "run": { "serviceId": "createmanualbooking", "region": "us-central1" }
+      },
+      {
+        "source": "/api/processDumpAndReturn",
+        "run": { "serviceId": "processdumpandreturn", "region": "us-central1" }
+      },
+      {
+        "source": "/api/recordWeighIn",
+        "run": { "serviceId": "recordweighin", "region": "us-central1" }
+      },
+      {
+        "source": "/api/settleStatement",
+        "run": { "serviceId": "settlestatement", "region": "us-central1" }
+      },
+      {
+        "source": "/api/getStatements",
+        "run": { "serviceId": "getstatements", "region": "us-central1" }
+      }
+    ]
   }
 }

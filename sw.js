@@ -3,7 +3,7 @@
  * Provides offline support and caching for better performance
  */
 
-const CACHE_NAME = 'streamline-dumpsters-v1.0.0';
+const CACHE_NAME = 'streamline-dumpsters-v1.1.0';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -49,6 +49,14 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
     // Skip service worker caching on localhost for development
     if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+        return event.respondWith(fetch(event.request));
+    }
+
+    // Never cache dynamic API calls or non-GET requests — always hit the network.
+    // Fixes stale /api/getStatements, and stale booking availability via
+    // /api/checkAvailability and /api/getFullyBookedDates.
+    const reqUrl = new URL(event.request.url);
+    if (event.request.method !== 'GET' || reqUrl.pathname.startsWith('/api/')) {
         return event.respondWith(fetch(event.request));
     }
 

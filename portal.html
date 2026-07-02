@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Contractor Portal — Streamline Dumpsters</title>
+
+  <!-- Inter (matches --font-family-primary in variables.css) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <!-- Design tokens, then portal styles -->
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/portal.css?v=6">
+
+  <!-- Square Web Payments SDK — prod vs sandbox by host (same pattern as bookNow.html) -->
+  <script type="text/javascript">
+    (function () {
+      const isLocalhost = window.location.hostname === 'localhost' ||
+                          window.location.hostname === '127.0.0.1' ||
+                          window.location.hostname.startsWith('192.168.');
+      const squareSDK = (!isLocalhost)
+        ? 'https://web.squarecdn.com/v1/square.js'           // Production
+        : 'https://sandbox.web.squarecdn.com/v1/square.js';  // Sandbox (localhost)
+      document.write('<script type="text/javascript" src="' + squareSDK + '"><\/script>');
+    })();
+  </script>
+</head>
+<body>
+  <!-- ── Loading ─────────────────────────────────────────── -->
+  <div id="app-loading">
+    <div class="portal-spinner" role="status" aria-label="Loading"></div>
+  </div>
+
+  <!-- ── Login (reuses the Firebase Auth mechanism from admin/) ─ -->
+  <div id="login-screen" class="portal-login">
+    <div class="portal-login__card">
+      <img class="portal-login__logo" src="/assets/img/StreamlineDumpstersLogo.webp" alt="Streamline Dumpsters" width="56" height="56">
+      <h1 class="portal-login__title">Contractor Portal</h1>
+      <p class="portal-login__sub">Sign in to manage your on-site dumpster.</p>
+
+      <label class="portal-login__label" for="login-email">Email</label>
+      <input id="login-email" class="portal-login__input" type="email" autocomplete="username" inputmode="email" placeholder="you@company.com">
+
+      <label class="portal-login__label" for="login-password">Password</label>
+      <input id="login-password" class="portal-login__input" type="password" autocomplete="current-password" placeholder="••••••••">
+
+      <p id="login-error" class="portal-login__error" role="alert"></p>
+
+      <button id="login-btn" class="portal-login__btn" type="button">Sign In</button>
+    </div>
+  </div>
+
+  <!-- ── Portal app (shown when authenticated) ───────────── -->
+  <div id="portal-app" class="portal" hidden>
+
+    <!-- Desktop sidebar -->
+    <aside class="portal__sidebar" aria-label="Portal navigation">
+      <div class="portal__sidebar-brand">
+        <img src="/assets/img/StreamlineDumpstersLogo.webp" alt="Streamline Dumpsters" width="36" height="36">
+        <span>Streamline</span>
+      </div>
+      <nav class="portal__nav">
+        <a class="portal__nav-item is-active" href="#" aria-current="page">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+          Dashboard
+        </a>
+        <a class="portal__nav-item" href="#history-section">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+          Service history
+        </a>
+        <a class="portal__nav-item is-disabled" href="#" aria-disabled="true" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Billing
+          <span class="portal__nav-soon">Soon</span>
+        </a>
+        <a class="portal__nav-item is-disabled" href="#" aria-disabled="true" tabindex="-1">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          Account
+          <span class="portal__nav-soon">Soon</span>
+        </a>
+      </nav>
+      <div class="portal__help">
+        <p class="portal__help-label">Need a hand?</p>
+        <a class="portal__help-phone" href="tel:+16146362343">(614) 636-2343</a>
+        <button id="logout-link" class="portal__logout" type="button">Sign out</button>
+      </div>
+    </aside>
+
+    <!-- Main column -->
+    <main class="portal__main">
+
+      <!-- Top bar -->
+      <header class="portal__topbar">
+        <div class="portal__topbar-id">
+          <img class="portal__topbar-logo" src="/assets/img/StreamlineDumpstersLogo.webp" alt="" width="34" height="34">
+          <div class="portal__topbar-text">
+            <strong id="topbar-business">—</strong>
+            <span id="topbar-shop">—</span>
+          </div>
+        </div>
+        <div class="portal__topbar-right">
+          <button class="portal__bell" type="button" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          </button>
+          <div id="avatar" class="portal__avatar" aria-hidden="true">—</div>
+        </div>
+      </header>
+
+      <div class="portal__content">
+
+        <!-- Hero: status + action -->
+        <section class="portal__hero">
+
+          <!-- Status banner -->
+          <div class="status-card">
+            <img class="status-card__photo" src="/assets/img/20yd.webp" alt="20-yard roll-off dumpster">
+            <div class="status-card__body">
+              <div class="status-card__top">
+                <div>
+                  <p class="status-card__eyebrow" id="status-eyebrow">20-YARD ROLL-OFF</p>
+                  <p class="status-card__status" id="status-text">—</p>
+                  <p class="status-card__loc">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    <span id="status-loc">—</span>
+                  </p>
+                </div>
+                <span class="status-card__pill" id="status-pill"><span class="status-card__dot"></span><span id="status-pill-text">Active</span></span>
+              </div>
+              <div class="status-card__divider"></div>
+              <div class="status-card__footer">
+                <span id="status-last-emptied">Last emptied —</span>
+                <strong id="status-days-ago">—</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action card -->
+          <div class="action-card">
+            <h2 class="action-card__title">Ready for a dump &amp; return?</h2>
+            <p class="action-card__sub">We take the dumpster, empty it, and bring the same unit back to your spot.</p>
+            <button id="request-btn" class="action-card__btn" type="button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              Request dump &amp; return · $350
+            </button>
+            <p class="action-card__caption">Flat $350 + tax · 2 tons included · same-day if before 10am</p>
+          </div>
+        </section>
+
+        <!-- Stat tiles -->
+        <section class="stats" aria-label="Account stats">
+          <div class="stat">
+            <p class="stat__label">Dumps this month</p>
+            <p class="stat__value" id="stat-month-count">—</p>
+            <p class="stat__sub" id="stat-month-billed">—</p>
+          </div>
+          <div class="stat">
+            <p class="stat__label">Avg. load weight</p>
+            <p class="stat__value" id="stat-avg-weight">—</p>
+            <p class="stat__sub" id="stat-avg-sub">—</p>
+          </div>
+          <div class="stat">
+            <p class="stat__label">Flat rate</p>
+            <p class="stat__value" id="stat-flat-rate">$350</p>
+            <p class="stat__sub">+ tax per dump</p>
+          </div>
+          <div class="stat">
+            <p class="stat__label">Total dumps</p>
+            <p class="stat__value" id="stat-total">—</p>
+            <p class="stat__sub" id="stat-total-sub">—</p>
+          </div>
+        </section>
+
+        <!-- Service history -->
+        <section id="history-section" class="history" aria-label="Service history">
+          <div class="history__head">
+            <h2 class="history__title">Service history</h2>
+            <a class="history__viewall" href="#">View all</a>
+          </div>
+          <div class="history__table-head" aria-hidden="true">
+            <span>Date</span><span>Type</span><span>Weight</span><span>Overage</span><span>Amount</span>
+          </div>
+          <ul id="history-list" class="history__list">
+            <!-- rendered by portal.js -->
+          </ul>
+          <p id="history-empty" class="history__empty" hidden>No service requests yet. Your first dump &amp; return will appear here.</p>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- ── Dump & return flow (Phase C) ─────────────────────── -->
+    <div id="flow" class="flow" hidden>
+
+      <!-- Screen 1 — Request -->
+      <section id="flow-request" class="flow__screen">
+        <header class="flow__header">
+          <button class="flow__back" type="button" data-flow-back="dashboard" aria-label="Back to dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="flow__title">
+            <strong>Dump &amp; return</strong>
+            <span>Step 1 of 2</span>
+          </div>
+        </header>
+
+        <div class="flow__body">
+          <!-- Dumpster mini-card -->
+          <div class="mini-card">
+            <img class="mini-card__photo" src="/assets/img/20yd.webp" alt="20-yard roll-off dumpster">
+            <div class="mini-card__text">
+              <p class="mini-card__title" id="mini-size">20-yard roll-off</p>
+              <p class="mini-card__sub" id="mini-asset">#SL-2041</p>
+              <p class="mini-card__sub" id="mini-addr">—</p>
+            </div>
+          </div>
+
+          <!-- Pickup window -->
+          <h2 class="flow__label">Pickup window</h2>
+          <div id="pickup-options" class="pickup" role="radiogroup" aria-label="Pickup window">
+            <!-- option cards rendered by portal.js -->
+          </div>
+
+          <!-- Photo of the load -->
+          <h2 class="flow__label">Photo of the load <span class="flow__optional">Optional</span></h2>
+          <button id="photo-box" class="photo-box" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span class="photo-box__title">Add a photo</span>
+            <span class="photo-box__sub">Helps us bring the right truck</span>
+            <span class="photo-box__soon">Photo upload coming soon</span>
+          </button>
+        </div>
+
+        <div class="flow__bar">
+          <div class="flow__bar-price">
+            <strong>$350.00</strong>
+            <span>+ tax · 2 tons incl.</span>
+          </div>
+          <button id="to-checkout" class="flow__btn flow__btn--teal" type="button">Continue →</button>
+        </div>
+      </section>
+
+      <!-- Screen 2 — Checkout -->
+      <section id="flow-checkout" class="flow__screen" hidden>
+        <header class="flow__header">
+          <button class="flow__back" type="button" data-flow-back="request" aria-label="Back to request">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="flow__title">
+            <strong>Checkout</strong>
+            <span>Step 2 of 2</span>
+          </div>
+        </header>
+
+        <div class="flow__body">
+          <!-- Pickup summary -->
+          <div class="summary-card">
+            <div class="summary-card__row">
+              <span class="summary-card__k">When</span>
+              <span class="summary-card__v" id="co-when">—</span>
+            </div>
+            <div class="summary-card__row">
+              <span class="summary-card__k">Where</span>
+              <span class="summary-card__v" id="co-where">—</span>
+            </div>
+            <button class="summary-card__change" type="button" data-flow-back="request">Change</button>
+          </div>
+
+          <!-- Order summary -->
+          <div class="order-card">
+            <div class="order-card__line">
+              <span>Dump &amp; return · 20-yard roll-off</span>
+              <span>$350.00</span>
+            </div>
+            <div class="order-card__line order-card__line--muted">
+              <span>Includes 2 tons (4,000 lb)</span>
+              <span>Included</span>
+            </div>
+            <div class="order-card__line">
+              <span>Sales tax (8%)</span>
+              <span>$28.00</span>
+            </div>
+            <div class="order-card__divider"></div>
+            <div class="order-card__line order-card__line--total">
+              <span id="due-label">Due today</span>
+              <span id="due-amount">$378.00</span>
+            </div>
+          </div>
+
+          <!-- Overage note -->
+          <div class="overage-note" id="co-overage-note">
+            Loads over 2 tons are billed to your card at <strong>$0.03/lb</strong> after weigh-in.
+            Most contractor loads come in under the cap.
+          </div>
+
+          <!-- Payment -->
+          <h2 class="flow__label" id="pay-label">Payment</h2>
+          <div id="card-container" class="card-container" aria-label="Credit card information">
+            <!-- Square card form is inserted here -->
+          </div>
+          <p id="card-error" class="card-error" role="alert"></p>
+          <p id="card-loading" class="card-loading">Loading secure payment form…</p>
+          <p id="monthly-note" class="overage-note" style="display:none;">No card required — this pickup is added to your monthly statement (billed via ACH/check).</p>
+        </div>
+
+        <div class="flow__bar">
+          <button id="pay-btn" class="flow__btn flow__btn--orange flow__btn--full" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Pay $378.00 &amp; schedule
+          </button>
+        </div>
+      </section>
+
+      <!-- Screen 3 — Confirmation -->
+      <section id="flow-confirm" class="flow__screen" hidden>
+        <div class="confirm">
+          <div class="confirm__check">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="confirm__title">Pickup scheduled</h2>
+          <p class="confirm__sub" id="confirm-reassure">Your dumpster will be emptied and returned to the same spot.</p>
+
+          <div class="confirm__details">
+            <div class="confirm__row"><span>Pickup</span><strong id="confirm-when">—</strong></div>
+            <div class="confirm__row"><span>Confirmation</span><strong id="confirm-number">—</strong></div>
+            <div class="confirm__row"><span id="confirm-amount-label">Paid today</span><strong id="confirm-amount">$378.00</strong></div>
+          </div>
+
+          <div class="confirm__note" id="confirm-text-note">
+            We’ll text you when your driver is on the way, and again once it’s back on site.
+          </div>
+
+          <button id="confirm-done" class="flow__btn flow__btn--teal flow__btn--full" type="button">Back to dashboard</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (compat 9.23.0 — same as admin/) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    if (typeof firebase === 'undefined') {
+      document.getElementById('app-loading').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('login-error').textContent = 'Could not load Firebase SDK. Check your connection and refresh.';
+    }
+  </script>
+  <!-- Square credentials per environment (window.CONFIG.square) -->
+  <script src="/js/config.js"></script>
+  <script src="/js/portal.js?v=4"></script>
+</body>
+</html>

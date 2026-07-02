@@ -1,0 +1,180 @@
+═══════════════════════════════════════════════════════════════
+   STREAMLINE DUMPSTERS - FIREBASE DEPLOYMENT CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+📋 PRE-DEPLOYMENT (ALL COMPLETED ✓)
+═══════════════════════════════════════════════════════════════
+✅ Firebase CLI installed (v14.12.1)
+✅ firebase.json created with proper config
+✅ .gitignore updated to exclude Firebase files
+✅ Console logging disabled in production JS
+✅ All Google Apps Script endpoints verified
+✅ Development files excluded from deployment
+
+🚀 DEPLOYMENT COMMANDS
+═══════════════════════════════════════════════════════════════
+
+1. Login to Firebase:
+   → firebase login
+
+2. Initialize Firebase Hosting:
+   → firebase init hosting
+
+   Select:
+   - Use existing project
+   - Public directory: .
+   - Single-page app: NO
+   - Overwrite index.html: NO
+
+3. (Optional) Test locally:
+   → firebase serve
+   → Open: http://localhost:5000
+
+4. Deploy to Firebase:
+   → firebase deploy --only hosting
+
+═══════════════════════════════════════════════════════════════
+
+📝 AFTER DEPLOYMENT - UPDATE GOOGLE APPS SCRIPT CORS
+═══════════════════════════════════════════════════════════════
+
+For EACH script (Booking, Contact, Junk Removal):
+
+1. Open Google Apps Script editor
+2. Find doPost() function
+3. Replace CORS header:
+
+   FROM: "Access-Control-Allow-Origin": "*"
+
+   TO:
+   ┌─────────────────────────────────────────────────────────┐
+   │ const allowedOrigins = [                                │
+   │   "https://YOUR-PROJECT-ID.web.app",                    │
+   │   "https://YOUR-PROJECT-ID.firebaseapp.com",            │
+   │   "http://localhost:5000"                               │
+   │ ];                                                      │
+   │                                                         │
+   │ const origin = e.postData ? e.postData.headers.Origin   │
+   │                           : '';                          │
+   │ const responseOrigin = allowedOrigins.includes(origin)  │
+   │                       ? origin : allowedOrigins[0];     │
+   │                                                         │
+   │ headers["Access-Control-Allow-Origin"] = responseOrigin;│
+   └─────────────────────────────────────────────────────────┘
+
+4. Save and redeploy script as web app
+5. Verify: Execute as "Me", Access "Anyone"
+
+═══════════════════════════════════════════════════════════════
+
+🧪 POST-DEPLOYMENT TESTING
+═══════════════════════════════════════════════════════════════
+
+Test at: https://YOUR-PROJECT-ID.web.app
+
+VISUAL & NAVIGATION:
+□ Homepage loads completely
+□ Logo displays correctly (mobile & desktop)
+□ Navigation menu works (hamburger on mobile)
+□ All internal links work
+□ Footer displays correctly
+□ All 6 location pages load
+
+BOOKING FORM:
+□ Modal opens on "Book Now" click
+□ Date picker functional
+□ Form validation works
+□ Submits to Google Sheets
+□ Success message displays
+
+JUNK REMOVAL FORM:
+□ Modal opens correctly
+□ Photo upload works
+□ Form validates
+□ Submits to Google Sheets
+
+CONTACT FORM:
+□ Page loads (contact.html)
+□ Form validates
+□ Submits successfully
+
+PAYMENT:
+□ Square payment form loads
+□ Card fields display
+□ Test payment processes
+
+MOBILE:
+□ Site loads on mobile
+□ Forms work on touchscreen
+□ Buttons are tappable
+
+PERFORMANCE:
+□ Lighthouse score > 85
+□ Images load quickly
+□ No console errors
+
+═══════════════════════════════════════════════════════════════
+
+🔍 TROUBLESHOOTING QUICK REFERENCE
+═══════════════════════════════════════════════════════════════
+
+FORMS DON'T SUBMIT (CORS ERROR):
+→ Update CORS in Google Apps Script
+→ Redeploy script as web app
+→ Clear browser cache
+
+404 ERRORS:
+→ Check firebase.json public directory is "."
+→ Verify cleanUrls: true
+→ Redeploy: firebase deploy --only hosting
+
+SQUARE PAYMENT ISSUES:
+→ Whitelist Firebase domain in Square Dashboard
+→ Verify production app ID (not sandbox)
+
+IMAGES NOT LOADING:
+→ Check relative paths
+→ Verify assets/img/ deployed
+→ Check case-sensitive filenames
+
+═══════════════════════════════════════════════════════════════
+
+📊 DEPLOYMENT STATS
+═══════════════════════════════════════════════════════════════
+
+Total Size: ~21 MB
+HTML: 492 KB (14 pages)
+CSS: 533 KB
+JavaScript: 741 KB
+Images: ~19 MB (101 files)
+
+Google Apps Script Endpoints:
+- Booking: ...Hc97TPcpGA/exec
+- Contact: ...lZbPZ_xM/exec
+- Junk Removal: ...faBqhKYT3g/exec
+
+═══════════════════════════════════════════════════════════════
+
+✅ DEPLOYMENT SUCCESS CRITERIA
+═══════════════════════════════════════════════════════════════
+
+Deployment complete when ALL checked:
+□ Site loads at Firebase URL
+□ All pages accessible
+□ Forms submit successfully
+□ No console errors
+□ Images load correctly
+□ Mobile navigation functional
+□ Lighthouse score > 85
+
+═══════════════════════════════════════════════════════════════
+
+📞 SUPPORT RESOURCES
+═══════════════════════════════════════════════════════════════
+
+Firebase Console: https://console.firebase.google.com
+Documentation: See FIREBASE-DEPLOYMENT-GUIDE.md
+Google Apps Script: script.google.com
+Square Dashboard: squareup.com/dashboard
+
+═══════════════════════════════════════════════════════════════

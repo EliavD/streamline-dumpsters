@@ -25,6 +25,7 @@
     <!-- Primary Meta Tags -->
     <title>Booking Confirmed | Streamline Dumpsters</title>
     <meta name="description" content="Your dumpster rental booking has been confirmed. Thank you for choosing Streamline Dumpsters!">
+    <meta name="robots" content="noindex, nofollow">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -36,10 +37,12 @@
     <link rel="apple-touch-icon" href="assets/img/logo.png">
 
     <!-- Stylesheets -->
+    <!-- Preconnect for external resources -->
+
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/navigation.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/confirmation.css?v=1">
+    <link rel="stylesheet" href="css/navigation.css?v=minified2">
+    <link rel="stylesheet" href="css/responsive.css?v=minified2">
+    <link rel="stylesheet" href="css/confirmation.css?v=minified2">
 
     <style>
         /* Page-specific styles */
@@ -228,6 +231,7 @@
             }
         }
     </style>
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
 </head>
 <body>
     <div class="confirmation-page">
@@ -269,10 +273,10 @@
 
             <!-- Action Buttons -->
             <div class="confirmation__actions">
-                <a href="index.html" class="confirmation__btn confirmation__btn--primary">
+                <a href="/" class="confirmation__btn confirmation__btn--primary">
                     Return to Homepage
                 </a>
-                <a href="contact.html" class="confirmation__btn confirmation__btn--secondary">
+                <a href="/contact" class="confirmation__btn confirmation__btn--secondary">
                     Contact Us
                 </a>
             </div>

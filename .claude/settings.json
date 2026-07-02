@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(where python:*)",
+      "Bash(C:/Python313/python.exe _update_locations.py)",
+      "Bash(C:/Python313/python.exe -c \":*)",
+      "Bash(ls assets/img/plaincity*)",
+      "Bash(grep -E \"v=[0-9a-zA-Z]|\\\\?[0-9]|[-_][0-9]{4,}|\\\\.min\\\\.\")",
+      "Bash(ls \"c:/Users/Admin/OneDrive/Desktop/Claude/assets/img/Basement\"*)",
+      "Bash(grep -rn \"three-step-booking-modal\\\\|three-step__step\" /c/Users/Admin/OneDrive/Desktop/Claude/ --include=*.html --include=*.js)",
+      "Bash(grep -rn \"\\\\.html\" \"c:\\\\Users\\\\Admin\\\\OneDrive\\\\Desktop\\\\Claude\\\\blog\\\\posts\\\\\" --include=\"*.html\" | grep -i \"blog/posts\\\\|href=\\\\\"[./]*posts/\" | grep \"\\\\.html\" | grep -v \"node_modules\" | head -40)",
+      "Bash(grep -rn \"href.*\\\\.html\" \"c:\\\\Users\\\\Admin\\\\OneDrive\\\\Desktop\\\\Claude\\\\blog\\\\posts\\\\\" --include=\"*.html\" | grep -i \"related\\\\|posts/\" | grep \"\\\\.html\" | grep -v \"node_modules\" | head -30)",
+      "Bash(C-c)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Admin\\OneDrive\\Desktop\\Claude"
+    ]
+  }
+}

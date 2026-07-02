@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Streamline Dumpsters</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f1f5f9; color: #334155; min-height: 100vh; }
+    button { cursor: pointer; border: none; font: inherit; }
+    input, select, textarea { font: inherit; }
+
+    /* ── Loading ── */
+    #app-loading {
+      position: fixed; inset: 0; background: #fff;
+      display: flex; align-items: center; justify-content: center; z-index: 999;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid #e2e8f0;
+      border-top-color: #01b0bb; border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Login ── */
+    #login-screen {
+      min-height: 100vh; display: none; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+    .login-card {
+      background: #fff; border-radius: 16px; padding: 48px 40px;
+      width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .login-logo {
+      text-align: center; margin-bottom: 32px;
+    }
+    .login-logo h1 { font-size: 22px; color: #334155; font-weight: 700; margin-top: 8px; }
+    .login-logo span { color: #01b0bb; }
+    .brand-icon {
+      width: 56px; height: 56px; background: linear-gradient(135deg, #01b0bb, #2a7d84);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px; font-size: 28px;
+    }
+    .login-label { display: block; font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .05em; }
+    .login-input {
+      width: 100%; padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 8px;
+      font-size: 15px; color: #334155; margin-bottom: 16px; outline: none; transition: border-color .15s;
+    }
+    .login-input:focus { border-color: #01b0bb; }
+    .login-btn {
+      width: 100%; padding: 13px; background: linear-gradient(to right, #01b0bb, #2a7d84);
+      color: #fff; border-radius: 8px; font-size: 15px; font-weight: 600;
+      margin-top: 4px; transition: opacity .15s;
+    }
+    .login-btn:hover { opacity: .9; }
+    .login-btn:disabled { opacity: .6; }
+    #login-error { color: #ef4444; font-size: 13px; text-align: center; margin-top: 12px; min-height: 18px; }
+
+    /* ── Dashboard ── */
+    #dashboard { display: none; flex-direction: column; min-height: 100vh; }
+
+    /* Header */
+    .admin-header {
+      background: linear-gradient(to right, #0f172a, #1e293b);
+      padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .admin-header__brand { display: flex; align-items: center; gap: 10px; }
+    .admin-header__brand-dot { width: 8px; height: 8px; background: #01b0bb; border-radius: 50%; }
+    .admin-header__brand-name { color: #fff; font-weight: 700; font-size: 16px; }
+    .admin-header__badge { color: #94a3b8; font-size: 12px; font-weight: 500; margin-left: 4px; }
+    .admin-header__right { display: flex; align-items: center; gap: 12px; }
+    #header-user-email { color: #94a3b8; font-size: 13px; }
+    #logout-btn {
+      padding: 6px 14px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15);
+      border-radius: 6px; color: #cbd5e1; font-size: 13px; transition: background .15s;
+    }
+    #logout-btn:hover { background: rgba(255,255,255,.14); }
+
+    /* Stats */
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 20px 24px 0; }
+    .stat-card {
+      background: #fff; border-radius: 12px; padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06); border: 1px solid #e2e8f0;
+    }
+    .stat-card__label { font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .05em; }
+    .stat-card__value { font-size: 28px; font-weight: 700; color: #334155; margin-top: 4px; }
+    .stat-card__sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+
+    /* Tabs */
+    .tabs-bar { display: flex; gap: 0; padding: 20px 24px 0; border-bottom: none; }
+    .tab-btn {
+      padding: 10px 20px; font-size: 14px; font-weight: 600; border-radius: 8px 8px 0 0;
+      color: #64748b; background: #e2e8f0; border: 1px solid #e2e8f0; border-bottom: none;
+      margin-right: 4px; transition: background .15s, color .15s;
+    }
+    .tab-btn.active { background: #fff; color: #01b0bb; border-color: #e2e8f0; }
+    .tab-btn:hover:not(.active) { background: #f1f5f9; color: #334155; }
+
+    /* Content area */
+    .content-area { background: #fff; border: 1px solid #e2e8f0; border-top: none; margin: 0 24px; flex: 1; }
+    .view-panel { display: none; padding: 24px; }
+    .view-panel.active { display: block; }
+
+    /* ── Calendar ── */
+    .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .cal-nav-btn {
+      width: 36px; height: 36px; border-radius: 8px; background: #f1f5f9;
+      color: #334155; font-size: 18px; display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .cal-nav-btn:hover { background: #e2e8f0; }
+    .cal-month-label { font-size: 18px; font-weight: 700; color: #334155; }
+    .cal-legend { display: flex; gap: 16px; align-items: center; }
+    .cal-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #64748b; }
+    .cal-legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+    .cal-dow {
+      text-align: center; font-size: 11px; font-weight: 700; color: #94a3b8;
+      text-transform: uppercase; padding: 8px 0; letter-spacing: .06em;
+    }
+    .cal-day {
+      min-height: 90px; background: #f8fafc; border: 1px solid #e2e8f0;
+      border-radius: 4px; padding: 4px;
+    }
+    .cal-day.today { background: #f0fdfa; border-color: #99f6e4; }
+    .cal-day.other-month { background: #f1f5f9; opacity: .55; }
+    .cal-day-num { font-size: 12px; font-weight: 600; color: #64748b; padding: 2px 4px; }
+    .cal-day.today .cal-day-num { color: #0d9488; }
+    .cal-chip {
+      margin-top: 2px; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;
+      cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: opacity .1s;
+    }
+    .cal-chip:hover { opacity: .8; }
+    .chip-10 { background: #dbeafe; color: #1d4ed8; }
+    .chip-14 { background: #ccfbf1; color: #0d9488; }
+    .chip-20 { background: #ede9fe; color: #7c3aed; }
+
+    /* ── List ── */
+    .list-filters { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+    .list-filter-select {
+      padding: 8px 12px; border: 1px solid #e2e8f0; border-radius: 8px;
+      background: #fff; color: #334155; font-size: 14px; outline: none;
+    }
+    .list-filter-select:focus { border-color: #01b0bb; }
+    .list-count { margin-left: auto; font-size: 13px; color: #94a3b8; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 700;
+      color: #94a3b8; text-transform: uppercase; letter-spacing: .06em;
+      background: #f8fafc; border-bottom: 2px solid #e2e8f0;
+    }
+    td { padding: 12px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    tr:hover td { background: #f8fafc; cursor: pointer; }
+    .size-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700;
+    }
+    .badge-10 { background: #dbeafe; color: #1d4ed8; }
+    .badge-14 { background: #ccfbf1; color: #0d9488; }
+    .badge-20 { background: #ede9fe; color: #7c3aed; }
+    .source-badge {
+      display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600;
+      background: #f1f5f9; color: #64748b;
+    }
+    .source-manual { background: #fef3c7; color: #92400e; }
+
+    /* ── New Booking Form ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 13px; font-weight: 600; color: #64748b; }
+    .form-input, .form-select, .form-textarea {
+      padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 8px;
+      font-size: 14px; color: #334155; outline: none; transition: border-color .15s;
+      background: #fff;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: #01b0bb; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-section { margin-bottom: 24px; }
+    .form-section-title {
+      font-size: 14px; font-weight: 700; color: #334155; margin-bottom: 14px;
+      padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;
+    }
+    .pricing-preview {
+      background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 16px;
+      margin-bottom: 20px;
+    }
+    .pricing-preview__row { display: flex; justify-content: space-between; font-size: 14px; color: #334155; margin-bottom: 6px; }
+    .pricing-preview__total { font-weight: 700; font-size: 16px; color: #0d9488; border-top: 1px solid #99f6e4; padding-top: 8px; margin-top: 4px; }
+    .submit-btn {
+      padding: 13px 32px; background: linear-gradient(to right, #01b0bb, #2a7d84);
+      color: #fff; border-radius: 8px; font-size: 15px; font-weight: 600;
+      transition: opacity .15s;
+    }
+    .submit-btn:hover { opacity: .9; }
+    .submit-btn:disabled { opacity: .6; }
+    #form-success { color: #10b981; font-size: 14px; font-weight: 600; }
+    #form-error { color: #ef4444; font-size: 14px; }
+
+    /* ── Booking Detail Modal ── */
+    #booking-modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none;
+      align-items: center; justify-content: center; z-index: 500; padding: 20px;
+    }
+    .modal-card {
+      background: #fff; border-radius: 16px; width: 100%; max-width: 540px;
+      max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    }
+    .modal-header {
+      padding: 20px 24px; border-bottom: 1px solid #e2e8f0;
+      display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #fff;
+    }
+    .modal-header h3 { font-size: 16px; font-weight: 700; color: #334155; }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: 8px; background: #f1f5f9;
+      color: #64748b; font-size: 18px; display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .modal-close:hover { background: #e2e8f0; }
+    .modal-body { padding: 24px; }
+    .detail-section { margin-bottom: 20px; }
+    .detail-section h4 { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 12px; }
+    .detail-row { display: flex; gap: 8px; margin-bottom: 8px; font-size: 14px; }
+    .detail-label { color: #64748b; min-width: 110px; flex-shrink: 0; }
+    .detail-value { color: #334155; font-weight: 500; }
+    .modal-footer { padding: 16px 24px; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px; }
+    .btn-cancel-booking {
+      padding: 9px 18px; border: 1px solid #fca5a5; border-radius: 8px;
+      background: #fff; color: #ef4444; font-size: 13px; font-weight: 600; transition: background .15s;
+    }
+    .btn-cancel-booking:hover { background: #fef2f2; }
+    .btn-close-modal {
+      padding: 9px 18px; background: #f1f5f9; border-radius: 8px;
+      color: #334155; font-size: 13px; font-weight: 600; transition: background .15s;
+    }
+    .btn-close-modal:hover { background: #e2e8f0; }
+    .btn-edit-booking {
+      padding: 9px 18px; border: 1px solid #99f6e4; border-radius: 8px;
+      background: #f0fdfa; color: #0d9488; font-size: 13px; font-weight: 600; transition: background .15s;
+    }
+    .btn-edit-booking:hover { background: #ccfbf1; }
+    .btn-save-booking {
+      padding: 9px 18px; background: linear-gradient(to right, #01b0bb, #2a7d84);
+      color: #fff; border-radius: 8px; font-size: 13px; font-weight: 600; transition: opacity .15s;
+    }
+    .btn-save-booking:hover { opacity: .9; }
+    .btn-save-booking:disabled { opacity: .6; }
+    .edit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+    .edit-grid .full { grid-column: 1 / -1; }
+    @media (max-width: 500px) { .edit-grid { grid-template-columns: 1fr; } }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .stats-bar { grid-template-columns: 1fr 1fr; padding: 12px; gap: 10px; }
+      .tabs-bar { padding: 12px 12px 0; }
+      .content-area { margin: 0 12px; }
+      .view-panel { padding: 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .cal-legend { display: none; }
+      .admin-header { padding: 0 12px; }
+      #header-user-email { display: none; }
+    }
+    /* ── Dump & Return (F1, read-only) ── */
+    .dr-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .dr-title { font-size: 15px; font-weight: 700; color: #334155; }
+    .dr-empty { text-align: center; padding: 40px; color: #94a3b8; }
+    .dr-group { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #94a3b8; margin: 18px 0 8px; }
+    .dr-group:first-child { margin-top: 0; }
+    .dr-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+    .dr-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .dr-card__biz { font-size: 15px; font-weight: 700; color: #334155; }
+    .dr-card__meta { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: #64748b; margin-bottom: 10px; }
+    .dr-card__asset { font-weight: 600; color: #334155; }
+    .dr-card__conf { color: #01b0bb; font-weight: 600; }
+    .dr-card__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    .dr-card__amt { font-size: 15px; font-weight: 700; color: #334155; }
+    .dr-card__weigh { font-size: 13px; color: #64748b; }
+    .dr-card__over { font-size: 12px; font-weight: 600; color: #ea580c; background: #fff1e6; padding: 2px 8px; border-radius: 9999px; }
+    .dr-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; padding: 3px 10px; border-radius: 9999px; }
+    .dr-badge--scheduled { color: #b45309; background: #fef3c7; }
+    .dr-badge--completed { color: #15803d; background: #e7f6ec; }
+    .dr-badge--cancelled { color: #64748b; background: #f1f5f9; }
+    .dr-card__actions { margin-top: 12px; }
+    .dr-weigh-btn { background: #01b0bb; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .dr-weigh-btn:hover { opacity: .9; }
+    #weighin-modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none;
+      align-items: center; justify-content: center; z-index: 500; padding: 20px;
+    }
+    .wi-summary { font-size: 14px; color: #334155; margin-bottom: 16px; line-height: 1.5; }
+    .wi-preview { font-size: 13px; color: #475569; margin-top: 10px; min-height: 18px; }
+    .wi-error { font-size: 13px; color: #b91c1c; margin: 8px 0 0; min-height: 16px; }
+    /* ── Statements (F3) ── */
+    .dr-subtabs { display: flex; gap: 8px; margin-bottom: 18px; }
+    .dr-subtab { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; border-radius: 8px; padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .dr-subtab.is-active { background: #fff; color: #01b0bb; border-color: #01b0bb; }
+    .stmt-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+    .stmt-card--settled { background: #fafbfc; }
+    .stmt-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .stmt-card__biz { font-size: 15px; font-weight: 700; color: #334155; }
+    .stmt-card__period { font-size: 13px; font-weight: 600; color: #64748b; }
+    .stmt-card__period-row { font-size: 13px; color: #64748b; margin-bottom: 10px; }
+    .stmt-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 13.5px; color: #334155; padding: 4px 0; }
+    .stmt-row--late label { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; color: #475569; }
+    .stmt-row--total { font-size: 16px; font-weight: 700; }
+    .stmt-card__divider { height: 1px; background: #e2e8f0; margin: 8px 0; }
+    .stmt-card__meta { font-size: 11.5px; color: #94a3b8; margin-top: 8px; }
+    .stmt-settle-btn { background: #01b0bb; color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 12px; }
+    .stmt-settle-btn:hover { opacity: .9; }
+    .stmt-settle-btn:disabled { opacity: .6; }
+  </style>
+</head>
+<body>
+
+  <!-- Loading -->
+  <div id="app-loading"><div class="spinner"></div></div>
+
+  <!-- Login Screen -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="brand-icon">🗑</div>
+        <h1>Streamline <span>Dumpsters</span></h1>
+        <p style="color:#94a3b8;font-size:13px;margin-top:4px;">Admin Dashboard</p>
+      </div>
+      <label class="login-label" for="login-email">Email</label>
+      <input id="login-email" class="login-input" type="email" placeholder="admin@example.com" autocomplete="username">
+      <label class="login-label" for="login-password">Password</label>
+      <input id="login-password" class="login-input" type="password" placeholder="••••••••••••" autocomplete="current-password">
+      <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In</button>
+      <div id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="admin-header__brand">
+        <div class="admin-header__brand-dot"></div>
+        <span class="admin-header__brand-name">Streamline Dumpsters</span>
+        <span class="admin-header__badge">Admin</span>
+      </div>
+      <div class="admin-header__right">
+        <span id="header-user-email"></span>
+        <button id="logout-btn" onclick="doLogout()">Sign Out</button>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-card__label">This Month</div>
+        <div class="stat-card__value" id="stat-month-bookings">—</div>
+        <div class="stat-card__sub">bookings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Month Revenue</div>
+        <div class="stat-card__value" id="stat-month-revenue">—</div>
+        <div class="stat-card__sub">gross</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Upcoming</div>
+        <div class="stat-card__value" id="stat-upcoming">—</div>
+        <div class="stat-card__sub">deliveries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Total Bookings</div>
+        <div class="stat-card__value" id="stat-total">—</div>
+        <div class="stat-card__sub">all time</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tab-calendar" onclick="switchTab('calendar')">📅 Calendar</button>
+      <button class="tab-btn" id="tab-list" onclick="switchTab('list')">📋 All Bookings</button>
+      <button class="tab-btn" id="tab-new" onclick="switchTab('new')">＋ New Booking</button>
+      <button class="tab-btn" id="tab-dumpreturn" onclick="switchTab('dumpreturn')">🚛 Dump &amp; Return</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content-area">
+
+      <!-- Calendar View -->
+      <div class="view-panel active" id="view-calendar">
+        <div class="cal-header">
+          <button class="cal-nav-btn" onclick="calNav(-1)">&#8249;</button>
+          <div>
+            <span class="cal-month-label" id="cal-month-label"></span>
+            <span class="cal-legend" style="display:inline-flex;margin-left:20px;">
+              <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#3b82f6"></span>10yd</span>
+              <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#01b0bb"></span>14yd</span>
+              <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#8b5cf6"></span>20yd</span>
+            </span>
+          </div>
+          <button class="cal-nav-btn" onclick="calNav(1)">&#8250;</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <!-- List View -->
+      <div class="view-panel" id="view-list">
+        <div class="list-filters">
+          <select class="list-filter-select" id="filter-month" onchange="renderList()">
+            <option value="">All months</option>
+          </select>
+          <select class="list-filter-select" id="filter-size" onchange="renderList()">
+            <option value="">All sizes</option>
+            <option value="10">10 yard</option>
+            <option value="14">14 yard</option>
+            <option value="20">20 yard</option>
+          </select>
+          <select class="list-filter-select" id="filter-source" onchange="renderList()">
+            <option value="">All sources</option>
+            <option value="online">Online</option>
+            <option value="manual">Manual</option>
+          </select>
+          <span class="list-count" id="list-count"></span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Delivery</th>
+                <th>Pickup</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Size</th>
+                <th>Total</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody id="list-body"></tbody>
+          </table>
+        </div>
+        <div id="list-empty" style="display:none;text-align:center;padding:40px;color:#94a3b8;">No bookings found.</div>
+      </div>
+
+      <!-- New Booking Form -->
+      <div class="view-panel" id="view-new">
+        <form id="booking-form" onsubmit="submitManualBooking(event)">
+          <div class="form-section">
+            <div class="form-section-title">Customer Info</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Full Name *</label>
+                <input class="form-input" id="f-name" type="text" required placeholder="John Smith">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email *</label>
+                <input class="form-input" id="f-email" type="email" required placeholder="john@email.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input class="form-input" id="f-phone" type="tel" placeholder="(614) 555-0000">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">Service Details</div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Delivery Date *</label>
+                <input class="form-input" id="f-delivery" type="date" required onchange="updatePricingPreview()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Pickup Date *</label>
+                <input class="form-input" id="f-pickup" type="date" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Dumpster Size *</label>
+                <select class="form-select" id="f-size" required onchange="updatePricingPreview()">
+                  <option value="10">10 Yard — $312.12</option>
+                  <option value="14" selected>14 Yard — $344.52</option>
+                  <option value="20">20 Yard — $420.12</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Preferred Time</label>
+                <select class="form-select" id="f-time">
+                  <option value="">Any time</option>
+                  <option value="morning">Morning (8am–12pm)</option>
+                  <option value="afternoon">Afternoon (12pm–5pm)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Street Address *</label>
+                <input class="form-input" id="f-address" type="text" required placeholder="123 Main St">
+              </div>
+              <div class="form-group">
+                <label class="form-label">City *</label>
+                <input class="form-input" id="f-city" type="text" required placeholder="Columbus">
+              </div>
+              <div class="form-group">
+                <label class="form-label">ZIP Code</label>
+                <input class="form-input" id="f-zip" type="text" placeholder="43085" maxlength="5">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Special Instructions</label>
+                <textarea class="form-textarea" id="f-notes" placeholder="Gate code, placement instructions, etc."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title">Pricing</div>
+            <div class="pricing-preview" id="pricing-preview">
+              <div class="pricing-preview__row"><span>Subtotal</span><span id="prev-subtotal">$319.00</span></div>
+              <div class="pricing-preview__row"><span>Tax (8%)</span><span id="prev-tax">$25.52</span></div>
+              <div class="pricing-preview__row pricing-preview__total"><span>Total</span><span id="prev-total">$344.52</span></div>
+            </div>
+            <div class="form-group" style="max-width:200px;">
+              <label class="form-label">Override Amount (cents)</label>
+              <input class="form-input" id="f-amount-cents" type="number" placeholder="Auto" min="1">
+              <span style="font-size:12px;color:#94a3b8;">Leave blank to use standard pricing</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <button class="submit-btn" type="submit" id="form-submit-btn">Create Booking</button>
+            <span id="form-success"></span>
+            <span id="form-error"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Dump & Return View (F1 requests + F3 statements) -->
+      <div class="view-panel" id="view-dumpreturn">
+        <div class="dr-subtabs">
+          <button class="dr-subtab is-active" id="drsub-requests" onclick="drSwitch('requests')">Requests</button>
+          <button class="dr-subtab" id="drsub-statements" onclick="drSwitch('statements')">Statements</button>
+        </div>
+
+        <div id="dr-requests-view">
+          <div class="dr-head">
+            <span class="dr-title">Contractor dump &amp; return requests</span>
+            <span class="list-count" id="dr-count"></span>
+          </div>
+          <div id="dr-loading" class="dr-empty">Loading…</div>
+          <div id="dr-empty" class="dr-empty" style="display:none;">No dump &amp; return requests yet.</div>
+          <div id="dr-list"></div>
+        </div>
+
+        <div id="dr-statements-view" style="display:none;">
+          <div class="dr-head"><span class="dr-title">Monthly statements</span></div>
+          <div id="stmt-loading" class="dr-empty">Loading…</div>
+          <div id="stmt-list"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Booking Detail Modal -->
+  <div id="booking-modal" onclick="closeModal(event)">
+    <div class="modal-card" id="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title">Booking Details</h3>
+        <button class="modal-close" onclick="closeModalDirect()">×</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer-view">
+        <button class="btn-cancel-booking" id="modal-cancel-btn" onclick="cancelBooking()">Cancel Booking</button>
+        <button class="btn-edit-booking" id="modal-edit-btn" onclick="showEditForm()">Edit</button>
+        <button class="btn-close-modal" onclick="closeModalDirect()">Close</button>
+      </div>
+      <div class="modal-footer" id="modal-footer-edit" style="display:none;">
+        <button class="btn-close-modal" onclick="discardEdit()">Discard</button>
+        <button class="btn-save-booking" id="modal-save-btn" onclick="saveBookingEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weigh-in Modal (F2) -->
+  <div id="weighin-modal" onclick="closeWeighIn(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Record weigh-in</h3>
+        <button class="modal-close" onclick="closeWeighInDirect()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="wi-summary" class="wi-summary"></div>
+        <label class="form-label" for="wi-weight" style="display:block;margin-bottom:6px;">Weigh-in (lbs)</label>
+        <input class="form-input" id="wi-weight" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 5200" oninput="updateWeighInPreview()">
+        <div id="wi-preview" class="wi-preview"></div>
+        <p id="wi-error" class="wi-error"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-close-modal" onclick="closeWeighInDirect()">Cancel</button>
+        <button class="btn-save-booking" id="wi-save-btn" onclick="submitWeighIn()">Save weigh-in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    if (typeof firebase === 'undefined') {
+      document.getElementById('app-loading').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('login-error').textContent = 'Could not load Firebase SDK. Check your connection and refresh.';
+    }
+  </script>
+  <script src="/admin/admin.js?v=7"></script>
+</body>
+</html>

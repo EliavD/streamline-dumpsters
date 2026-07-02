@@ -287,7 +287,7 @@ class LocalSEOOptimizer {
             },
             {
                 question: "How much does dumpster rental cost?",
-                answer: "Our dumpster rental service costs $299 flat rate with no hidden fees, including 3 days rental and pickup."
+                answer: "Our dumpster rental service starts at $289 flat rate with no hidden fees, including 3 days rental and pickup."
             },
             {
                 question: "What size dumpster do I need?",
@@ -330,11 +330,11 @@ class LocalSEOOptimizer {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Streamline Dumpsters Ltd",
-            "image": "https://streamlinedumpsters.com/assets/img/logo.png",
-            "@id": `https://streamlinedumpsters.com/${this.currentLocation}.html`,
-            "url": `https://streamlinedumpsters.com/${this.currentLocation}.html`,
+            "image": "https://sl-dumpsters.com/assets/img/logo.png",
+            "@id": `https://sl-dumpsters.com/${this.currentLocation}.html`,
+            "url": `https://sl-dumpsters.com/${this.currentLocation}.html`,
             "telephone": "(555) 123-DUMP",
-            "priceRange": "$299",
+            "priceRange": "$289+",
             "address": {
                 "@type": "PostalAddress",
                 "addressLocality": locationData.cityName,
@@ -373,7 +373,7 @@ class LocalSEOOptimizer {
                 "@type": "ReserveAction",
                 "target": {
                     "@type": "EntryPoint",
-                    "urlTemplate": `https://streamlinedumpsters.com/${this.currentLocation}.html#dumpster-form`
+                    "urlTemplate": `https://sl-dumpsters.com/${this.currentLocation}.html#dumpster-form`
                 },
                 "result": {
                     "@type": "Reservation",
@@ -451,10 +451,10 @@ class LocalSEOOptimizer {
             <div class="service-links">
                 <h4>Our Services</h4>
                 <nav class="service-nav">
-                    <a href="index.html" title="Dumpster Rental Home">Dumpster Rental</a>
-                    <a href="faq.html" title="Frequently Asked Questions">FAQ</a>
-                    <a href="service-area.html" title="Complete Service Area">Service Areas</a>
-                    <a href="contact.html" title="Contact Information">Contact</a>
+                    <a href="/" title="Dumpster Rental Home">Dumpster Rental</a>
+                    <a href="/faq" title="Frequently Asked Questions">FAQ</a>
+                    <a href="/service-area" title="Complete Service Area">Service Areas</a>
+                    <a href="/contact" title="Contact Information">Contact</a>
                 </nav>
             </div>
         `;
@@ -472,10 +472,10 @@ class LocalSEOOptimizer {
             <div class="helpful-resources">
                 <h4>Helpful Resources</h4>
                 <ul>
-                    <li><a href="faq.html#what-can-go-in-dumpster" title="What can go in a dumpster">Accepted Materials</a></li>
-                    <li><a href="faq.html#prohibited-items" title="Prohibited items">What Not to Put in Dumpster</a></li>
-                    <li><a href="bookNow.html" title="Book dumpster rental online">Online Booking</a></li>
-                    <li><a href="contact.html" title="Get a quote">Get Free Quote</a></li>
+                    <li><a href="/faq#what-can-go-in-dumpster" title="What can go in a dumpster">Accepted Materials</a></li>
+                    <li><a href="/faq#prohibited-items" title="Prohibited items">What Not to Put in Dumpster</a></li>
+                    <li><a href="/bookNow" title="Book dumpster rental online">Online Booking</a></li>
+                    <li><a href="/contact" title="Get a quote">Get Free Quote</a></li>
                 </ul>
             </div>
         `;

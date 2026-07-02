@@ -95,14 +95,31 @@ BROWSER SUPPORT:
   box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
-.contact-form input:invalid,
-.contact-form textarea:invalid {
+/* Validation coloring is driven by the .field-error class that contact.js adds
+   AFTER the user interacts — not by :invalid, which would paint empty required
+   fields red the moment the page loads. */
+#contactForm input.field-error,
+#contactForm textarea.field-error {
   border-color: var(--color-error);
+  /* The global stylesheet defines .field-error as a hidden error-message
+     element (display:none). contact.js reuses that same class on the input,
+     so without this the field would disappear when flagged. Keep it visible. */
+  display: block;
 }
 
-.contact-form input:invalid:focus,
-.contact-form textarea:invalid:focus {
+#contactForm input.field-error:focus,
+#contactForm textarea.field-error:focus {
   box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* main-purged.min.css also colors .form-group input:valid/:invalid on load
+   (green for empty optional fields, red for empty required ones). Suppress that
+   for this form so all fields start neutral; errors still show via .field-error
+   once the user interacts. */
+#contactForm .form-group input:invalid:not(:focus):not(:placeholder-shown):not(.field-error),
+#contactForm .form-group input:valid:not(:focus):not([value=""]):not(.field-error) {
+  border-color: #ccc;
+  background-color: var(--color-white);
 }
 
 .contact-form textarea {
@@ -210,6 +227,75 @@ BROWSER SUPPORT:
 }
 
 /* =============================================================================
+   MEET THE TEAM SECTION
+   ============================================================================= */
+
+.meet-team {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.meet-team h2 {
+  font-size: 2.5rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.team-member {
+  background: var(--color-white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.team-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team-content {
+  padding: 2rem;
+}
+
+.team-content h3 {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.team-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* =============================================================================
    RESPONSIVE DESIGN
    ============================================================================= */
 
@@ -277,6 +363,42 @@ BROWSER SUPPORT:
   .service-area p {
     font-size: 1.1rem;
   }
+
+  /* Meet the Team - Tablet */
+  .meet-team {
+    padding: 5rem 0;
+  }
+
+  .meet-team h2 {
+    font-size: 3rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  .team-member:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .team-image {
+    height: 350px;
+  }
+
+  .team-content {
+    padding: 2.5rem;
+  }
+
+  .team-content h3 {
+    font-size: 1.75rem;
+  }
+
+  .team-content p {
+    font-size: 1.05rem;
+  }
 }
 
 /* Large Desktop */
@@ -312,6 +434,38 @@ BROWSER SUPPORT:
 
   .service-area h2 {
     font-size: 2.5rem;
+  }
+
+  /* Meet the Team - Desktop */
+  .meet-team {
+    padding: 6rem 0;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .team-member:nth-child(3) {
+    grid-column: auto;
+    max-width: none;
+  }
+
+  .team-image {
+    height: 400px;
+  }
+
+  .team-content {
+    padding: 3rem;
+  }
+
+  .team-content h3 {
+    font-size: 2rem;
+  }
+
+  .team-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
   }
 }
 
@@ -377,6 +531,43 @@ BROWSER SUPPORT:
 
   .service-area p {
     font-size: 0.9rem;
+  }
+
+  /* Meet the Team - Mobile */
+  .meet-team {
+    padding: 2.5rem 0;
+  }
+
+  .meet-team h2 {
+    font-size: 1.75rem;
+  }
+
+  .team-grid {
+    gap: 2rem;
+  }
+
+  .team-image {
+    height: auto;
+    min-height: 300px;
+  }
+
+  .team-image img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .team-content {
+    padding: 1.5rem;
+  }
+
+  .team-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .team-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 }
 

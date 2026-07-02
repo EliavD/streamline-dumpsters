@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- Homepage - Highest Priority -->
   <url>
     <loc>https://sl-dumpsters.com/</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-04-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,42 +12,42 @@
   <!-- Main Service/Location Pages - High Priority -->
   <url>
     <loc>https://sl-dumpsters.com/dublin</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/hilliard</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/upper-arlington</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/worthington</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/powell</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/plain-city</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -54,52 +55,52 @@
   <!-- Booking Page - High Priority -->
   <url>
     <loc>https://sl-dumpsters.com/bookNow</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Supporting Pages - Medium Priority -->
   <url>
+    <loc>https://sl-dumpsters.com/commercial</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://sl-dumpsters.com/faq</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/contact</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/service-area</loc>
-    <lastmod>2025-11-10</lastmod>
+    <lastmod>2026-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Legal Pages - Lower Priority -->
-  <url>
-    <loc>https://sl-dumpsters.com/terms</loc>
-    <lastmod>2025-11-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Blog Pages - Medium Priority -->
+  <!-- Blog Index -->
   <url>
     <loc>https://sl-dumpsters.com/blog</loc>
-    <lastmod>2025-11-24</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
+  <!-- Blog Posts - Local Guides (Higher Priority) -->
   <url>
-    <loc>https://sl-dumpsters.com/blog/posts/same-day-dumpster-delivery-columbus</loc>
-    <lastmod>2025-11-24</lastmod>
+    <loc>https://sl-dumpsters.com/blog/posts/dumpster-rental-hilliard-ohio</loc>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -108,20 +109,163 @@
     <loc>https://sl-dumpsters.com/blog/posts/dumpster-rental-dublin-ohio</loc>
     <lastmod>2025-11-22</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://sl-dumpsters.com/blog/posts/choose-right-dumpster-size-columbus</loc>
-    <lastmod>2025-11-22</lastmod>
+    <loc>https://sl-dumpsters.com/blog/posts/dumpster-rental-powell-ohio</loc>
+    <lastmod>2026-04-04</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://sl-dumpsters.com/blog/posts/ohio-dumpster-permit-guide</loc>
     <lastmod>2025-11-22</lastmod>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Posts - High-Value Transactional -->
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/same-day-dumpster-delivery-columbus</loc>
+    <lastmod>2026-03-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/choose-right-dumpster-size-columbus</loc>
+    <lastmod>2025-11-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/transparent-pricing-columbus-dumpster-rental</loc>
+    <lastmod>2025-11-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/first-time-renting-dumpster-what-to-expect</loc>
+    <lastmod>2026-02-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog Posts - Supporting Content -->
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/dumpster-rental-home-renovation-columbus</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/roofing-dumpster-rental-contractors-columbus</loc>
+    <lastmod>2026-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/kitchen-bathroom-remodel-dumpster-rental-guide</loc>
+    <lastmod>2026-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/basement-renovation-dumpster-rental-columbus</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/flip-house-dumpster-rental-strategy-columbus</loc>
+    <lastmod>2026-03-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/property-management-tenant-cleanout-columbus</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/spring-cleaning-garage-cleanout-dumpster-rental-columbus</loc>
+    <lastmod>2026-01-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/junk-removal-vs-dumpster-rental-columbus</loc>
+    <lastmod>2026-02-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/recycling-dumpster-rental-columbus</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/maximize-dumpster-space-loading-tips-columbus</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/dumpster-placement-tips-property-guide</loc>
+    <lastmod>2026-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/how-long-keep-rental-dumpster-columbus</loc>
+    <lastmod>2026-02-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/diy-hauling-vs-dumpster-rental-cost-comparison</loc>
+    <lastmod>2026-01-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/can-you-share-dumpster-rental-neighbors-columbus</loc>
+    <lastmod>2026-02-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/live-load-dumpster-service-columbus</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://sl-dumpsters.com/blog/posts/winter-dumpster-rental-safety-columbus</loc>
+    <lastmod>2025-12-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

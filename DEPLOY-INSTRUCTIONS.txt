@@ -1,0 +1,278 @@
+╔══════════════════════════════════════════════════════════════╗
+║  PRODUCTION PRICING DEPLOYMENT - STEP BY STEP INSTRUCTIONS  ║
+║  Updated: November 20, 2025                                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+⚠️  READ THIS FIRST ⚠️
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+You are deploying PRODUCTION PRICING that will charge customers
+REAL MONEY: $322.92 per booking (subtotal $299 + tax $23.92)
+
+Make sure to TEST with Square test card BEFORE accepting real payments!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+═══════════════════════════════════════════════════════════════
+STEP 1: DEPLOY BACKEND (Google Apps Script)
+═══════════════════════════════════════════════════════════════
+
+1. Go to: https://script.google.com
+
+2. Open your "Sl-Dumpsters Booking" script
+
+3. Select ALL existing code in the editor (Ctrl+A)
+
+4. Delete it
+
+5. Open file: google-apps-script.js
+   Location: c:\Users\Admin\OneDrive\Desktop\Claude\google-apps-script.js
+
+6. Copy ALL code from google-apps-script.js (Ctrl+A, Ctrl+C)
+
+7. Paste into Google Apps Script editor (Ctrl+V)
+
+8. Save (Ctrl+S)
+
+9. Click "Deploy" button (top right corner)
+
+10. Select "Manage deployments"
+
+11. Click the EDIT button (pencil icon) next to your active deployment
+
+12. Under "Version", select "New version"
+
+13. Add description: Production pricing $322.92
+
+14. Click "Deploy"
+
+15. Verify the URL is still:
+    https://script.google.com/macros/s/AKfycbwcIb08hs6kZun5ryfjXh4PNtWoDAs7IrmWdIw0W9cr-ertZj0up4ttEM8pB5ukRii5WQ/exec
+
+✅ Backend deployment complete!
+
+
+═══════════════════════════════════════════════════════════════
+STEP 2: UPLOAD JAVASCRIPT FILES TO WEB SERVER
+═══════════════════════════════════════════════════════════════
+
+Using your FTP client or web hosting file manager:
+
+1. Navigate to the "js" folder on your server
+
+2. Upload these 2 files (REPLACE existing files):
+
+   ✓ js/config.js
+     From: c:\Users\Admin\OneDrive\Desktop\Claude\js\config.js
+     To:   /js/config.js (on server)
+
+   ✓ js/bookNow.js
+     From: c:\Users\Admin\OneDrive\Desktop\Claude\js\bookNow.js
+     To:   /js/bookNow.js (on server)
+
+✅ JavaScript files uploaded!
+
+
+═══════════════════════════════════════════════════════════════
+STEP 3: UPLOAD HTML FILES TO WEB SERVER
+═══════════════════════════════════════════════════════════════
+
+Upload ALL 8 HTML files to your server root folder (REPLACE existing):
+
+   ✓ bookNow.html
+   ✓ index.html
+   ✓ dublin.html
+   ✓ hilliard.html
+   ✓ plain-city.html
+   ✓ powell.html
+   ✓ upper-arlington.html
+   ✓ worthington.html
+
+From: c:\Users\Admin\OneDrive\Desktop\Claude\
+To:   / (root folder on server)
+
+✅ HTML files uploaded!
+
+
+═══════════════════════════════════════════════════════════════
+STEP 4: CLEAR BROWSER CACHE
+═══════════════════════════════════════════════════════════════
+
+IMPORTANT: You must clear cache to load new JavaScript files!
+
+Option 1: Hard Refresh
+   • Windows: Press Ctrl+Shift+R or Ctrl+F5
+   • Mac: Press Cmd+Shift+R
+
+Option 2: Clear All Cache
+   • Press Ctrl+Shift+Delete (Windows) or Cmd+Shift+Delete (Mac)
+   • Select "Cached images and files"
+   • Time range: "All time"
+   • Click "Clear data"
+
+✅ Cache cleared!
+
+
+═══════════════════════════════════════════════════════════════
+STEP 5: TEST WITH SQUARE TEST CARD
+═══════════════════════════════════════════════════════════════
+
+DO NOT SKIP THIS STEP!
+
+1. Go to: https://sl-dumpsters.com/bookNow.html
+
+2. Open browser console (Press F12)
+
+3. Click "Book Now" to start a booking
+
+4. Fill in test information:
+   • Name: Test Customer
+   • Email: your-email@example.com
+   • Phone: (614) 555-1234
+   • Address: 123 Test St
+   • City: Dublin
+   • ZIP: 43016
+
+5. Select any dates for delivery and pickup
+
+6. Choose a time slot
+
+7. Enter Square TEST CARD:
+   • Card Number: 4111 1111 1111 1111
+   • Expiration: 12/25
+   • CVV: 111
+   • ZIP: 43016
+
+8. BEFORE clicking "Complete Booking", CHECK CONSOLE:
+
+   ✅ CORRECT (what you should see):
+   🔍 Amount: 32292 cents
+   "amount_cents": 32292,
+   "subtotal": 299,
+   "tax_rate": 0.08,
+   "tax_amount": 23.92,
+   "amount": 322.92
+
+   ❌ WRONG (old cached files):
+   🔍 Amount: 100 cents
+   "amount_cents": 100
+
+9. If console shows 100 cents:
+   • Files didn't upload correctly, OR
+   • Browser cache not cleared
+   • STOP and fix before continuing!
+
+10. If console shows 32292 cents:
+    • Click "Complete Booking"
+    • Wait for confirmation
+
+11. Verify Square Dashboard shows $322.92 charge
+
+12. Check confirmation email arrives with:
+    • Subtotal: $299.00
+    • Tax (8%): $23.92
+    • Total: $322.92
+
+13. Verify Google Calendar event created
+
+14. Check Google Sheet logged $322.92
+
+✅ Test successful! System is working correctly!
+
+
+═══════════════════════════════════════════════════════════════
+STEP 6: GO LIVE
+═══════════════════════════════════════════════════════════════
+
+If all tests pass, your system is ready for production!
+
+✅ Customers will now be charged $322.92 for bookings
+✅ All confirmations will show correct pricing
+✅ Square, Calendar, Email, Sheet all consistent
+
+Monitor the first few real bookings closely.
+
+
+═══════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+Problem: Console still shows "100 cents"
+Solution:
+  • Verify files uploaded to correct location
+  • Clear browser cache completely
+  • Try incognito window
+  • Check file timestamps on server
+
+Problem: "Card declined" error with test card
+Solution:
+  • Test cards only work in Square Sandbox
+  • Verify using correct test card: 4111 1111 1111 1111
+  • If using production credentials, use real card (BE CAREFUL!)
+
+Problem: Square charges wrong amount
+Solution:
+  • Check backend deployed correctly
+  • Verify BOOKING_PRICE_CENTS = 32292 in Apps Script
+  • Check frontend config.js has BOOKING_PRICE: 322.92
+
+Problem: Email doesn't show pricing breakdown
+Solution:
+  • Check bookNow.js uploaded correctly
+  • Verify it includes lines 2818-2822 with pricing fields
+  • Clear browser cache and retry
+
+
+═══════════════════════════════════════════════════════════════
+ROLLBACK (IF NEEDED)
+═══════════════════════════════════════════════════════════════
+
+If you need to revert to $1 test mode:
+
+Backend (Google Apps Script):
+  Change line 43 to:
+  const BOOKING_PRICE_CENTS = 100; // $1.00 - TESTING ONLY
+
+Frontend (js/config.js):
+  Change line 233 to:
+  BOOKING_PRICE: 1, // TEST MODE
+
+Then re-deploy both.
+
+
+═══════════════════════════════════════════════════════════════
+SUCCESS CRITERIA
+═══════════════════════════════════════════════════════════════
+
+ALL must pass before accepting real payments:
+
+✓ Console shows 32292 cents
+✓ Console shows subtotal: 299
+✓ Console shows tax_amount: 23.92
+✓ Console shows amount: 322.92
+✓ Square test charges $322.92
+✓ Email shows $299 + $23.92 = $322.92
+✓ Calendar event shows correct amounts
+✓ Google Sheet logs $322.92
+✓ No errors in console
+✓ No errors in Apps Script logs
+
+
+═══════════════════════════════════════════════════════════════
+SUPPORT
+═══════════════════════════════════════════════════════════════
+
+If you need help:
+  1. Check browser console for errors (F12)
+  2. Check Google Apps Script execution logs
+  3. Verify all 10 files uploaded correctly
+  4. Review FINAL-DEPLOYMENT-CHECKLIST.md for details
+
+
+═══════════════════════════════════════════════════════════════
+                    DEPLOYMENT COMPLETE! 🚀
+═══════════════════════════════════════════════════════════════
+
+Your production pricing system is ready to accept real bookings
+at $322.92 per transaction.
+
+Good luck with your launch! 🎉

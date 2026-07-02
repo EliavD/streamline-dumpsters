@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Configuration
     const config = {
         apiEndpoint: 'https://script.google.com/macros/s/AKfycbxYKGlGv6pKRlyySYZ7iAbD_5QU1TWGIP0y2nWJvM2gg7lroG0h2Q58A4PGpA0bQKsf/exec',
-        submitTimeout: 10000, // 10 seconds
+        submitTimeout: 25000, // 25 seconds (allow for Apps Script cold starts)
         enableClientValidation: true
     };
 
@@ -98,6 +98,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // Phone-specific validation (optional field)
         const phoneField = contactForm.querySelector('#phone');
         if (phoneField) {
+            // Format the number as the user types: 6146362343 -> (614) 636-2343
+            phoneField.addEventListener('input', function() {
+                formatPhoneField(phoneField);
+            });
             phoneField.addEventListener('blur', function() {
                 if (phoneField.value.trim()) {
                     validatePhone(phoneField);
@@ -131,8 +135,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Submit form
             const response = await submitForm(formData);
 
-            // Handle success
-            handleSubmitSuccess(response);
+            // Only treat as success if the backend explicitly confirms it.
+            // A resolved fetch alone is not enough (e.g. validation/rate-limit
+            // rejections come back with { success: false }).
+            if (response && response.success === true) {
+                handleSubmitSuccess(response);
+            } else {
+                throw new Error((response && response.message) || 'Submission was not successful.');
+            }
 
         } catch (error) {
             // Handle error
@@ -246,6 +256,26 @@ document.addEventListener('DOMContentLoaded', function() {
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email) && email.length <= 254;
+    }
+
+    /**
+     * Format the phone field as a US phone number as the user types.
+     * Keeps only digits (max 10) and reformats to (XXX) XXX-XXXX.
+     * @param {Element} field - Phone input field
+     */
+    function formatPhoneField(field) {
+        const digits = field.value.replace(/\D/g, '').substring(0, 10);
+
+        let formatted = digits;
+        if (digits.length > 6) {
+            formatted = `(${digits.substring(0, 3)}) ${digits.substring(3, 6)}-${digits.substring(6)}`;
+        } else if (digits.length > 3) {
+            formatted = `(${digits.substring(0, 3)}) ${digits.substring(3)}`;
+        } else if (digits.length > 0) {
+            formatted = `(${digits}`;
+        }
+
+        field.value = formatted;
     }
 
     /**

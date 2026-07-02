@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin allowlist — these UIDs retain full access (admin panel).
+    function isAdmin() {
+      return request.auth != null
+             && request.auth.uid in ['sYC54EnjOBZZZFCv1x7nBFV3pZm2'];
+    }
+
+    // Bookings — backend writes via Admin SDK (bypasses rules)
+    // Admin page reads/writes restricted to the admin allowlist so contractor
+    // logins cannot read or write bookings.
+    match /bookings/{bookingId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Contractors — a contractor reads ONLY their own profile; admin reads all.
+    // No client writes (provisioned via console / Admin SDK).
+    match /contractors/{uid} {
+      allow read: if request.auth != null
+                  && (request.auth.uid == uid || isAdmin());
+    }
+
+    // Service requests — a contractor reads ONLY their own (contractorId ==
+    // their uid); admin reads all. No client writes (created by the backend
+    // function via Admin SDK).
+    match /serviceRequests/{requestId} {
+      allow read: if request.auth != null
+                  && (resource.data.contractorId == request.auth.uid || isAdmin());
+    }
+
+    // Catch-all — deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

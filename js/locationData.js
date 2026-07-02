@@ -132,7 +132,7 @@ const LOCATION_DATA = {
                 answer: "Absolutely! We specialize in construction and renovation debris for both residential and commercial projects throughout Hilliard."
             },
             {
-                question: "What's included in the $299 price for Hilliard?",
+                question: "What's included in the $319 price for the 14-yard dumpster in Hilliard?",
                 answer: "Our flat rate includes delivery, 3-day rental, pickup, and up to 4,000 lbs of debris disposal anywhere in Hilliard."
             }
         ]
