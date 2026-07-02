@@ -287,7 +287,7 @@ class LocalSEOOptimizer {
             },
             {
                 question: "How much does dumpster rental cost?",
-                answer: "Our dumpster rental service starts at $289 flat rate with no hidden fees, including 3 days rental and pickup."
+                answer: "Our dumpster rental service starts at $289 with no hidden fees, including 3 days rental and pickup."
             },
             {
                 question: "What size dumpster do I need?",
