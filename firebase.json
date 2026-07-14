@@ -114,12 +114,45 @@
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
+            "value": "public, max-age=2592000"
           }
         ]
       },
       {
         "source": "**/*.@(html)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      // Maintained allowlist of clean-URL page routes (cleanUrls:true strips the
+      // .html, so real users hit these extensionless paths). NEW OR RENAMED
+      // PAGES MUST BE ADDED HERE to get no-cache. This fails safe: a route left
+      // out simply falls back to the default 1-hour cache (mild over-caching) --
+      // it never breaks an asset, since JS/CSS/image/font tiers are matched by
+      // their own extension globs and are disjoint from these routes.
+      {
+        "source": "/@(404|bookNow|commercial|confirmation|contact|dublin|faq|hilliard|plain-city|portal|powell|service-area|terms|upper-arlington|worthington|admin|blog)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/blog/posts/**",
         "headers": [
           {
             "key": "Cache-Control",
