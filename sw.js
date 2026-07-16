@@ -3,7 +3,7 @@
  * Provides offline support and caching for better performance
  */
 
-const CACHE_NAME = 'streamline-dumpsters-v1.1.0';
+const CACHE_NAME = 'streamline-dumpsters-v1.1.1';
 const urlsToCache = [
     '/',
     '/index.html',
