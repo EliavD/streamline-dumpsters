@@ -262,6 +262,21 @@
       .cal-legend { display: none; }
       .admin-header { padding: 0 12px; }
       #header-user-email { display: none; }
+      /* Touch targets: 44px min tap height + comfortable padding on action buttons */
+      .tab-btn, #logout-btn, .submit-btn, .login-btn,
+      .dr-subtab, .dr-weigh-btn, .stmt-settle-btn,
+      .btn-cancel-booking, .btn-close-modal, .btn-edit-booking, .btn-save-booking {
+        min-height: 44px; padding: 11px 18px;
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      /* Square icon buttons: enlarge tap area to 44x44 */
+      .cal-nav-btn, .modal-close { width: 44px; height: 44px; }
+      /* 16px prevents iOS focus-zoom; roomier vertical padding; full-width controls */
+      .form-input, .form-select, .form-textarea, .login-input {
+        font-size: 16px; padding-top: 12px; padding-bottom: 12px; width: 100%;
+      }
+      /* Anti-zoom on the list filter selects too (layout unchanged) */
+      .list-filter-select { font-size: 16px; }
     }
     /* ── Dump & Return (F1, read-only) ── */
     .dr-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
